@@ -1,0 +1,24 @@
+project:
+  type: website
+  output-dir: docs
+  
+website:
+  title: "Skin and Bone in London, 1760-1901"
+  site-url: https://skin-and-bone-in-london-1760-1901.github.io/
+  description: "A data blog for the Skin and Bone project"
+  navbar:
+    right:
+      - text: Blog
+        href: blog.qmd 
+      - icon: github
+        href: https://github.com/Skin-and-Bone-in-London-1760-1901
+      - icon: rss
+        href: blog.xml
+        
+format:
+  html:
+    theme: simplex
+    css: styles.css
+
+
+
