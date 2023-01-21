@@ -1,12 +1,8 @@
 ---
-title: "Home"
-
+title: "Skin and Bone"
+subtitle: "Interdisciplinary analysis of accidents, injury, and violence in industrialising London, 1760-1901"
 
 ---
-
-# Skin and Bone
-
-## Interdisciplinary analysis of accidents, injury, and violence in industrialising London, 1760-1901
 
 
 This project explores the possibilities of studying the impact of industrialisation and urbanisation on the material human body by combining methodologies from three disparate but related disciplines: Osteoarchaeology, History, and Digital Humanities. Skin and Bone seeks to chart the embodied experience of work-related injury, accidents, and interpersonal violence of 173, 366 Londoners during the Industrial Revolution, 1760-1901. 
