@@ -13,3 +13,7 @@ notes
 docs/ is the output folder (to integrate with GH). don't edit anything in here!
 
 usual sort of thing - by default it copies everything into the output folder unless prefixed with _
+
+what the hell did i do to actually publish the thing...
+
+
