@@ -6,6 +6,7 @@ website:
   title: "Skin and Bone in London, 1760-1901"
   site-url: https://skin-and-bone-in-london-1760-1901.github.io/
   description: "A data blog for the Skin and Bone project"
+  favicon: favicon.jpg
   navbar:
     right:
       - text: Blog

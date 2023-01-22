@@ -30,6 +30,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./favicon.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -59,9 +62,40 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-posts-table .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title',{ data: ['index'] },{ data: ['categories'] }],
+      
+      searchColumns: [],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-posts-table'] = new List('listing-posts-table', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
-</head>
+<link rel="alternate" type="application/rss+xml" title="Skin and Bone in London, 1760-1901" href="index.xml"></head>
 
 <body class="nav-fixed fullcontent">
 
@@ -128,8 +162,34 @@ ul.task-list li input[type="checkbox"] {
 <p>This project explores the possibilities of studying the impact of industrialisation and urbanisation on the material human body by combining methodologies from three disparate but related disciplines: Osteoarchaeology, History, and Digital Humanities. Skin and Bone seeks to chart the embodied experience of work-related injury, accidents, and interpersonal violence of 173, 366 Londoners during the Industrial Revolution, 1760-1901.</p>
 <p>To do this, the project will merge ten disparate datasets compiled from criminal, hospital, and osteoarchaeological records to explore the relationships between trauma, injury, and accidents with social demographics, but especially, sex/gender, age and occupational status.</p>
 <p>Led by a historian of the period, with expertise in digital humanities, and an osteoarchaeologist who has collated data on trauma and injury in eighteenth-century bodies, the project will generate a new open-access multivariate database and develop innovative approaches to studying and visualising the historic material body - skin and bone - in London during the Industrial Revolution.</p>
+<section id="recent-posts" class="level2">
+<h2 class="anchored" data-anchor-id="recent-posts">Recent Posts</h2>
+<div id="listing-posts-table" class="quarto-listing quarto-listing-container-table">
+
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+<th>
+Date
+</th>
+<th>
+Title
+</th>
+</tr>
+</thead>
+<tbody class="list">
+</tbody>
+
+</table>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+<p><a href="./blog.html">All posts</a></p>
 
 
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
