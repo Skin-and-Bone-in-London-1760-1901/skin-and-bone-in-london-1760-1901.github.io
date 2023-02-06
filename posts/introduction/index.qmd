@@ -1,0 +1,48 @@
+---
+title: "Introducing the Skin and Bone Project"
+author: "Sharon Howard"
+date: "2023-02-10"
+draft: true
+---
+
+
+  
+## Research Questions
+
+This project addresses a combination of historical and digital humanities research questions.
+
+- What does evidence of scars and injuries, and their locations on the body, taken from convict observations, hospital admissions, and analysis of skeletal remains, tell us about experiences of work-related injuries, accidents, and interpersonal violence in the eighteenth and nineteenth century?
+- Which individuals, and from which social contexts, bore scars and injuries? How did physical harm vary by gender, age, and occupation? And how did these patterns change between 1760 and 1901?
+- How do we classify and merge complex variables from social and osteoarchaeological datasets charting experiences of scarring and injury from skin (surface descriptions within hospital and criminal records) and bone (evidence of healed and/or healing trauma in skeletal remains)?
+- How can visualisations be utilised to summarise and analyse the complexity of this evidence, particularly when it is combined with evidence about the individual's personal background and characteristics, in order to identify the specific contexts in which injuries, and what types of injuries, occurred?
+- In particular, can new data-mining and visualisation techniques be developed to uncover significant patterns in this and potentially other collections of complex, multivariate humanities data?
+
+## Methodology
+
+Skin and Bone aims to develop a new interdisciplinary approach by combining the expertise of archaeology and history with digital humanities methodologies. The methods applied in this project bring together those established in two completed projects: '[Analysing Criminal Tattoos through Data Mining and Visualisation](https://criminaltattoos.github.io/)', which developed data mining techniques and examined 75,000 tattoos on 58,000 convicts in Britain and Australia from 1793 to 1925 (2018-2019), and 'The Material Body' (2015-2018), which tested a range of collaborative methods by working on skeletal remains in Sheffield (1806-1855) and South Shields (1818-1855) with associated historical records.
+
+Skin and Bone will reuse and merge ten existing datasets compiled from criminal records, hospital records, and osteological data that covers London, 1760-1901. London has been chosen as a pilot study due to the unique coverage, availability, and accessibility of the data for the period and an area where social and economic change was most pronounced. It will uncover hidden histories in the areas of risk, trauma, and the social, working, and domestic experiences of men and women, work, and the distribution of physical impairments over the life course.
+
+This project will develop new methods for accessing the rich body of evidence on injury found in existing digitised data to create new and enhanced biographical information about individuals, their bodies and injuries to understand the impact of the Industrial Revolution on the body. The methodologies developed for data extraction and visualisation will be transferable for analysing other types of diverse and disparate data found in historical and contemporary sources. The database will generate new findings, illustrate the potential for interdisciplinary work in this area, and will be a pilot for a larger, collaborative research project.
+
+
+## The datasets
+
+### Osteoarchaeological data
+
+- St. Bride's lower churchyard (1770-1849), c.300 individuals
+- Royal London Hospital (1825-1841), c.200 individuals
+- Payne Road/Bow Baptist (1816-1854), c.200 individuals
+
+### Hospital Records (Admission Registers)
+
+- Middlesex (1760-64, 1771-88), c.6000 individuals
+- Royal London (1760, 1791, 1792, 1805), c.4000 individuals
+- Guy's (1813-39), c.70000 individuals
+- St. Thomas' (1773-6, 1781-9, 1790-9, 1800-9), c.30000 individuals
+
+### Criminal records
+
+- Millbank Prison Register (1816-1828), c.500 individuals
+- Home Office Prison Licenses (1853-1889), c.6000 individuals
+- Metropolitan Police Habitual Criminal Register (1881-1901), c.55,000 individuals

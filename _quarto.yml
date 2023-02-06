@@ -11,8 +11,6 @@ website:
     right:
       - text: Blog
         href: blog.qmd 
-      - icon: github
-        href: https://github.com/Skin-and-Bone-in-London-1760-1901
       - icon: rss
         href: blog.xml
         
@@ -20,6 +18,9 @@ format:
   html:
     theme: simplex
     css: styles.css
+
+
+date-format: "D MMMM YYYY"
 
 
 
