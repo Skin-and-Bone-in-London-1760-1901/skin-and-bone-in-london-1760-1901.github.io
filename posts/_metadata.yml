@@ -9,8 +9,8 @@ listing:
   filter-ui: false
   fields: [date, title, description, categories]
 
-  date-format: "D MMMM YYYY"
-page-layout: full
+date-format: "D MMMM YYYY"
+page-layout: article
 
 # date-format in this file doesn't seem to do anything. may have to specify for every post.
 # or maybe experiment to see if you only need it in the listing page.
@@ -19,7 +19,7 @@ page-layout: full
 
 # freeze computational output
 # (see https://quarto.org/docs/projects/code-execution.html#freeze)
-freeze: true
+freeze: auto
 
 # Enable banner style title blocks
 title-block-banner: false

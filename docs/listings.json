@@ -4,15 +4,15 @@
     "items": []
   },
   {
-    "listing": "/posts/welcome/index.html",
-    "items": []
-  },
-  {
     "listing": "/index.html",
-    "items": []
+    "items": [
+      "/posts/introduction/index.html"
+    ]
   },
   {
     "listing": "/blog.html",
-    "items": []
+    "items": [
+      "/posts/introduction/index.html"
+    ]
   }
 ]

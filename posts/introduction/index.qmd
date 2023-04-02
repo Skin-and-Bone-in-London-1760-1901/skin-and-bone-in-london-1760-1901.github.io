@@ -1,15 +1,37 @@
 ---
-title: "Introducing the Skin and Bone Project"
+title: "Introducing the Skin and Bone data project"
 author: "Sharon Howard"
-date: "2023-02-10"
-draft: true
+date: "2023-04-01"
+
 ---
 
+This website accompanies the British Academy funded project [Skin and Bone: Interdisciplinary analysis of accidents, injury, and violence in industrialising London, 1760-1901](https://www.thebritishacademy.ac.uk/funding/ba-leverhulme-small-research-grants/past-awards/baleverhulme-small-research-grants-awards-2021-2022/)
+
+## Methodology
+
+Skin and Bone aims to develop a new interdisciplinary approach by combining the expertise of archaeology and history with digital humanities methodologies. The methods applied in this project bring together those established in two completed projects: '[Analysing Criminal Tattoos through Data Mining and Visualisation](https://criminaltattoos.github.io/)', which developed data mining techniques and examined 75,000 tattoos on 58,000 convicts in Britain and Australia from 1793 to 1925 (2018-2019), and 'The Material Body' (2015-2018), which tested a range of collaborative methods by working on skeletal remains in Sheffield (1806-1855) and South Shields (1818-1855) with associated historical records.
+
+
+The project has two main components:
+
+### Data extraction and classification 
+
+Skin and Bone will reuse and merge ten existing datasets compiled from criminal records, hospital records, and osteological data that covers London, 1760-1901. London has been chosen as a pilot study due to the unique coverage, availability, and accessibility of the data for the period and an area where social and economic change was most pronounced. It will uncover hidden histories in the areas of risk, trauma, and the social, working, and domestic experiences of men and women, work, and the distribution of physical impairments over the life course.
+
+The amount of processing required (and the amount and kind of information available) varies among the datasets. The osteological data is already highly structured, and the hospital data partly so. However, the physical descriptions in Digital Panopticon datasets often consist of undifferentiated and fragmentary language which can include various physical attributes (eg heights, scars, tattoos and disabilities). The relevant descriptive language needs to be identified, delineated and classified, but the datasets are too large in most cases for it to be feasible to mark them up manually. Instead, the project will build on and extend automated techniques developed for the Criminal Tattoos project. The Digital Humanities Institute, Sheffield, will be primarily responsible for the development work.
+
+### Data analysis and visualisation
+
+The project will develop new methods for accessing the rich body of evidence on injury found in existing digitised data to create new and enhanced biographical information about individuals, their bodies and injuries to understand the impact of the Industrial Revolution on the body. 
+
+On this website I'll experiment with data analysis and visualisation techniques in order to explore some of the project's research questions. In addition to physical description, we have significant amounts of biographical information for many individuals, including gender, age, occupation, religion and criminal profile, and we'll explore ways to use visualisation to summarise and analyse this evidence. 
+
+The methodologies developed for data extraction and visualisation will be transferable for analysing other types of diverse and disparate data found in historical and contemporary sources. The database will generate new findings, illustrate the potential for interdisciplinary work in this area, and will be a pilot for a larger, collaborative research project.
 
   
 ## Research Questions
 
-This project addresses a combination of historical and digital humanities research questions.
+The project addresses a combination of historical and digital humanities research questions.
 
 - What does evidence of scars and injuries, and their locations on the body, taken from convict observations, hospital admissions, and analysis of skeletal remains, tell us about experiences of work-related injuries, accidents, and interpersonal violence in the eighteenth and nineteenth century?
 - Which individuals, and from which social contexts, bore scars and injuries? How did physical harm vary by gender, age, and occupation? And how did these patterns change between 1760 and 1901?
@@ -17,13 +39,6 @@ This project addresses a combination of historical and digital humanities resear
 - How can visualisations be utilised to summarise and analyse the complexity of this evidence, particularly when it is combined with evidence about the individual's personal background and characteristics, in order to identify the specific contexts in which injuries, and what types of injuries, occurred?
 - In particular, can new data-mining and visualisation techniques be developed to uncover significant patterns in this and potentially other collections of complex, multivariate humanities data?
 
-## Methodology
-
-Skin and Bone aims to develop a new interdisciplinary approach by combining the expertise of archaeology and history with digital humanities methodologies. The methods applied in this project bring together those established in two completed projects: '[Analysing Criminal Tattoos through Data Mining and Visualisation](https://criminaltattoos.github.io/)', which developed data mining techniques and examined 75,000 tattoos on 58,000 convicts in Britain and Australia from 1793 to 1925 (2018-2019), and 'The Material Body' (2015-2018), which tested a range of collaborative methods by working on skeletal remains in Sheffield (1806-1855) and South Shields (1818-1855) with associated historical records.
-
-Skin and Bone will reuse and merge ten existing datasets compiled from criminal records, hospital records, and osteological data that covers London, 1760-1901. London has been chosen as a pilot study due to the unique coverage, availability, and accessibility of the data for the period and an area where social and economic change was most pronounced. It will uncover hidden histories in the areas of risk, trauma, and the social, working, and domestic experiences of men and women, work, and the distribution of physical impairments over the life course.
-
-This project will develop new methods for accessing the rich body of evidence on injury found in existing digitised data to create new and enhanced biographical information about individuals, their bodies and injuries to understand the impact of the Industrial Revolution on the body. The methodologies developed for data extraction and visualisation will be transferable for analysing other types of diverse and disparate data found in historical and contemporary sources. The database will generate new findings, illustrate the potential for interdisciplinary work in this area, and will be a pilot for a larger, collaborative research project.
 
 
 ## The datasets
@@ -46,3 +61,25 @@ This project will develop new methods for accessing the rich body of evidence on
 - Millbank Prison Register (1816-1828), c.500 individuals
 - Home Office Prison Licenses (1853-1889), c.6000 individuals
 - Metropolitan Police Habitual Criminal Register (1881-1901), c.55,000 individuals
+
+
+
+Code and data
+----
+
+I'm using [R](https://en.wikipedia.org/wiki/R_(programming_language)), a programming language particularly geared towards statistical analysis and visualisation, throughout this blogging project. 
+
+More specifically, my R workflow has these key components:
+
+* [RStudio](https://www.rstudio.com/), an "integrated development environment" (IDE) for R (free open source software, multi-platform)
+* [The Tidyverse](https://www.tidyverse.org/), "an opinionated collection of R packages designed for data science" (personally speaking, this was the single most important thing that transformed R into a language I could actually understand and use)
+* [Markdown](https://daringfireball.net/projects/markdown/) and [RMarkdown](https://rmarkdown.rstudio.com/) for writing
+* [Quarto](https://quarto.org/) and Github Pages for publishing
+
+This enables me to do most of what I need for the project - data wrangling and tidying, exploratory analysis, data modelling and visualisation, blogging - in one place, so that (hopefully...) everything I do is easily re-usable, either to test and reproduce my own results or as examples that can be adapted for other data and research. 
+
+One of the goals of this blog is to show how R can be of *practical* use for working with large, complex historical datasets, right through the research process from data management to writing and publication. 
+
+The project data will be made openly available. Some of the data being used by the project is already publicly available from the University of Sheffield [data repository](https://figshare.com/projects/Digital_Panopticon/16071). Datasets will be Creative Commons-licensed (or similar) for re-use, but the exact license terms are likely to vary.
+
+

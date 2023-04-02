@@ -16,8 +16,11 @@ website:
         
 format:
   html:
-    theme: simplex
+    theme: united
     css: styles.css
+    toc: true
+    code-fold: true
+
 
 
 date-format: "D MMMM YYYY"

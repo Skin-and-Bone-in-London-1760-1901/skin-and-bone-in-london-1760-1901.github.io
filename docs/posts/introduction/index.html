@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sharon Howard">
-<meta name="dcterms.date" content="2023-02-10">
+<meta name="dcterms.date" content="2023-04-01">
 
-<title>Skin and Bone in London, 1760-1901 - Introducing the Skin and Bone Project</title>
+<title>Skin and Bone in London, 1760-1901 - Introducing the Skin and Bone data project</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -119,11 +119,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/Skin-and-Bone-in-London-1760-1901"><i class="bi bi-github" role="img">
-</i> 
- <span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
     <a class="nav-link" href="../../blog.xml"><i class="bi bi-rss" role="img">
 </i> 
  <span class="menu-text"></span></a>
@@ -135,16 +130,36 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link active" data-scroll-target="#methodology">Methodology</a>
+  <ul class="collapse">
+  <li><a href="#data-extraction-and-classification" id="toc-data-extraction-and-classification" class="nav-link" data-scroll-target="#data-extraction-and-classification">Data extraction and classification</a></li>
+  <li><a href="#data-analysis-and-visualisation" id="toc-data-analysis-and-visualisation" class="nav-link" data-scroll-target="#data-analysis-and-visualisation">Data analysis and visualisation</a></li>
+  </ul></li>
+  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a></li>
+  <li><a href="#the-datasets" id="toc-the-datasets" class="nav-link" data-scroll-target="#the-datasets">The datasets</a>
+  <ul class="collapse">
+  <li><a href="#osteoarchaeological-data" id="toc-osteoarchaeological-data" class="nav-link" data-scroll-target="#osteoarchaeological-data">Osteoarchaeological data</a></li>
+  <li><a href="#hospital-records-admission-registers" id="toc-hospital-records-admission-registers" class="nav-link" data-scroll-target="#hospital-records-admission-registers">Hospital Records (Admission Registers)</a></li>
+  <li><a href="#criminal-records" id="toc-criminal-records" class="nav-link" data-scroll-target="#criminal-records">Criminal records</a></li>
+  </ul></li>
+  <li><a href="#code-and-data" id="toc-code-and-data" class="nav-link" data-scroll-target="#code-and-data">Code and data</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introducing the Skin and Bone Project</h1>
+<h1 class="title">Introducing the Skin and Bone data project</h1>
 </div>
 
 
@@ -161,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 February 2023</p>
+      <p class="date">1 April 2023</p>
     </div>
   </div>
   
@@ -171,9 +186,26 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>This website accompanies the British Academy funded project <a href="https://www.thebritishacademy.ac.uk/funding/ba-leverhulme-small-research-grants/past-awards/baleverhulme-small-research-grants-awards-2021-2022/">Skin and Bone: Interdisciplinary analysis of accidents, injury, and violence in industrialising London, 1760-1901</a></p>
+<section id="methodology" class="level2">
+<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
+<p>Skin and Bone aims to develop a new interdisciplinary approach by combining the expertise of archaeology and history with digital humanities methodologies. The methods applied in this project bring together those established in two completed projects: ‘<a href="https://criminaltattoos.github.io/">Analysing Criminal Tattoos through Data Mining and Visualisation</a>’, which developed data mining techniques and examined 75,000 tattoos on 58,000 convicts in Britain and Australia from 1793 to 1925 (2018-2019), and ‘The Material Body’ (2015-2018), which tested a range of collaborative methods by working on skeletal remains in Sheffield (1806-1855) and South Shields (1818-1855) with associated historical records.</p>
+<p>The project has two main components:</p>
+<section id="data-extraction-and-classification" class="level3">
+<h3 class="anchored" data-anchor-id="data-extraction-and-classification">Data extraction and classification</h3>
+<p>Skin and Bone will reuse and merge ten existing datasets compiled from criminal records, hospital records, and osteological data that covers London, 1760-1901. London has been chosen as a pilot study due to the unique coverage, availability, and accessibility of the data for the period and an area where social and economic change was most pronounced. It will uncover hidden histories in the areas of risk, trauma, and the social, working, and domestic experiences of men and women, work, and the distribution of physical impairments over the life course.</p>
+<p>The amount of processing required (and the amount and kind of information available) varies among the datasets. The osteological data is already highly structured, and the hospital data partly so. However, the physical descriptions in Digital Panopticon datasets often consist of undifferentiated and fragmentary language which can include various physical attributes (eg heights, scars, tattoos and disabilities). The relevant descriptive language needs to be identified, delineated and classified, but the datasets are too large in most cases for it to be feasible to mark them up manually. Instead, the project will build on and extend automated techniques developed for the Criminal Tattoos project. The Digital Humanities Institute, Sheffield, will be primarily responsible for the development work.</p>
+</section>
+<section id="data-analysis-and-visualisation" class="level3">
+<h3 class="anchored" data-anchor-id="data-analysis-and-visualisation">Data analysis and visualisation</h3>
+<p>The project will develop new methods for accessing the rich body of evidence on injury found in existing digitised data to create new and enhanced biographical information about individuals, their bodies and injuries to understand the impact of the Industrial Revolution on the body.</p>
+<p>On this website I’ll experiment with data analysis and visualisation techniques in order to explore some of the project’s research questions. In addition to physical description, we have significant amounts of biographical information for many individuals, including gender, age, occupation, religion and criminal profile, and we’ll explore ways to use visualisation to summarise and analyse this evidence.</p>
+<p>The methodologies developed for data extraction and visualisation will be transferable for analysing other types of diverse and disparate data found in historical and contemporary sources. The database will generate new findings, illustrate the potential for interdisciplinary work in this area, and will be a pilot for a larger, collaborative research project.</p>
+</section>
+</section>
 <section id="research-questions" class="level2">
 <h2 class="anchored" data-anchor-id="research-questions">Research Questions</h2>
-<p>This project addresses a combination of historical and digital humanities research questions.</p>
+<p>The project addresses a combination of historical and digital humanities research questions.</p>
 <ul>
 <li>What does evidence of scars and injuries, and their locations on the body, taken from convict observations, hospital admissions, and analysis of skeletal remains, tell us about experiences of work-related injuries, accidents, and interpersonal violence in the eighteenth and nineteenth century?</li>
 <li>Which individuals, and from which social contexts, bore scars and injuries? How did physical harm vary by gender, age, and occupation? And how did these patterns change between 1760 and 1901?</li>
@@ -181,12 +213,6 @@ ul.task-list li input[type="checkbox"] {
 <li>How can visualisations be utilised to summarise and analyse the complexity of this evidence, particularly when it is combined with evidence about the individual’s personal background and characteristics, in order to identify the specific contexts in which injuries, and what types of injuries, occurred?</li>
 <li>In particular, can new data-mining and visualisation techniques be developed to uncover significant patterns in this and potentially other collections of complex, multivariate humanities data?</li>
 </ul>
-</section>
-<section id="methodology" class="level2">
-<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
-<p>Skin and Bone aims to develop a new interdisciplinary approach by combining the expertise of archaeology and history with digital humanities methodologies. The methods applied in this project bring together those established in two completed projects: ‘<a href="https://criminaltattoos.github.io/">Analysing Criminal Tattoos through Data Mining and Visualisation</a>’, which developed data mining techniques and examined 75,000 tattoos on 58,000 convicts in Britain and Australia from 1793 to 1925 (2018-2019), and ‘The Material Body’ (2015-2018), which tested a range of collaborative methods by working on skeletal remains in Sheffield (1806-1855) and South Shields (1818-1855) with associated historical records.</p>
-<p>Skin and Bone will reuse and merge ten existing datasets compiled from criminal records, hospital records, and osteological data that covers London, 1760-1901. London has been chosen as a pilot study due to the unique coverage, availability, and accessibility of the data for the period and an area where social and economic change was most pronounced. It will uncover hidden histories in the areas of risk, trauma, and the social, working, and domestic experiences of men and women, work, and the distribution of physical impairments over the life course.</p>
-<p>This project will develop new methods for accessing the rich body of evidence on injury found in existing digitised data to create new and enhanced biographical information about individuals, their bodies and injuries to understand the impact of the Industrial Revolution on the body. The methodologies developed for data extraction and visualisation will be transferable for analysing other types of diverse and disparate data found in historical and contemporary sources. The database will generate new findings, illustrate the potential for interdisciplinary work in this area, and will be a pilot for a larger, collaborative research project.</p>
 </section>
 <section id="the-datasets" class="level2">
 <h2 class="anchored" data-anchor-id="the-datasets">The datasets</h2>
@@ -214,10 +240,24 @@ ul.task-list li input[type="checkbox"] {
 <li>Home Office Prison Licenses (1853-1889), c.6000 individuals</li>
 <li>Metropolitan Police Habitual Criminal Register (1881-1901), c.55,000 individuals</li>
 </ul>
-
-
-
 </section>
+</section>
+<section id="code-and-data" class="level2">
+<h2 class="anchored" data-anchor-id="code-and-data">Code and data</h2>
+<p>I’m using <a href="https://en.wikipedia.org/wiki/R_(programming_language)">R</a>, a programming language particularly geared towards statistical analysis and visualisation, throughout this blogging project.</p>
+<p>More specifically, my R workflow has these key components:</p>
+<ul>
+<li><a href="https://www.rstudio.com/">RStudio</a>, an “integrated development environment” (IDE) for R (free open source software, multi-platform)</li>
+<li><a href="https://www.tidyverse.org/">The Tidyverse</a>, “an opinionated collection of R packages designed for data science” (personally speaking, this was the single most important thing that transformed R into a language I could actually understand and use)</li>
+<li><a href="https://daringfireball.net/projects/markdown/">Markdown</a> and <a href="https://rmarkdown.rstudio.com/">RMarkdown</a> for writing</li>
+<li><a href="https://quarto.org/">Quarto</a> and Github Pages for publishing</li>
+</ul>
+<p>This enables me to do most of what I need for the project - data wrangling and tidying, exploratory analysis, data modelling and visualisation, blogging - in one place, so that (hopefully…) everything I do is easily re-usable, either to test and reproduce my own results or as examples that can be adapted for other data and research.</p>
+<p>One of the goals of this blog is to show how R can be of <em>practical</em> use for working with large, complex historical datasets, right through the research process from data management to writing and publication.</p>
+<p>The project data will be made openly available. Some of the data being used by the project is already publicly available from the University of Sheffield <a href="https://figshare.com/projects/Digital_Panopticon/16071">data repository</a>. Datasets will be Creative Commons-licensed (or similar) for re-use, but the exact license terms are likely to vary.</p>
+
+
+
 </section>
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
