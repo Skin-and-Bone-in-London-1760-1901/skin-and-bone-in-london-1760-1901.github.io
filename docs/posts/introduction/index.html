@@ -2,14 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.5.53">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sharon Howard">
-<meta name="dcterms.date" content="2023-04-01">
+<meta name="dcterms.date" content="2025-04-07">
+<meta name="description" content="Brief description of the data and processing methods">
 
-<title>Skin and Bone in London, 1760-1901 - Introducing the Skin and Bone data project</title>
+<title>An overview of the Skin and Bone data – Skin and Bone in London, 1760-1901</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,7 +20,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -33,8 +34,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../favicon.jpg" rel="icon" type="image/jpeg">
-<script src="../../site_libs/quarto-listing/list.min.js"></script>
-<script src="../../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -50,7 +49,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -59,41 +64,13 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: [],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -102,30 +79,36 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Skin and Bone in London, 1760-1901</span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../blog.html">
- <span class="menu-text">Blog</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../../blog.xml"><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../blog.xml"> <i class="bi bi-rss" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -138,19 +121,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#methodology" id="toc-methodology" class="nav-link active" data-scroll-target="#methodology">Methodology</a>
+  <li><a href="#the-data" id="toc-the-data" class="nav-link active" data-scroll-target="#the-data">The Data</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
+  <li><a href="#the-collections" id="toc-the-collections" class="nav-link" data-scroll-target="#the-collections">The collections</a>
   <ul class="collapse">
-  <li><a href="#data-extraction-and-classification" id="toc-data-extraction-and-classification" class="nav-link" data-scroll-target="#data-extraction-and-classification">Data extraction and classification</a></li>
-  <li><a href="#data-analysis-and-visualisation" id="toc-data-analysis-and-visualisation" class="nav-link" data-scroll-target="#data-analysis-and-visualisation">Data analysis and visualisation</a></li>
+  <li><a href="#osteoarchaeological-data-os" id="toc-osteoarchaeological-data-os" class="nav-link" data-scroll-target="#osteoarchaeological-data-os">Osteoarchaeological data (OS)</a></li>
+  <li><a href="#hospital-records-hp" id="toc-hospital-records-hp" class="nav-link" data-scroll-target="#hospital-records-hp">Hospital Records (HP)</a></li>
+  <li><a href="#criminal-records-dp" id="toc-criminal-records-dp" class="nav-link" data-scroll-target="#criminal-records-dp">Criminal records (DP)</a></li>
   </ul></li>
-  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a></li>
-  <li><a href="#the-datasets" id="toc-the-datasets" class="nav-link" data-scroll-target="#the-datasets">The datasets</a>
-  <ul class="collapse">
-  <li><a href="#osteoarchaeological-data" id="toc-osteoarchaeological-data" class="nav-link" data-scroll-target="#osteoarchaeological-data">Osteoarchaeological data</a></li>
-  <li><a href="#hospital-records-admission-registers" id="toc-hospital-records-admission-registers" class="nav-link" data-scroll-target="#hospital-records-admission-registers">Hospital Records (Admission Registers)</a></li>
-  <li><a href="#criminal-records" id="toc-criminal-records" class="nav-link" data-scroll-target="#criminal-records">Criminal records</a></li>
-  </ul></li>
-  <li><a href="#code-and-data" id="toc-code-and-data" class="nav-link" data-scroll-target="#code-and-data">Code and data</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -159,9 +138,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introducing the Skin and Bone data project</h1>
+<h1 class="title">An overview of the Skin and Bone data</h1>
 </div>
 
+<div>
+  <div class="description">
+    Brief description of the data and processing methods
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -176,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">1 April 2023</p>
+      <p class="date">7 April 2025</p>
     </div>
   </div>
   
@@ -184,90 +168,74 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
+
 </header>
 
-<p>This website accompanies the British Academy funded project <a href="https://www.thebritishacademy.ac.uk/funding/ba-leverhulme-small-research-grants/past-awards/baleverhulme-small-research-grants-awards-2021-2022/">Skin and Bone: Interdisciplinary analysis of accidents, injury, and violence in industrialising London, 1760-1901</a></p>
+
+<section id="the-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-data">The Data</h2>
+<p><a href="https://www.dhi.ac.uk/data/skin-and-bone">Download</a></p>
+<p>Consists of six spreadsheets (.xlsx) listing the project data per collection, by person and by injury.</p>
+<p>License: Creative Commons Attribution-ShareAlike 4.0 International (see the download page for citation details).</p>
+</section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
-<p>Skin and Bone aims to develop a new interdisciplinary approach by combining the expertise of archaeology and history with digital humanities methodologies. The methods applied in this project bring together those established in two completed projects: ‘<a href="https://criminaltattoos.github.io/">Analysing Criminal Tattoos through Data Mining and Visualisation</a>’, which developed data mining techniques and examined 75,000 tattoos on 58,000 convicts in Britain and Australia from 1793 to 1925 (2018-2019), and ‘The Material Body’ (2015-2018), which tested a range of collaborative methods by working on skeletal remains in Sheffield (1806-1855) and South Shields (1818-1855) with associated historical records.</p>
-<p>The project has two main components:</p>
-<section id="data-extraction-and-classification" class="level3">
-<h3 class="anchored" data-anchor-id="data-extraction-and-classification">Data extraction and classification</h3>
-<p>Skin and Bone will reuse and merge ten existing datasets compiled from criminal records, hospital records, and osteological data that covers London, 1760-1901. London has been chosen as a pilot study due to the unique coverage, availability, and accessibility of the data for the period and an area where social and economic change was most pronounced. It will uncover hidden histories in the areas of risk, trauma, and the social, working, and domestic experiences of men and women, work, and the distribution of physical impairments over the life course.</p>
-<p>The amount of processing required (and the amount and kind of information available) varies among the datasets. The osteological data is already highly structured, and the hospital data partly so. However, the physical descriptions in Digital Panopticon datasets often consist of undifferentiated and fragmentary language which can include various physical attributes (eg heights, scars, tattoos and disabilities). The relevant descriptive language needs to be identified, delineated and classified, but the datasets are too large in most cases for it to be feasible to mark them up manually. Instead, the project will build on and extend automated techniques developed for the Criminal Tattoos project. The Digital Humanities Institute, Sheffield, will be primarily responsible for the development work.</p>
-</section>
-<section id="data-analysis-and-visualisation" class="level3">
-<h3 class="anchored" data-anchor-id="data-analysis-and-visualisation">Data analysis and visualisation</h3>
-<p>The project will develop new methods for accessing the rich body of evidence on injury found in existing digitised data to create new and enhanced biographical information about individuals, their bodies and injuries to understand the impact of the Industrial Revolution on the body.</p>
-<p>On this website I’ll experiment with data analysis and visualisation techniques in order to explore some of the project’s research questions. In addition to physical description, we have significant amounts of biographical information for many individuals, including gender, age, occupation, religion and criminal profile, and we’ll explore ways to use visualisation to summarise and analyse this evidence.</p>
-<p>The methodologies developed for data extraction and visualisation will be transferable for analysing other types of diverse and disparate data found in historical and contemporary sources. The database will generate new findings, illustrate the potential for interdisciplinary work in this area, and will be a pilot for a larger, collaborative research project.</p>
-</section>
-</section>
-<section id="research-questions" class="level2">
-<h2 class="anchored" data-anchor-id="research-questions">Research Questions</h2>
-<p>The project addresses a combination of historical and digital humanities research questions.</p>
+<p>The technical challenge is to extract and classify detailed evidence from more than 87000 descriptions of individuals, including physical characteristics, bodily infirmities and personal details. The language used to describe injuries in the data is highly varied across the datasets, and it can be difficult to classify and standardise the nature of injury.</p>
+<p>The amount of processing required (and the amount and kind of information available) varies among the datasets. The osteological data is already highly structured, and the hospital data partly so. However, the physical descriptions in Digital Panopticon datasets often consist of undifferentiated and fragmentary language which can include various physical attributes (eg heights, scars, tattoos and disabilities).</p>
+<p>The relevant descriptive language needs to be identified, delineated and classified, but the datasets are too large in most cases for it to be feasible to mark them up manually. Instead, the project builds on automated techniques developed for the <a href="https://www.digitalpanopticon.org/Tattoos,_1793-1925">Criminal Tattoos</a> project.</p>
+<p>Outline of the process:</p>
 <ul>
-<li>What does evidence of scars and injuries, and their locations on the body, taken from convict observations, hospital admissions, and analysis of skeletal remains, tell us about experiences of work-related injuries, accidents, and interpersonal violence in the eighteenth and nineteenth century?</li>
-<li>Which individuals, and from which social contexts, bore scars and injuries? How did physical harm vary by gender, age, and occupation? And how did these patterns change between 1760 and 1901?</li>
-<li>How do we classify and merge complex variables from social and osteoarchaeological datasets charting experiences of scarring and injury from skin (surface descriptions within hospital and criminal records) and bone (evidence of healed and/or healing trauma in skeletal remains)?</li>
-<li>How can visualisations be utilised to summarise and analyse the complexity of this evidence, particularly when it is combined with evidence about the individual’s personal background and characteristics, in order to identify the specific contexts in which injuries, and what types of injuries, occurred?</li>
-<li>In particular, can new data-mining and visualisation techniques be developed to uncover significant patterns in this and potentially other collections of complex, multivariate humanities data?</li>
+<li>tokenisation of the text (ie, break into individual linguistic units eg words, punctuation) and then classify each token using a dictionary prepared by the project team, to assign a type to each token: injury type, body part, body specifier (left, right, upper, back of), cause of injury [where possible], stop word (anything unrelated to an injury, such as boil, pockmark, or mole), separator.</li>
+<li>a simple grammatical rule set is applied to the text in order to assign individual injuries to the correct locations on the body. The rules-based approach is augmented by training a <a href="https://spacy.io/">spaCy</a> relation extraction deep learning model.</li>
 </ul>
+<p>The process is not perfect. The original text of the descriptions is retained in the injuries tables for reference, and anyone using the data is advised to take some time to understand the data and its limitations.</p>
 </section>
-<section id="the-datasets" class="level2">
-<h2 class="anchored" data-anchor-id="the-datasets">The datasets</h2>
-<section id="osteoarchaeological-data" class="level3">
-<h3 class="anchored" data-anchor-id="osteoarchaeological-data">Osteoarchaeological data</h3>
+<section id="the-collections" class="level2">
+<h2 class="anchored" data-anchor-id="the-collections">The collections</h2>
+<section id="osteoarchaeological-data-os" class="level3">
+<h3 class="anchored" data-anchor-id="osteoarchaeological-data-os">Osteoarchaeological data (OS)</h3>
+<p>Data from three London burial grounds:</p>
 <ul>
 <li>St.&nbsp;Bride’s lower churchyard (1770-1849), c.300 individuals</li>
 <li>Royal London Hospital (1825-1841), c.200 individuals</li>
 <li>Payne Road/Bow Baptist (1816-1854), c.200 individuals</li>
 </ul>
+<p>Notes:</p>
+<p>This is fine-grained, systematically recorded data covering a range of the adult population. It’s already very structured so it’s easy to work with. However, it includes a relatively limited range of injuries (mainly fractures), constrained to those that can be observed on the skeleton. There is also limited background information (we don’t know exactly when people were buried). Both age and sex are determined from the skeleton itself.</p>
 </section>
-<section id="hospital-records-admission-registers" class="level3">
-<h3 class="anchored" data-anchor-id="hospital-records-admission-registers">Hospital Records (Admission Registers)</h3>
+<section id="hospital-records-hp" class="level3">
+<h3 class="anchored" data-anchor-id="hospital-records-hp">Hospital Records (HP)</h3>
+<p>Admission Registers:</p>
 <ul>
 <li>Middlesex (1760-64, 1771-88), c.6000 individuals</li>
 <li>Royal London (1760, 1791, 1792, 1805), c.4000 individuals</li>
 <li>Guy’s (1813-39), c.70000 individuals</li>
 <li>St.&nbsp;Thomas’ (1773-6, 1781-9, 1790-9, 1800-9), c.30000 individuals</li>
 </ul>
+<p>Notes:</p>
+<p>The registers vary considerably both in terms of their survival and the amount of detail they recorded. In the best cases, there is valuable data on length of hospital stay and outcomes, as well as ages and occupations. But the largest registers have much less detail than this. Moreover, by its nature the data only records injuries that were severe enough to necessitate hospitalisation (and descriptions only record the specific injuries that occasioned hospitalisation). There is no “uninjured” population for comparison.</p>
 </section>
-<section id="criminal-records" class="level3">
-<h3 class="anchored" data-anchor-id="criminal-records">Criminal records</h3>
+<section id="criminal-records-dp" class="level3">
+<h3 class="anchored" data-anchor-id="criminal-records-dp">Criminal records (DP)</h3>
+<p>Three datasets from the <a href="https://www.digitalpanopticon.org/">Digital Panopticon</a>:</p>
 <ul>
 <li>Millbank Prison Register (1816-1828), c.500 individuals</li>
 <li>Home Office Prison Licenses (1853-1889), c.6000 individuals</li>
 <li>Metropolitan Police Habitual Criminal Register (1881-1901), c.55,000 individuals</li>
 </ul>
+<p>Notes:</p>
+<p>These can be extraordinarily detailed documents of bodily experience, all the more valuable because they have been linked to extensive biographical and criminal histories. But, as noted, the varied language of the descriptions is highly challenging for computational analysis and there will be many (though hopefully mostly minor) errors and omissions in classification, so the data should be used with care.</p>
 </section>
 </section>
-<section id="code-and-data" class="level2">
-<h2 class="anchored" data-anchor-id="code-and-data">Code and data</h2>
-<p>I’m using <a href="https://en.wikipedia.org/wiki/R_(programming_language)">R</a>, a programming language particularly geared towards statistical analysis and visualisation, throughout this blogging project.</p>
-<p>More specifically, my R workflow has these key components:</p>
-<ul>
-<li><a href="https://www.rstudio.com/">RStudio</a>, an “integrated development environment” (IDE) for R (free open source software, multi-platform)</li>
-<li><a href="https://www.tidyverse.org/">The Tidyverse</a>, “an opinionated collection of R packages designed for data science” (personally speaking, this was the single most important thing that transformed R into a language I could actually understand and use)</li>
-<li><a href="https://daringfireball.net/projects/markdown/">Markdown</a> and <a href="https://rmarkdown.rstudio.com/">RMarkdown</a> for writing</li>
-<li><a href="https://quarto.org/">Quarto</a> and Github Pages for publishing</li>
-</ul>
-<p>This enables me to do most of what I need for the project - data wrangling and tidying, exploratory analysis, data modelling and visualisation, blogging - in one place, so that (hopefully…) everything I do is easily re-usable, either to test and reproduce my own results or as examples that can be adapted for other data and research.</p>
-<p>One of the goals of this blog is to show how R can be of <em>practical</em> use for working with large, complex historical datasets, right through the research process from data management to writing and publication.</p>
-<p>The project data will be made openly available. Some of the data being used by the project is already publicly available from the University of Sheffield <a href="https://figshare.com/projects/Digital_Panopticon/16071">data repository</a>. Datasets will be Creative Commons-licensed (or similar) for re-use, but the exact license terms are likely to vary.</p>
-
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p>On the Digital Panopticon descriptions and a similar methodology see <a href="https://www.digitalpanopticon.org/Tattoos,_1793-1925">Tattoos</a>.</p>
+<p>The Hospital and Osteological data sources are described in detail in Madeleine Mant’s PhD thesis, <a href="https://macsphere.mcmaster.ca/handle/11375/20026">Slips, Trips, Falls, and Brawls: Fractures of the Working Poor in London During the Long Eighteenth Century</a>.</p>
 
 
 </section>
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -295,12 +263,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
     }
-  });
-  clipboard.on('success', function(e) {
+    return false;
+  }
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -332,11 +303,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/skin-and-bone-in-london-1760-1901\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -346,8 +356,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -359,9 +378,245 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -402,6 +657,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

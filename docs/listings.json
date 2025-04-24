@@ -1,17 +1,17 @@
 [
   {
-    "listing": "/posts/introduction/index.html",
-    "items": []
-  },
-  {
-    "listing": "/index.html",
+    "listing": "/blog.html",
     "items": [
+      "/posts/biographical/index.html",
+      "/posts/a-first-look/index.html",
       "/posts/introduction/index.html"
     ]
   },
   {
-    "listing": "/blog.html",
+    "listing": "/index.html",
     "items": [
+      "/posts/biographical/index.html",
+      "/posts/a-first-look/index.html",
       "/posts/introduction/index.html"
     ]
   }

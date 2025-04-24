@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://skin-and-bone-in-london-1760-1901.github.io/posts/introduction/index.html</loc>
-    <lastmod>2023-04-02T08:30:30.510Z</lastmod>
+    <loc>https://skin-and-bone-in-london-1760-1901.github.io/blog.html</loc>
+    <lastmod>2022-09-30T09:08:20.910Z</lastmod>
   </url>
   <url>
     <loc>https://skin-and-bone-in-london-1760-1901.github.io/index.html</loc>
-    <lastmod>2023-04-02T08:30:30.851Z</lastmod>
+    <lastmod>2025-04-24T06:26:41.715Z</lastmod>
   </url>
   <url>
-    <loc>https://skin-and-bone-in-london-1760-1901.github.io/blog.html</loc>
-    <lastmod>2023-04-02T08:30:31.159Z</lastmod>
+    <loc>https://skin-and-bone-in-london-1760-1901.github.io/posts/introduction/index.html</loc>
+    <lastmod>2025-04-24T06:43:33.406Z</lastmod>
+  </url>
+  <url>
+    <loc>https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/index.html</loc>
+    <lastmod>2025-04-24T06:26:04.538Z</lastmod>
+  </url>
+  <url>
+    <loc>https://skin-and-bone-in-london-1760-1901.github.io/posts/biographical/index.html</loc>
+    <lastmod>2025-04-24T06:26:11.728Z</lastmod>
+  </url>
+  <url>
+    <loc>https://skin-and-bone-in-london-1760-1901.github.io/about.html</loc>
+    <lastmod>2025-04-23T21:06:45.507Z</lastmod>
   </url>
 </urlset>

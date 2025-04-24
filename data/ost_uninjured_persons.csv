@@ -1,0 +1,408 @@
+person_id,gender,age_group,cemetery,cemetery_code,cemetery_id
+pr-BBP07-106.0,female,26-35,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-108.0,female,36-45,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-110.0,male,Adult,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-113.0,male,18-25,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-120.0,male,26-35,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-125.0,female,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-132.0,female,26-35,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-143.0,female,26-35,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-154.0,female,26-35,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-16.0,female,36-45,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-163.0,female,36-45,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-165.0,male,26-35,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-18.0,male,36-45,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-188.0,female,36-45,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-190.0,female,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-194.0,female,26-35,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-199.0,female,36-45,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-220.0,female,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-225.0,male,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-234.0,female,36-45,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-236.0,female,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-237.0,male,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-24.0,female,36-45,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-30.0,unknown,Adult,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-32.0,unknown,Adult,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-37.0,female,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-42.0,male,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-49.0,female,Adult,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-52.0,female,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-53.0,female,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-54.0,male,36-45,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-58.0,female,18-25,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-72.0,male,46+,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-76.0,female,26-35,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-9.0,unknown,Adult,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-92.0,female,26-35,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-95.0,unknown,Adult,Payne Road/Bow Baptist,BBP07,pr
+pr-BBP07-97.0,male,36-45,Payne Road/Bow Baptist,BBP07,pr
+pr-PAY05-109.0,female,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-132.0,male,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-134.0,female,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-139.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-146.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-169.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-176.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-179.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-181.0,female,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-198.0,female,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-228.0,female,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-235.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-254.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-263.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-267.0,female,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-273.0,female,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-283.0,female,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-292.0,female,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-299.0,male,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-305.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-315.0,female,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-322.0,male,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-342.0,male,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-344.0,male,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-366.0,female,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-368.0,male,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-385.0,female,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-390.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-392.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-399.0,unknown,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-408.0,female,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-412.0,male,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-413.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-449.0,female,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-451.0,female,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-471.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-473.0,male,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-476.0,male,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-489.0,female,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-497.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-506.0,male,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-520.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-530.0,unknown,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-536.0,female,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-538.0,male,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-541.0,male,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-543.0,unknown,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-547.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-551.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-556.0,unknown,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-560.0,male,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-573.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-574.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-579.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-587.0,female,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-594.0,unknown,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-596.0,male,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-601.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-602.0,unknown,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-616.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-633.0,unknown,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-635.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-647.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-650.0,male,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-652.0,male,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-653.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-657.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-661.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-663.0,male,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-664.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-668.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-683.0,female,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-686.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-697.0,male,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-702.0,male,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-706.0,male,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-721.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-725.0,unknown,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-727.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-756.0,female,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-764.0,male,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-767.0,male,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-781.0,male,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-783.0,female,18-25,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-789.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-791.0,male,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-830.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-838.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-844.0,male,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-849.0,female,26-35,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-858.0,male,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-861.0,male,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-873.0,female,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-875.0,female,46+,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-877.0,female,Adult,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-884.0,male,36-45,Payne Road/Bow Baptist,PAY05,pr
+pr-PAY05-891.0,female,Adult,Payne Road/Bow Baptist,PAY05,pr
+rl-RLP05-103.0,female,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-107.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-113.0,female,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-114.0,male,46+,Royal London Hospital,RLP05,rl
+rl-RLP05-125.0,male,18-25,Royal London Hospital,RLP05,rl
+rl-RLP05-126.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-127.0,female,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-131.0,female,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-135.0,male,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-140.0,unknown,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-147.0,male,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-14901.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-163.0,female,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-167.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-175.0,female,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-216.0,female,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-235.0,unknown,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-237.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-256.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-260.0,unknown,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-279.0,female,18-25,Royal London Hospital,RLP05,rl
+rl-RLP05-282.0,female,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-299.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-309.0,male,18-25,Royal London Hospital,RLP05,rl
+rl-RLP05-317.0,male,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-336.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-339.0,female,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-359.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-364.0,female,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-365.0,male,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-367.0,male,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-371.0,male,18-25,Royal London Hospital,RLP05,rl
+rl-RLP05-380.0,female,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-385.0,unknown,18-25,Royal London Hospital,RLP05,rl
+rl-RLP05-392.0,male,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-397.0,female,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-407.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-409.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-422.0,female,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-424.0,female,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-43301.0,male,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-436.0,male,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-442.0,male,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-443.0,unknown,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-444.0,unknown,18-25,Royal London Hospital,RLP05,rl
+rl-RLP05-449.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-450.0,male,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-452.0,female,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-455.0,female,26-35,Royal London Hospital,RLP05,rl
+rl-RLP05-462.0,male,46+,Royal London Hospital,RLP05,rl
+rl-RLP05-466.0,unknown,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-47101.0,male,18-25,Royal London Hospital,RLP05,rl
+rl-RLP05-48002.0,female,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-51701.0,female,18-25,Royal London Hospital,RLP05,rl
+rl-RLP05-52201.0,male,18-25,Royal London Hospital,RLP05,rl
+rl-RLP05-523.0,female,36-45,Royal London Hospital,RLP05,rl
+rl-RLP05-543.0,male,Adult,Royal London Hospital,RLP05,rl
+rl-RLP05-59901.0,male,36-45,Royal London Hospital,RLP05,rl
+sb-FAO90-1055.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1055.1,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1058.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1061.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1116.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1119.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1123.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1125.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1127.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1141.1,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1152.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1170.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1172.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1176.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1177.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1183.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1184.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1185.0,unknown,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1188.0,female,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1196.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1199.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1207.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1215.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1226.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1244.1,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1245.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1247.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1253.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1258.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1259.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1278.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1291.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1292.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1298.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1326.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1336.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1336.1,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1343.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1345.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1350.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1355.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1360.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1362.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1366.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1373.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1374.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1376.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1386.0,female,18-25,St. Bride's,FAO90,sb
+sb-FAO90-1390.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1404.0,female,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1408.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1409.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1420.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1422.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1426.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1428.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1439.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1441.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1441.1,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1449.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1454.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1456.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1457.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1483.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1495.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1505.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1519.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1564.0,unknown,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1570.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1572.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1574.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1578.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1580.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1588.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1589.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1591.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1599.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1608.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1611.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1617.0,male,18-25,St. Bride's,FAO90,sb
+sb-FAO90-1637.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1639.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1641.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1645.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1649.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1651.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1669.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1671.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1675.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1680.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1683.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1685.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1687.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1691.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1699.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1703.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1709.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1711.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1727.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1751.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1755.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1761.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1767.0,male,18-25,St. Bride's,FAO90,sb
+sb-FAO90-1771.0,unknown,46+,St. Bride's,FAO90,sb
+sb-FAO90-1777.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1779.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1779.1,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1783.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1785.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1793.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1805.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1811.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1817.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1819.0,male,18-25,St. Bride's,FAO90,sb
+sb-FAO90-1821.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1823.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1831.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1845.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1860.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1870.1,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1872.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1874.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1879.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1883.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1883.1,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1887.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1891.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1893.0,female,18-25,St. Bride's,FAO90,sb
+sb-FAO90-1895.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1899.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1903.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1911.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1919.0,unknown,46+,St. Bride's,FAO90,sb
+sb-FAO90-1923.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1928.0,unknown,46+,St. Bride's,FAO90,sb
+sb-FAO90-1932.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1934.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-1936.0,female,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1936.1,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1939.0,female,18-25,St. Bride's,FAO90,sb
+sb-FAO90-1951.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1952.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1954.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1961.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1963.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1965.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1967.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1970.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-1983.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1993.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-1995.0,female,18-25,St. Bride's,FAO90,sb
+sb-FAO90-1997.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-1997.1,unknown,36-45,St. Bride's,FAO90,sb
+sb-FAO90-1999.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-2001.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2005.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2006.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-2009.1,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-2031.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2035.0,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-2037.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2043.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2049.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2053.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2053.1,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-2055.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2059.1,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2063.0,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-2071.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-2081.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2083.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2083.1,unknown,Adult,St. Bride's,FAO90,sb
+sb-FAO90-2085.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2097.0,female,Adult,St. Bride's,FAO90,sb
+sb-FAO90-2107.0,male,18-25,St. Bride's,FAO90,sb
+sb-FAO90-2111.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2118.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2120.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2124.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-2130.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2132.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2134.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-2136.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2142.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2154.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2158.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2161.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-2171.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-2183.0,unknown,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2199.0,female,26-35,St. Bride's,FAO90,sb
+sb-FAO90-2203.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2207.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2214.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2220.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2233.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2236.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-2245.0,male,26-35,St. Bride's,FAO90,sb
+sb-FAO90-2249.0,female,Adult,St. Bride's,FAO90,sb
+sb-FAO90-2251.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2255.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2272.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2274.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2284.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2284.1,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2298.0,female,46+,St. Bride's,FAO90,sb
+sb-FAO90-2300.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2300.2,male,Adult,St. Bride's,FAO90,sb
+sb-FAO90-2313.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2314.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2318.0,unknown,18-25,St. Bride's,FAO90,sb
+sb-FAO90-2340.0,male,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2353.0,female,36-45,St. Bride's,FAO90,sb
+sb-FAO90-2356.0,male,46+,St. Bride's,FAO90,sb
+sb-FAO90-2378.0,male,26-35,St. Bride's,FAO90,sb

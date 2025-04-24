@@ -9,6 +9,8 @@ website:
   favicon: favicon.jpg
   navbar:
     right:
+      - text: About
+        href: about.qmd
       - text: Blog
         href: blog.qmd 
       - icon: rss
@@ -19,7 +21,7 @@ format:
     theme: united
     css: styles.css
     toc: true
-    code-fold: true
+    #code-fold: true
 
 
 

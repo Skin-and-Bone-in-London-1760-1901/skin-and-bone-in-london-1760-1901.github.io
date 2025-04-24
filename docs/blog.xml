@@ -9,100 +9,1196 @@
 <link>https://skin-and-bone-in-london-1760-1901.github.io/blog.html</link>
 <atom:link href="https://skin-and-bone-in-london-1760-1901.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>A data blog for the Skin and Bone project</description>
-<generator>quarto-1.2.335</generator>
-<lastBuildDate>Fri, 31 Mar 2023 23:00:00 GMT</lastBuildDate>
+<generator>quarto-1.5.53</generator>
+<lastBuildDate>Sun, 20 Apr 2025 23:00:00 GMT</lastBuildDate>
 <item>
-  <title>Introducing the Skin and Bone data project</title>
+  <title>Biographical information</title>
   <dc:creator>Sharon Howard</dc:creator>
-  <link>https://skin-and-bone-in-london-1760-1901.github.io/posts/introduction/index.html</link>
+  <link>https://skin-and-bone-in-london-1760-1901.github.io/posts/biographical/</link>
   <description><![CDATA[ 
 
 
 
-<p>This website accompanies the British Academy funded project <a href="https://www.thebritishacademy.ac.uk/funding/ba-leverhulme-small-research-grants/past-awards/baleverhulme-small-research-grants-awards-2021-2022/">Skin and Bone: Interdisciplinary analysis of accidents, injury, and violence in industrialising London, 1760-1901</a></p>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The Skin and Bone project data contains two kinds of biographical information, sex/gender and age, that are consistent enough across collections to be useful for comparison. However, they need some standardisation to enable meaningful analysis and visualisations. There are some variations in recording of the gender data, and ages need to be grouped.</p>
+</section>
+<section id="age-groups" class="level2">
+<h2 class="anchored" data-anchor-id="age-groups">Age groups</h2>
+<p>This was effectively pre-determined by broad age categories used in the osteological (OS) collection, where ages are unrecorded and have to be estimated from analysis of the skeletons (<a href="http://hdl.handle.net/11375/20026">Mant thesis p.58</a>).</p>
+<ul>
+<li>Young Adult (YA) = 18-25 years<br>
+</li>
+<li>Middle Adult 1 (MA1) = 26-35 years</li>
+<li>Middle Adult 2 (MA2) = 36-45 years</li>
+<li>Old Adult (OA) = 46+ years</li>
+<li>Adult = &gt;18 years</li>
+</ul>
+<p>A group for children (0-17) was added for the hospital (HP) and Digital Panopticon criminals (DP) collections, as children were excluded from the osteological data, and the “Adult” category was turned into “Unknown” (since it can’t be assumed in HP and DP that someone without a recorded age is an adult).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">os_injury_ages <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb1-2">  os_injury_bio <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">age_group =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if_else</span>(age_group<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Adult"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unknown"</span>, age_group))</span>
+<span id="cb1-4"></span>
+<span id="cb1-5">os_injury_ages <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span>  </span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">distinct</span>(person_id, age_group) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(age_group, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">name=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"count"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable_styling</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">age_group</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">18-25</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">26-35</td>
+<td style="text-align: right;">44</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">36-45</td>
+<td style="text-align: right;">93</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">46+</td>
+<td style="text-align: right;">122</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">unknown</td>
+<td style="text-align: right;">60</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<section id="hp" class="level3">
+<h3 class="anchored" data-anchor-id="hp">HP</h3>
+<p>Assigning groups to ages is straightforward using <code>case_when()</code>, as the age column is already numerical.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">hp_injury_bio <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">distinct</span>(age) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-3">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># make age groups; "unknown" for NA.</span></span>
+<span id="cb2-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">age_group =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">case_when</span>(</span>
+<span id="cb2-5">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">is.na</span>(age) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unknown"</span>,</span>
+<span id="cb2-6">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">between</span>(age, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0-17"</span>,</span>
+<span id="cb2-7">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">between</span>(age, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"18-25"</span>,</span>
+<span id="cb2-8">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">between</span>(age, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">35</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"26-35"</span>,</span>
+<span id="cb2-9">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">between</span>(age, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">36</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">45</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"36-45"</span>,</span>
+<span id="cb2-10">    age<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">45</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"46+"</span></span>
+<span id="cb2-11">  )) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-12">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">slice</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-13">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-14">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable_styling</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">age</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">age_group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">unknown</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">36-45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">58</td>
+<td style="text-align: left;">46+</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">25</td>
+<td style="text-align: left;">18-25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">45</td>
+<td style="text-align: left;">36-45</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">35</td>
+<td style="text-align: left;">26-35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">36</td>
+<td style="text-align: left;">36-45</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">64</td>
+<td style="text-align: left;">46+</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">36-45</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">47</td>
+<td style="text-align: left;">46+</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>I may as well turn it into a function I can reuse.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">make_age_groups <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(df){</span>
+<span id="cb3-2">  df <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-3">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">age_group =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">case_when</span>(</span>
+<span id="cb3-4">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">is.na</span>(age) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unknown"</span>,</span>
+<span id="cb3-5">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">between</span>(age, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0-17"</span>,</span>
+<span id="cb3-6">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">between</span>(age, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"18-25"</span>,</span>
+<span id="cb3-7">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">between</span>(age, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">35</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"26-35"</span>,</span>
+<span id="cb3-8">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">between</span>(age, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">36</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">45</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"36-45"</span>,</span>
+<span id="cb3-9">    age<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">45</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"46+"</span></span>
+<span id="cb3-10">  ))</span>
+<span id="cb3-11">}</span></code></pre></div>
+</div>
+<p>Unfortunately age is not consistently recorded across HP (only one hospital has it for most records).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">hp_injury_ages <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb4-2">hp_injury_bio <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb4-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">make_age_groups</span>()</span>
+<span id="cb4-4"></span>
+<span id="cb4-5">hp_injury_ages <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb4-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">distinct</span>(person_id, age, age_group) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb4-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(age_group, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">name=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"count"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb4-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb4-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable_styling</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">age_group</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0-17</td>
+<td style="text-align: right;">182</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">18-25</td>
+<td style="text-align: right;">598</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">26-35</td>
+<td style="text-align: right;">789</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">36-45</td>
+<td style="text-align: right;">768</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">46+</td>
+<td style="text-align: right;">931</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">unknown</td>
+<td style="text-align: right;">14427</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="dp" class="level3">
+<h3 class="anchored" data-anchor-id="dp">DP</h3>
+<p>A high proportion of DP records have age information, but it needs a little bit of preprocessing because for some reason R decides to import the age column as character rather than numeric data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">dp_injury_ages <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb5-2">dp_injury_bio <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">age =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">parse_number</span>(age)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">make_age_groups</span>() </span>
+<span id="cb5-5"></span>
+<span id="cb5-6">dp_injury_ages <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">distinct</span>(description_id, age, age_group) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(age_group, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">name =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"count"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable_styling</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">age_group</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0-17</td>
+<td style="text-align: right;">405</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">18-25</td>
+<td style="text-align: right;">5718</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">26-35</td>
+<td style="text-align: right;">6544</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">36-45</td>
+<td style="text-align: right;">3947</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">46+</td>
+<td style="text-align: right;">3952</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">unknown</td>
+<td style="text-align: right;">62</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+</section>
+<section id="gender" class="level2">
+<h2 class="anchored" data-anchor-id="gender">Gender</h2>
+<p>Gender was assigned in the skeletons data on the basis of physical characteristics, whereas in HP and DP it was done on the basis of first names. In either case, it’s essentially probabilistic.</p>
+<p>Values in the gender data across the collections haven’t been standardised and they’re all slightly different.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">os_injury_bio <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb6-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">distinct</span>(person_id, gender) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb6-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(gender) </span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  gender           n
+  &lt;chr&gt;        &lt;int&gt;
+1 F               81
+2 M              198
+3 Undetermined    55</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">hp_injury_bio <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb8-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">distinct</span>(person_id, gender) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb8-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(gender)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  gender     n
+  &lt;chr&gt;  &lt;int&gt;
+1 f       4103
+2 m      13425
+3 u        167</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">dp_injury_bio <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb10-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">distinct</span>(person_id, gender) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb10-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(gender)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  gender     n
+  &lt;chr&gt;  &lt;int&gt;
+1 f       1712
+2 m      17336
+3 &lt;NA&gt;     111</code></pre>
+</div>
+</div>
+<p>Annoying! But all the variations can be smoothed out with a simple function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">gender_std <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(df){</span>
+<span id="cb12-2">  df <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb12-3">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">gender =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_to_lower</span>(gender)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb12-4">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">gender =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">case_match</span>(</span>
+<span id="cb12-5">      gender,</span>
+<span id="cb12-6">      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"f"</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"female"</span>,</span>
+<span id="cb12-7">      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"m"</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"male"</span>,</span>
+<span id="cb12-8">      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"undetermined"</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unknown"</span>, </span>
+<span id="cb12-9">      <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"u"</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unknown"</span>,</span>
+<span id="cb12-10">      <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unknown"</span>,</span>
+<span id="cb12-11">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">.default =</span> gender</span>
+<span id="cb12-12">    ))</span>
+<span id="cb12-13">}</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">gender</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">female</td>
+<td style="text-align: right;">1712</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">17336</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">unknown</td>
+<td style="text-align: right;">111</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>Pie charts are a bit <a href="https://observablehq.com/blog/truth-about-pie-charts">controversial</a>. But I like them in certain cases. They’re also <a href="https://r-graph-gallery.com/piechart-ggplot2.html">really easy to make in {ggplot}</a>. Essentially, you start by making a bar chart and then turn it into a circle using the <code>coord_polar()</code> function.</p>
+<section id="age-groups-1" class="level3">
+<h3 class="anchored" data-anchor-id="age-groups-1">Age groups</h3>
+<p>I opted to use a <a href="https://www.datawrapper.de/blog/which-color-scale-to-use-in-data-vis#sequential-color-scales-nbsp">sequential colour scale</a>, which I wouldn’t normally do for categorical data, but age groups are a special case (since they’re based on numerical data and do go from low to high).</p>
+<p>I’d like to have consistent colours for these categories across analyses. With ggplot, the easiest way to have complete control of colours is to use the scale_*_manual() functions, with a paired vector. I can include all five groups (plus unknown) and ggplot won’t mind if some aren’t actually in the data; it’ll only complain if there’s a value in the data that isn’t included in the vector.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">col_age_groups5 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb13-2">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0-17"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#ffeda0'</span>, </span>
+<span id="cb13-3">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"18-25"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#fecc5c'</span>, </span>
+<span id="cb13-4">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"26-35"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#fd8d3c'</span>, </span>
+<span id="cb13-5">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"36-45"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#fc4e2a'</span>, </span>
+<span id="cb13-6">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"46+"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#800026'</span>, </span>
+<span id="cb13-7">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unknown"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#dddddd'</span></span>
+<span id="cb13-8">  )</span></code></pre></div>
+</div>
+<p>As you might expect of data based on skeletons from cemeteries, the largest group is the oldest. (But the younger groups are nonetheless considerably larger than they would be in a modern cemetery.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">os_injury_ages <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb14-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">distinct</span>(person_id, age_group) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb14-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(age_group <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unknown"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb14-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(age_group) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb14-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">prop =</span> n <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(n)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb14-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ypos =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cumsum</span>(prop)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>prop ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb14-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y=</span>prop, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill=</span>age_group)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb14-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_col</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">show.legend =</span> F) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb14-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_text</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">label =</span> age_group), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">position =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">position_stack</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">vjust=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb14-10">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># make it circular</span></span>
+<span id="cb14-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_polar</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">start=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">direction =</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb14-12">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_fill_manual</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">values =</span> col_age_groups5) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb14-13">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_void</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb14-14">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.tag.position =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"top"</span> ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb14-15">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">tag =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"OS age groups"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/biographical/index_files/figure-html/os-age-pie-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Comparing the three collections, the 46+ group is a lot smaller in both HP and DP; in both cases, the age groups are more evenly distributed than in OS. In HP 46+ is clearly still the single largest group. In DP the largest group is 26-35, with 18-25 close behind, so pie chart critics might point out it’s not obvious which is larger. But I’d argue that’s fine, because the difference (about 3%) is too small to really matter. What I want to do is get a quick overview and comparison of the three collections, and that’s what this is good at.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/biographical/index_files/figure-html/all-age-pies-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gender-1" class="level3">
+<h3 class="anchored" data-anchor-id="gender-1">Gender</h3>
+<p>Only OS has a significant proportion of unknowns. What’s most noticeable is that women are in the minority in all three collections - this would be expected in criminal datasets, but is more surprising in the other two.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/biographical/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <guid>https://skin-and-bone-in-london-1760-1901.github.io/posts/biographical/</guid>
+  <pubDate>Sun, 20 Apr 2025 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>A first look at the Skin and Bone data</title>
+  <dc:creator>Sharon Howard</dc:creator>
+  <link>https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The brief for the meeting was mainly to think about</p>
+<ul>
+<li>characteristics of the three data collections</li>
+<li>differences between the collections and what might be comparable</li>
+<li>shared demographic data across collections - ie gender/sex and age - plus injury locations and types</li>
+</ul>
+<p>Note: this post uses final versions of data rather than the slightly provisional version at the time of the meeting, but that makes only a few very minor differences to results.</p>
+</section>
+<section id="osteological-data" class="level2">
+<h2 class="anchored" data-anchor-id="osteological-data">Osteological data</h2>
+<ul>
+<li>fine-grained, systematically recorded data covering range of adult population</li>
+<li>but only injuries (and other information) that can be observed on the skeleton itself</li>
+<li>limited background data (eg, no precise dates)</li>
+<li>age groups are very broad</li>
+</ul>
+<section id="skeletons-sex-and-injuries" class="level3">
+<h3 class="anchored" data-anchor-id="skeletons-sex-and-injuries">Skeletons: sex and injuries</h3>
+<p>I like waffle charts for comparisons, as long as there aren’t too many different values.</p>
+<p>Having said that coverage is broad, gender is still not balanced (overall about 42% of skeletons for which sex could be determined [which is about 85% of skeletons]) so it’s not whole population - and highly variable between the three cemeteries.</p>
+<p>There is a very consistent correlation between female sex and lower % of skeletons with injuries.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="skeletons-mapping-injuries" class="level3">
+<h3 class="anchored" data-anchor-id="skeletons-mapping-injuries">Skeletons: mapping injuries</h3>
+<p>It’s straightforward to assign broad body location regions across datasets for comparisons (less so for more detailed locations). But injury categories are much more diverse between datasets.</p>
+<p>Skeletons are virtually all fractures, with a few variations on different parts of the body: knocks on the head, leg/arm/spinal muscle injuries.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="royal-london-hospital" class="level2">
+<h2 class="anchored" data-anchor-id="royal-london-hospital">Royal London Hospital</h2>
+<p>An early version of the data for all three hospitals was available, but I’d only done analysis of Royal London at this point as the most detailed dataset (shouldn’t assume it will be the same as other hospitals).</p>
+<ul>
+<li>unique data on length of hospital stay and outcomes</li>
+<li>but hospital data only records injuries that were severe enough to necessitate hospitalisation</li>
+<li>and descriptions only record the injuries that occasioned hospitalisation</li>
+<li>no “uninjured” population for comparison</li>
+</ul>
+<section id="rlh-age-groups-and-injury-categories" class="level3">
+<h3 class="anchored" data-anchor-id="rlh-age-groups-and-injury-categories">RLH: age groups and injury categories</h3>
+<p>Used these particular age groups to match the groups in the skeletons data.</p>
+<p>More diverse range of injuries than in skeletons; noted higher proprotion of burns among children and fractures among older patients.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="rlh-injury-locations-and-categories" class="level3">
+<h3 class="anchored" data-anchor-id="rlh-injury-locations-and-categories">RLH: injury locations and categories</h3>
+<p>Some interesting variations: knocks on the head again; fractures are mainly ribs, followed by arms and legs.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="rlh-outcomes-and-gender" class="level3">
+<h3 class="anchored" data-anchor-id="rlh-outcomes-and-gender">RLH: outcomes and gender</h3>
+<p>You can pack a lot of information into a mosaic chart - shows proportions of categories as well as of outcomes.</p>
+<p>More detailed injury categories this time. “fracture+”= compound fractures - can see there’s a big difference in outcomes compared to simple fractures.</p>
+<p>Compound fractures and burns were far more lethal than any other categories. Can also see association of female patients with burns and somewhat more likely than men to die, suggesting tended to be more severe cases.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="digital-panopticon" class="level2">
+<h2 class="anchored" data-anchor-id="digital-panopticon">Digital Panopticon</h2>
+<ul>
+<li>may have highly detailed physical descriptions (and could even be repeated for the same individual over time)</li>
+<li>considerable amounts of background and demographic information are available from the same sources or via DP linkage</li>
+<li>prisoners and “habitual” convicts only</li>
+</ul>
+<section id="dp-chronology" class="level3">
+<h3 class="anchored" data-anchor-id="dp-chronology">DP: chronology</h3>
+<p>There are actually several different datasets within the DP collection, spanning more than a century. Chronologically there’s very little overlap between them (and I removed the few years’ overlap for convenience here).</p>
+<p>There are huge differences in numbers, but also big differences in numbers (and also proportions) of datasets that included physical descriptions. That makes comparisons difficult.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="dp-what-is-changing" class="level3">
+<h3 class="anchored" data-anchor-id="dp-what-is-changing">DP: what is changing?</h3>
+<p>Proportional bar chart shows changing percentage of descriptions that mention injuries more clearly. But it’s not actually recording changing likelihood of having injuries. It’s really showing increasing state surveillance of criminals’ bodies over the course of the nineteenth century.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="dp-gender" class="level3">
+<h3 class="anchored" data-anchor-id="dp-gender">DP: gender</h3>
+<p>Women are always substantially outnumbered in criminal data, but exact proportions can vary.</p>
+<p>Comparison of injured vs uninjured, as with skeletons, shows lower % of women have injuries.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="comparison-location-of-injuries" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-location-of-injuries">Comparison: location of injuries</h2>
+<p>What might be compared across the three collections?</p>
+<p>Finish with comparison of body regions across DP, skeletons and RLH to show just how much difference there is.</p>
+<p>DP - higher % head (skull, face). Closer inspection shows a lot of these are relatively superficial injuries that wouldn’t appear in the other two collections, like facial scars, missing teeth, scarred eyebrows.</p>
+<p>RLH - predominance of broken legs</p>
+<p>Skeletons - a lot more rib injuries (in fact this is aggregated per person and would be even higher if I counted every individual rib injury). Curious there are so few mentions in the other datasets.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://skin-and-bone-in-london-1760-1901.github.io/posts/a-first-look/</guid>
+  <pubDate>Sun, 13 Apr 2025 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>An overview of the Skin and Bone data</title>
+  <dc:creator>Sharon Howard</dc:creator>
+  <link>https://skin-and-bone-in-london-1760-1901.github.io/posts/introduction/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="the-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-data">The Data</h2>
+<p><a href="https://www.dhi.ac.uk/data/skin-and-bone">Download</a></p>
+<p>Consists of six spreadsheets (.xlsx) listing the project data per collection, by person and by injury.</p>
+<p>License: Creative Commons Attribution-ShareAlike 4.0 International (see the download page for citation details).</p>
+</section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
-<p>Skin and Bone aims to develop a new interdisciplinary approach by combining the expertise of archaeology and history with digital humanities methodologies. The methods applied in this project bring together those established in two completed projects: ‘<a href="https://criminaltattoos.github.io/">Analysing Criminal Tattoos through Data Mining and Visualisation</a>’, which developed data mining techniques and examined 75,000 tattoos on 58,000 convicts in Britain and Australia from 1793 to 1925 (2018-2019), and ‘The Material Body’ (2015-2018), which tested a range of collaborative methods by working on skeletal remains in Sheffield (1806-1855) and South Shields (1818-1855) with associated historical records.</p>
-<p>The project has two main components:</p>
-<section id="data-extraction-and-classification" class="level3">
-<h3 class="anchored" data-anchor-id="data-extraction-and-classification">Data extraction and classification</h3>
-<p>Skin and Bone will reuse and merge ten existing datasets compiled from criminal records, hospital records, and osteological data that covers London, 1760-1901. London has been chosen as a pilot study due to the unique coverage, availability, and accessibility of the data for the period and an area where social and economic change was most pronounced. It will uncover hidden histories in the areas of risk, trauma, and the social, working, and domestic experiences of men and women, work, and the distribution of physical impairments over the life course.</p>
-<p>The amount of processing required (and the amount and kind of information available) varies among the datasets. The osteological data is already highly structured, and the hospital data partly so. However, the physical descriptions in Digital Panopticon datasets often consist of undifferentiated and fragmentary language which can include various physical attributes (eg heights, scars, tattoos and disabilities). The relevant descriptive language needs to be identified, delineated and classified, but the datasets are too large in most cases for it to be feasible to mark them up manually. Instead, the project will build on and extend automated techniques developed for the Criminal Tattoos project. The Digital Humanities Institute, Sheffield, will be primarily responsible for the development work.</p>
-</section>
-<section id="data-analysis-and-visualisation" class="level3">
-<h3 class="anchored" data-anchor-id="data-analysis-and-visualisation">Data analysis and visualisation</h3>
-<p>The project will develop new methods for accessing the rich body of evidence on injury found in existing digitised data to create new and enhanced biographical information about individuals, their bodies and injuries to understand the impact of the Industrial Revolution on the body.</p>
-<p>On this website I’ll experiment with data analysis and visualisation techniques in order to explore some of the project’s research questions. In addition to physical description, we have significant amounts of biographical information for many individuals, including gender, age, occupation, religion and criminal profile, and we’ll explore ways to use visualisation to summarise and analyse this evidence.</p>
-<p>The methodologies developed for data extraction and visualisation will be transferable for analysing other types of diverse and disparate data found in historical and contemporary sources. The database will generate new findings, illustrate the potential for interdisciplinary work in this area, and will be a pilot for a larger, collaborative research project.</p>
-</section>
-</section>
-<section id="research-questions" class="level2">
-<h2 class="anchored" data-anchor-id="research-questions">Research Questions</h2>
-<p>The project addresses a combination of historical and digital humanities research questions.</p>
+<p>The technical challenge is to extract and classify detailed evidence from more than 87000 descriptions of individuals, including physical characteristics, bodily infirmities and personal details. The language used to describe injuries in the data is highly varied across the datasets, and it can be difficult to classify and standardise the nature of injury.</p>
+<p>The amount of processing required (and the amount and kind of information available) varies among the datasets. The osteological data is already highly structured, and the hospital data partly so. However, the physical descriptions in Digital Panopticon datasets often consist of undifferentiated and fragmentary language which can include various physical attributes (eg heights, scars, tattoos and disabilities).</p>
+<p>The relevant descriptive language needs to be identified, delineated and classified, but the datasets are too large in most cases for it to be feasible to mark them up manually. Instead, the project builds on automated techniques developed for the <a href="https://www.digitalpanopticon.org/Tattoos,_1793-1925">Criminal Tattoos</a> project.</p>
+<p>Outline of the process:</p>
 <ul>
-<li>What does evidence of scars and injuries, and their locations on the body, taken from convict observations, hospital admissions, and analysis of skeletal remains, tell us about experiences of work-related injuries, accidents, and interpersonal violence in the eighteenth and nineteenth century?</li>
-<li>Which individuals, and from which social contexts, bore scars and injuries? How did physical harm vary by gender, age, and occupation? And how did these patterns change between 1760 and 1901?</li>
-<li>How do we classify and merge complex variables from social and osteoarchaeological datasets charting experiences of scarring and injury from skin (surface descriptions within hospital and criminal records) and bone (evidence of healed and/or healing trauma in skeletal remains)?</li>
-<li>How can visualisations be utilised to summarise and analyse the complexity of this evidence, particularly when it is combined with evidence about the individual’s personal background and characteristics, in order to identify the specific contexts in which injuries, and what types of injuries, occurred?</li>
-<li>In particular, can new data-mining and visualisation techniques be developed to uncover significant patterns in this and potentially other collections of complex, multivariate humanities data?</li>
+<li>tokenisation of the text (ie, break into individual linguistic units eg words, punctuation) and then classify each token using a dictionary prepared by the project team, to assign a type to each token: injury type, body part, body specifier (left, right, upper, back of), cause of injury [where possible], stop word (anything unrelated to an injury, such as boil, pockmark, or mole), separator.</li>
+<li>a simple grammatical rule set is applied to the text in order to assign individual injuries to the correct locations on the body. The rules-based approach is augmented by training a <a href="https://spacy.io/">spaCy</a> relation extraction deep learning model.</li>
 </ul>
+<p>The process is not perfect. The original text of the descriptions is retained in the injuries tables for reference, and anyone using the data is advised to take some time to understand the data and its limitations.</p>
 </section>
-<section id="the-datasets" class="level2">
-<h2 class="anchored" data-anchor-id="the-datasets">The datasets</h2>
-<section id="osteoarchaeological-data" class="level3">
-<h3 class="anchored" data-anchor-id="osteoarchaeological-data">Osteoarchaeological data</h3>
+<section id="the-collections" class="level2">
+<h2 class="anchored" data-anchor-id="the-collections">The collections</h2>
+<section id="osteoarchaeological-data-os" class="level3">
+<h3 class="anchored" data-anchor-id="osteoarchaeological-data-os">Osteoarchaeological data (OS)</h3>
+<p>Data from three London burial grounds:</p>
 <ul>
 <li>St.&nbsp;Bride’s lower churchyard (1770-1849), c.300 individuals</li>
 <li>Royal London Hospital (1825-1841), c.200 individuals</li>
 <li>Payne Road/Bow Baptist (1816-1854), c.200 individuals</li>
 </ul>
+<p>Notes:</p>
+<p>This is fine-grained, systematically recorded data covering a range of the adult population. It’s already very structured so it’s easy to work with. However, it includes a relatively limited range of injuries (mainly fractures), constrained to those that can be observed on the skeleton. There is also limited background information (we don’t know exactly when people were buried). Both age and sex are determined from the skeleton itself.</p>
 </section>
-<section id="hospital-records-admission-registers" class="level3">
-<h3 class="anchored" data-anchor-id="hospital-records-admission-registers">Hospital Records (Admission Registers)</h3>
+<section id="hospital-records-hp" class="level3">
+<h3 class="anchored" data-anchor-id="hospital-records-hp">Hospital Records (HP)</h3>
+<p>Admission Registers:</p>
 <ul>
 <li>Middlesex (1760-64, 1771-88), c.6000 individuals</li>
 <li>Royal London (1760, 1791, 1792, 1805), c.4000 individuals</li>
 <li>Guy’s (1813-39), c.70000 individuals</li>
 <li>St.&nbsp;Thomas’ (1773-6, 1781-9, 1790-9, 1800-9), c.30000 individuals</li>
 </ul>
+<p>Notes:</p>
+<p>The registers vary considerably both in terms of their survival and the amount of detail they recorded. In the best cases, there is valuable data on length of hospital stay and outcomes, as well as ages and occupations. But the largest registers have much less detail than this. Moreover, by its nature the data only records injuries that were severe enough to necessitate hospitalisation (and descriptions only record the specific injuries that occasioned hospitalisation). There is no “uninjured” population for comparison.</p>
 </section>
-<section id="criminal-records" class="level3">
-<h3 class="anchored" data-anchor-id="criminal-records">Criminal records</h3>
+<section id="criminal-records-dp" class="level3">
+<h3 class="anchored" data-anchor-id="criminal-records-dp">Criminal records (DP)</h3>
+<p>Three datasets from the <a href="https://www.digitalpanopticon.org/">Digital Panopticon</a>:</p>
 <ul>
 <li>Millbank Prison Register (1816-1828), c.500 individuals</li>
 <li>Home Office Prison Licenses (1853-1889), c.6000 individuals</li>
 <li>Metropolitan Police Habitual Criminal Register (1881-1901), c.55,000 individuals</li>
 </ul>
+<p>Notes:</p>
+<p>These can be extraordinarily detailed documents of bodily experience, all the more valuable because they have been linked to extensive biographical and criminal histories. But, as noted, the varied language of the descriptions is highly challenging for computational analysis and there will be many (though hopefully mostly minor) errors and omissions in classification, so the data should be used with care.</p>
 </section>
 </section>
-<section id="code-and-data" class="level2">
-<h2 class="anchored" data-anchor-id="code-and-data">Code and data</h2>
-<p>I’m using <a href="https://en.wikipedia.org/wiki/R_(programming_language)">R</a>, a programming language particularly geared towards statistical analysis and visualisation, throughout this blogging project.</p>
-<p>More specifically, my R workflow has these key components:</p>
-<ul>
-<li><a href="https://www.rstudio.com/">RStudio</a>, an “integrated development environment” (IDE) for R (free open source software, multi-platform)</li>
-<li><a href="https://www.tidyverse.org/">The Tidyverse</a>, “an opinionated collection of R packages designed for data science” (personally speaking, this was the single most important thing that transformed R into a language I could actually understand and use)</li>
-<li><a href="https://daringfireball.net/projects/markdown/">Markdown</a> and <a href="https://rmarkdown.rstudio.com/">RMarkdown</a> for writing</li>
-<li><a href="https://quarto.org/">Quarto</a> and Github Pages for publishing</li>
-</ul>
-<p>This enables me to do most of what I need for the project - data wrangling and tidying, exploratory analysis, data modelling and visualisation, blogging - in one place, so that (hopefully…) everything I do is easily re-usable, either to test and reproduce my own results or as examples that can be adapted for other data and research.</p>
-<p>One of the goals of this blog is to show how R can be of <em>practical</em> use for working with large, complex historical datasets, right through the research process from data management to writing and publication.</p>
-<p>The project data will be made openly available. Some of the data being used by the project is already publicly available from the University of Sheffield <a href="https://figshare.com/projects/Digital_Panopticon/16071">data repository</a>. Datasets will be Creative Commons-licensed (or similar) for re-use, but the exact license terms are likely to vary.</p>
-
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p>On the Digital Panopticon descriptions and a similar methodology see <a href="https://www.digitalpanopticon.org/Tattoos,_1793-1925">Tattoos</a>.</p>
+<p>The Hospital and Osteological data sources are described in detail in Madeleine Mant’s PhD thesis, <a href="https://macsphere.mcmaster.ca/handle/11375/20026">Slips, Trips, Falls, and Brawls: Fractures of the Working Poor in London During the Long Eighteenth Century</a>.</p>
 
 
 </section>
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div> ]]></description>
-  <guid>https://skin-and-bone-in-london-1760-1901.github.io/posts/introduction/index.html</guid>
-  <pubDate>Fri, 31 Mar 2023 23:00:00 GMT</pubDate>
+ ]]></description>
+  <guid>https://skin-and-bone-in-london-1760-1901.github.io/posts/introduction/</guid>
+  <pubDate>Sun, 06 Apr 2025 23:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

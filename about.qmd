@@ -1,0 +1,56 @@
+---
+title: "About"
+date: "2023-04-01"
+author: "Sharon Howard"
+---
+
+This website accompanies the British Academy funded project [Skin and Bone: Interdisciplinary analysis of accidents, injury, and violence in industrialising London, 1760-1901](https://www.thebritishacademy.ac.uk/funding/ba-leverhulme-small-research-grants/past-awards/baleverhulme-small-research-grants-awards-2021-2022/)
+
+
+Skin and Bone aims to develop a new interdisciplinary approach by combining the expertise of archaeology and history with digital humanities methodologies. 
+
+
+### Data extraction and classification 
+
+Skin and Bone will reuse and merge ten existing datasets compiled from criminal records, hospital records, and osteological data that covers London, 1760-1901. London has been chosen as a pilot study due to the unique coverage, availability, and accessibility of the data for the period and an area where social and economic change was most pronounced. It will uncover hidden histories in the areas of risk, trauma, and the social, working, and domestic experiences of men and women, work, and the distribution of physical impairments over the life course. The Digital Humanities Institute, Sheffield, is primarily responsible for the development work.
+
+
+### Data analysis and visualisation
+
+The project will develop new methods for accessing the rich body of evidence on injury found in existing digitised data to create new and enhanced biographical information about individuals, their bodies and injuries to understand the impact of the Industrial Revolution on the body. 
+
+On this blog I'll document the data and experiment with data analysis and visualisation techniques in order to explore some of the project's research questions. In addition to physical description, we have significant amounts of biographical information for many individuals, including gender, age, occupation, religion and criminal profile, and we'll explore ways to use visualisation to summarise and analyse this evidence. 
+
+The methodologies developed for data extraction and visualisation will be transferable for analysing other types of diverse and disparate data found in historical and contemporary sources. The database will generate new findings, illustrate the potential for interdisciplinary work in this area, and will be a pilot for a larger, collaborative research project.
+
+  
+## Research Questions
+
+The project addresses a combination of historical and digital humanities research questions.
+
+- What does evidence of scars and injuries, and their locations on the body, taken from convict observations, hospital admissions, and analysis of skeletal remains, tell us about experiences of work-related injuries, accidents, and interpersonal violence in the eighteenth and nineteenth century?
+- Which individuals, and from which social contexts, bore scars and injuries? How did physical harm vary by gender, age, and occupation? And how did these patterns change between 1760 and 1901?
+- How do we classify and merge complex variables from social and osteoarchaeological datasets charting experiences of scarring and injury from skin (surface descriptions within hospital and criminal records) and bone (evidence of healed and/or healing trauma in skeletal remains)?
+- How can visualisations be utilised to summarise and analyse the complexity of this evidence, particularly when it is combined with evidence about the individual's personal background and characteristics, in order to identify the specific contexts in which injuries, and what types of injuries, occurred?
+- In particular, can new data-mining and visualisation techniques be developed to uncover significant patterns in this and potentially other collections of complex, multivariate humanities data?
+
+
+Code and data analysis
+----
+
+All analysis of the data is done in [R](https://en.wikipedia.org/wiki/R_(programming_language)), a programming language particularly geared towards statistical analysis and visualisation. 
+
+More specifically, the R workflow has these key components:
+
+* [RStudio](https://www.rstudio.com/), an "integrated development environment" (IDE) for R (free open source software, multi-platform)
+* [The Tidyverse](https://www.tidyverse.org/), "an opinionated collection of R packages designed for data science" 
+* [Markdown](https://daringfireball.net/projects/markdown/) and [RMarkdown](https://rmarkdown.rstudio.com/) for writing
+* [Quarto](https://quarto.org/) and Github Pages for publishing
+
+This enables me to do most of what I need for the project - data wrangling and tidying, exploratory analysis, data modelling and visualisation, blogging - in one place, so that (hopefully...) everything I do is easily re-usable, either to test and reproduce my own results or as examples that can be adapted for other data and research. 
+
+One of the goals of this blog is to show how R can be of *practical* use for working with large, complex historical datasets, right through the research process from data management to writing and publication. 
+
+The project data will be made openly available. (Some of the datasets used by the project are already publicly available from the University of Sheffield [data repository](https://figshare.com/projects/Digital_Panopticon/16071).) Datasets will be Creative Commons-licensed (or similar) for re-use, but the exact license terms are likely to vary.
+
+

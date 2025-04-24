@@ -1,13 +1,13 @@
 # options specified here will apply to all posts in this folder
 
-listing:
-  contents: posts/**/*.qmd
-  sort: "date desc"
-  type: default
-  categories: false
-  sort-ui: false
-  filter-ui: false
-  fields: [date, title, description, categories]
+#listing:
+#  contents: posts/*.qmd
+#  sort: "date desc"
+#  type: default
+#  categories: false
+#  sort-ui: false
+#  filter-ui: false
+#  fields: [date, title, description, categories]
 
 date-format: "D MMMM YYYY"
 page-layout: article

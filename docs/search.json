@@ -1,72 +1,163 @@
 [
   {
-    "objectID": "posts/introduction/index.html",
-    "href": "posts/introduction/index.html",
-    "title": "Introducing the Skin and Bone data project",
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Posts",
     "section": "",
-    "text": "This website accompanies the British Academy funded project Skin and Bone: Interdisciplinary analysis of accidents, injury, and violence in industrialising London, 1760-1901"
-  },
-  {
-    "objectID": "posts/introduction/index.html#methodology",
-    "href": "posts/introduction/index.html#methodology",
-    "title": "Introducing the Skin and Bone data project",
-    "section": "Methodology",
-    "text": "Methodology\nSkin and Bone aims to develop a new interdisciplinary approach by combining the expertise of archaeology and history with digital humanities methodologies. The methods applied in this project bring together those established in two completed projects: ‘Analysing Criminal Tattoos through Data Mining and Visualisation’, which developed data mining techniques and examined 75,000 tattoos on 58,000 convicts in Britain and Australia from 1793 to 1925 (2018-2019), and ‘The Material Body’ (2015-2018), which tested a range of collaborative methods by working on skeletal remains in Sheffield (1806-1855) and South Shields (1818-1855) with associated historical records.\nThe project has two main components:\n\nData extraction and classification\nSkin and Bone will reuse and merge ten existing datasets compiled from criminal records, hospital records, and osteological data that covers London, 1760-1901. London has been chosen as a pilot study due to the unique coverage, availability, and accessibility of the data for the period and an area where social and economic change was most pronounced. It will uncover hidden histories in the areas of risk, trauma, and the social, working, and domestic experiences of men and women, work, and the distribution of physical impairments over the life course.\nThe amount of processing required (and the amount and kind of information available) varies among the datasets. The osteological data is already highly structured, and the hospital data partly so. However, the physical descriptions in Digital Panopticon datasets often consist of undifferentiated and fragmentary language which can include various physical attributes (eg heights, scars, tattoos and disabilities). The relevant descriptive language needs to be identified, delineated and classified, but the datasets are too large in most cases for it to be feasible to mark them up manually. Instead, the project will build on and extend automated techniques developed for the Criminal Tattoos project. The Digital Humanities Institute, Sheffield, will be primarily responsible for the development work.\n\n\nData analysis and visualisation\nThe project will develop new methods for accessing the rich body of evidence on injury found in existing digitised data to create new and enhanced biographical information about individuals, their bodies and injuries to understand the impact of the Industrial Revolution on the body.\nOn this website I’ll experiment with data analysis and visualisation techniques in order to explore some of the project’s research questions. In addition to physical description, we have significant amounts of biographical information for many individuals, including gender, age, occupation, religion and criminal profile, and we’ll explore ways to use visualisation to summarise and analyse this evidence.\nThe methodologies developed for data extraction and visualisation will be transferable for analysing other types of diverse and disparate data found in historical and contemporary sources. The database will generate new findings, illustrate the potential for interdisciplinary work in this area, and will be a pilot for a larger, collaborative research project."
-  },
-  {
-    "objectID": "posts/introduction/index.html#research-questions",
-    "href": "posts/introduction/index.html#research-questions",
-    "title": "Introducing the Skin and Bone data project",
-    "section": "Research Questions",
-    "text": "Research Questions\nThe project addresses a combination of historical and digital humanities research questions.\n\nWhat does evidence of scars and injuries, and their locations on the body, taken from convict observations, hospital admissions, and analysis of skeletal remains, tell us about experiences of work-related injuries, accidents, and interpersonal violence in the eighteenth and nineteenth century?\nWhich individuals, and from which social contexts, bore scars and injuries? How did physical harm vary by gender, age, and occupation? And how did these patterns change between 1760 and 1901?\nHow do we classify and merge complex variables from social and osteoarchaeological datasets charting experiences of scarring and injury from skin (surface descriptions within hospital and criminal records) and bone (evidence of healed and/or healing trauma in skeletal remains)?\nHow can visualisations be utilised to summarise and analyse the complexity of this evidence, particularly when it is combined with evidence about the individual’s personal background and characteristics, in order to identify the specific contexts in which injuries, and what types of injuries, occurred?\nIn particular, can new data-mining and visualisation techniques be developed to uncover significant patterns in this and potentially other collections of complex, multivariate humanities data?"
-  },
-  {
-    "objectID": "posts/introduction/index.html#the-datasets",
-    "href": "posts/introduction/index.html#the-datasets",
-    "title": "Introducing the Skin and Bone data project",
-    "section": "The datasets",
-    "text": "The datasets\n\nOsteoarchaeological data\n\nSt. Bride’s lower churchyard (1770-1849), c.300 individuals\nRoyal London Hospital (1825-1841), c.200 individuals\nPayne Road/Bow Baptist (1816-1854), c.200 individuals\n\n\n\nHospital Records (Admission Registers)\n\nMiddlesex (1760-64, 1771-88), c.6000 individuals\nRoyal London (1760, 1791, 1792, 1805), c.4000 individuals\nGuy’s (1813-39), c.70000 individuals\nSt. Thomas’ (1773-6, 1781-9, 1790-9, 1800-9), c.30000 individuals\n\n\n\nCriminal records\n\nMillbank Prison Register (1816-1828), c.500 individuals\nHome Office Prison Licenses (1853-1889), c.6000 individuals\nMetropolitan Police Habitual Criminal Register (1881-1901), c.55,000 individuals"
-  },
-  {
-    "objectID": "posts/introduction/index.html#code-and-data",
-    "href": "posts/introduction/index.html#code-and-data",
-    "title": "Introducing the Skin and Bone data project",
-    "section": "Code and data",
-    "text": "Code and data\nI’m using R, a programming language particularly geared towards statistical analysis and visualisation, throughout this blogging project.\nMore specifically, my R workflow has these key components:\n\nRStudio, an “integrated development environment” (IDE) for R (free open source software, multi-platform)\nThe Tidyverse, “an opinionated collection of R packages designed for data science” (personally speaking, this was the single most important thing that transformed R into a language I could actually understand and use)\nMarkdown and RMarkdown for writing\nQuarto and Github Pages for publishing\n\nThis enables me to do most of what I need for the project - data wrangling and tidying, exploratory analysis, data modelling and visualisation, blogging - in one place, so that (hopefully…) everything I do is easily re-usable, either to test and reproduce my own results or as examples that can be adapted for other data and research.\nOne of the goals of this blog is to show how R can be of practical use for working with large, complex historical datasets, right through the research process from data management to writing and publication.\nThe project data will be made openly available. Some of the data being used by the project is already publicly available from the University of Sheffield data repository. Datasets will be Creative Commons-licensed (or similar) for re-use, but the exact license terms are likely to vary."
+    "text": "Biographical information\n\n\n\n\n\nProcessing gender and age data in the Skin and Bone collections\n\n\n\n\n\n21 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nA first look at the Skin and Bone data\n\n\n\n\n\nSome early exploratory visualisations at the project’s advisory board meeting in May 2023\n\n\n\n\n\n14 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nAn overview of the Skin and Bone data\n\n\n\n\n\nBrief description of the data and processing methods\n\n\n\n\n\n7 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Skin and Bone",
     "section": "",
-    "text": "Skin and Bone seeks to chart the embodied experience of work-related injury, accidents, and interpersonal violence of c.170,000 Londoners during the Industrial Revolution. Led by a historian of the period, with expertise in digital humanities, and an osteoarchaeologist who has collated data on trauma and injury in eighteenth-century bodies, the project will generate a new open-access multivariate database and develop innovative approaches to studying and visualising the historic material body - skin and bone - in London during the Industrial Revolution.\nIn both archaeology and history, the period 1760-1901 represents a significant transformation for the body. Injuries, accidents and interpersonal violence profoundly affected lived experiences of the body in England during the intense period of industrialisation between 1760 and 1901. Osteoarchaeological scholarship has increasingly examined the negative impacts of the process of industrialisation. Historians, too, have discussed the impact of industrialisation on the body, specifically how new urban contexts damaged life expectancy while also changing attitudes to bodies that defined new social identities and social relationships, notably a new class of poor labouring bodies and hardening concepts of the able and disabled body.\nOsteoarchaeology datasets in combination with hospital and criminal justice records, which note age, gender and occupation alongside many bodily features (such as deformities and scars), provide a means of accessing and contextualising embodied experiences of industrialising London, but this information is currently held within disparate datasets. The project will merge ten datasets compiled from criminal, hospital, and osteoarchaeological records to explore the relationships between trauma, injury, and accidents with social demographics, but especially, sex/gender, age and occupational status.\nThe first technical challenge is to extract and classify detailed evidence on over 170,000 individuals, including their physical characteristics, bodily infirmities and personal details. The language used to describe injuries in the data is highly varied across the datasets, and it can be difficult to classify and standardise the nature of injury. In addition to the challenge of merging, extracting and classifying the data, a second technical challenge exists in coping with the complexity of the multiple variables available and in summarising such diverse data. In order to deal with this complexity, and examine the links between the datasets, new visualisations need to be developed to summarise this multivariate data."
-  },
-  {
-    "objectID": "index.html#further-reading",
-    "href": "index.html#further-reading",
-    "title": "Skin and Bone",
-    "section": "Further reading",
-    "text": "Further reading\nDavid Turner and Daniel Blackie, Disability in the Industrial Revolution (oa book)\nDisability and Industrial Society\nCooter, R., and B. Luckin (eds), Accidents in History: Injuries, Fatalities and Social Relations (Amsterdam, 1997)\nRisse, G. B., Hospital Life in Enlightenment Scotland: Care and Teaching at the Royal Infirmary of Edinburgh (Cambridge/New York, 1986)"
+    "text": "This is a data blog for the Skin and Bone project, which seeks to chart the embodied experience of work-related injury, accidents, and interpersonal violence of c.50,000 Londoners during the Industrial Revolution.\nIn both archaeology and history, the period 1760-1901 represents a significant transformation for the body. Injuries, accidents and interpersonal violence profoundly affected lived experiences of the body in England during this intense period of industrialisation.\nLed by a historian of the period with expertise in digital humanities, and an osteoarchaeologist who has collated data on trauma and injury in eighteenth-century bodies, the project has created a new open-access dataset, which this blog will document, explore and visualise."
   },
   {
     "objectID": "index.html#recent-posts",
     "href": "index.html#recent-posts",
     "title": "Skin and Bone",
     "section": "Recent Posts",
-    "text": "Recent Posts\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\n\n\n\n\n1 Apr 2023\n\n\nIntroducing the Skin and Bone data project\n\n\n\n\n\n\nNo matching items\n\n\nAll posts"
+    "text": "Recent Posts\n\n\n\n\n\nDate\n\n\nTitle\n\n\n\n\n\n\n21 Apr 2025\n\n\nBiographical information\n\n\n\n\n14 Apr 2025\n\n\nA first look at the Skin and Bone data\n\n\n\n\n7 Apr 2025\n\n\nAn overview of the Skin and Bone data\n\n\n\n\n\nNo matching items\n\n\nAll posts"
   },
   {
     "objectID": "index.html#credits",
     "href": "index.html#credits",
     "title": "Skin and Bone",
     "section": "Credits",
-    "text": "Credits\nThe project is funded by the British Academy (2022-23).\nThe project directors are Zoe Alker, University of Lancaster, and Madeleine Mant, University of Toronto.\nProject technical development is carried out by the Digital Humanities Institute | Sheffield.\nThis blog has been built by Sharon Howard, with help from RStudio, Quarto and Github."
+    "text": "Credits\nThe project was funded by the British Academy (2022-23).\nThe project directors are Zoe Alker, University of Lancaster, and Madeleine Mant, University of Toronto.\nProject technical development is carried out by the Digital Humanities Institute | Sheffield.\nThis blog has been created by Sharon Howard, using RStudio, Quarto and Github."
   },
   {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Posts",
+    "objectID": "posts/introduction/index.html",
+    "href": "posts/introduction/index.html",
+    "title": "An overview of the Skin and Bone data",
     "section": "",
-    "text": "Introducing the Skin and Bone data project\n\n\n\n\n\n\n\n\n\n\n\n\n1 April 2023\n\n\nSharon Howard\n\n\n\n\n\n\nNo matching items"
+    "text": "Download\nConsists of six spreadsheets (.xlsx) listing the project data per collection, by person and by injury.\nLicense: Creative Commons Attribution-ShareAlike 4.0 International (see the download page for citation details)."
+  },
+  {
+    "objectID": "posts/introduction/index.html#the-data",
+    "href": "posts/introduction/index.html#the-data",
+    "title": "An overview of the Skin and Bone data",
+    "section": "",
+    "text": "Download\nConsists of six spreadsheets (.xlsx) listing the project data per collection, by person and by injury.\nLicense: Creative Commons Attribution-ShareAlike 4.0 International (see the download page for citation details)."
+  },
+  {
+    "objectID": "posts/introduction/index.html#methodology",
+    "href": "posts/introduction/index.html#methodology",
+    "title": "An overview of the Skin and Bone data",
+    "section": "Methodology",
+    "text": "Methodology\nThe technical challenge is to extract and classify detailed evidence from more than 87000 descriptions of individuals, including physical characteristics, bodily infirmities and personal details. The language used to describe injuries in the data is highly varied across the datasets, and it can be difficult to classify and standardise the nature of injury.\nThe amount of processing required (and the amount and kind of information available) varies among the datasets. The osteological data is already highly structured, and the hospital data partly so. However, the physical descriptions in Digital Panopticon datasets often consist of undifferentiated and fragmentary language which can include various physical attributes (eg heights, scars, tattoos and disabilities).\nThe relevant descriptive language needs to be identified, delineated and classified, but the datasets are too large in most cases for it to be feasible to mark them up manually. Instead, the project builds on automated techniques developed for the Criminal Tattoos project.\nOutline of the process:\n\ntokenisation of the text (ie, break into individual linguistic units eg words, punctuation) and then classify each token using a dictionary prepared by the project team, to assign a type to each token: injury type, body part, body specifier (left, right, upper, back of), cause of injury [where possible], stop word (anything unrelated to an injury, such as boil, pockmark, or mole), separator.\na simple grammatical rule set is applied to the text in order to assign individual injuries to the correct locations on the body. The rules-based approach is augmented by training a spaCy relation extraction deep learning model.\n\nThe process is not perfect. The original text of the descriptions is retained in the injuries tables for reference, and anyone using the data is advised to take some time to understand the data and its limitations."
+  },
+  {
+    "objectID": "posts/introduction/index.html#the-collections",
+    "href": "posts/introduction/index.html#the-collections",
+    "title": "An overview of the Skin and Bone data",
+    "section": "The collections",
+    "text": "The collections\n\nOsteoarchaeological data (OS)\nData from three London burial grounds:\n\nSt. Bride’s lower churchyard (1770-1849), c.300 individuals\nRoyal London Hospital (1825-1841), c.200 individuals\nPayne Road/Bow Baptist (1816-1854), c.200 individuals\n\nNotes:\nThis is fine-grained, systematically recorded data covering a range of the adult population. It’s already very structured so it’s easy to work with. However, it includes a relatively limited range of injuries (mainly fractures), constrained to those that can be observed on the skeleton. There is also limited background information (we don’t know exactly when people were buried). Both age and sex are determined from the skeleton itself.\n\n\nHospital Records (HP)\nAdmission Registers:\n\nMiddlesex (1760-64, 1771-88), c.6000 individuals\nRoyal London (1760, 1791, 1792, 1805), c.4000 individuals\nGuy’s (1813-39), c.70000 individuals\nSt. Thomas’ (1773-6, 1781-9, 1790-9, 1800-9), c.30000 individuals\n\nNotes:\nThe registers vary considerably both in terms of their survival and the amount of detail they recorded. In the best cases, there is valuable data on length of hospital stay and outcomes, as well as ages and occupations. But the largest registers have much less detail than this. Moreover, by its nature the data only records injuries that were severe enough to necessitate hospitalisation (and descriptions only record the specific injuries that occasioned hospitalisation). There is no “uninjured” population for comparison.\n\n\nCriminal records (DP)\nThree datasets from the Digital Panopticon:\n\nMillbank Prison Register (1816-1828), c.500 individuals\nHome Office Prison Licenses (1853-1889), c.6000 individuals\nMetropolitan Police Habitual Criminal Register (1881-1901), c.55,000 individuals\n\nNotes:\nThese can be extraordinarily detailed documents of bodily experience, all the more valuable because they have been linked to extensive biographical and criminal histories. But, as noted, the varied language of the descriptions is highly challenging for computational analysis and there will be many (though hopefully mostly minor) errors and omissions in classification, so the data should be used with care."
+  },
+  {
+    "objectID": "posts/introduction/index.html#resources",
+    "href": "posts/introduction/index.html#resources",
+    "title": "An overview of the Skin and Bone data",
+    "section": "Resources",
+    "text": "Resources\nOn the Digital Panopticon descriptions and a similar methodology see Tattoos.\nThe Hospital and Osteological data sources are described in detail in Madeleine Mant’s PhD thesis, Slips, Trips, Falls, and Brawls: Fractures of the Working Poor in London During the Long Eighteenth Century."
+  },
+  {
+    "objectID": "posts/a-first-look/index.html",
+    "href": "posts/a-first-look/index.html",
+    "title": "A first look at the Skin and Bone data",
+    "section": "",
+    "text": "The brief for the meeting was mainly to think about\n\ncharacteristics of the three data collections\ndifferences between the collections and what might be comparable\nshared demographic data across collections - ie gender/sex and age - plus injury locations and types\n\nNote: this post uses final versions of data rather than the slightly provisional version at the time of the meeting, but that makes only a few very minor differences to results."
+  },
+  {
+    "objectID": "posts/a-first-look/index.html#introduction",
+    "href": "posts/a-first-look/index.html#introduction",
+    "title": "A first look at the Skin and Bone data",
+    "section": "",
+    "text": "The brief for the meeting was mainly to think about\n\ncharacteristics of the three data collections\ndifferences between the collections and what might be comparable\nshared demographic data across collections - ie gender/sex and age - plus injury locations and types\n\nNote: this post uses final versions of data rather than the slightly provisional version at the time of the meeting, but that makes only a few very minor differences to results."
+  },
+  {
+    "objectID": "posts/a-first-look/index.html#osteological-data",
+    "href": "posts/a-first-look/index.html#osteological-data",
+    "title": "A first look at the Skin and Bone data",
+    "section": "Osteological data",
+    "text": "Osteological data\n\nfine-grained, systematically recorded data covering range of adult population\nbut only injuries (and other information) that can be observed on the skeleton itself\nlimited background data (eg, no precise dates)\nage groups are very broad\n\n\nSkeletons: sex and injuries\nI like waffle charts for comparisons, as long as there aren’t too many different values.\nHaving said that coverage is broad, gender is still not balanced (overall about 42% of skeletons for which sex could be determined [which is about 85% of skeletons]) so it’s not whole population - and highly variable between the three cemeteries.\nThere is a very consistent correlation between female sex and lower % of skeletons with injuries.\n\n\n\n\n\n\n\n\n\n\n\nSkeletons: mapping injuries\nIt’s straightforward to assign broad body location regions across datasets for comparisons (less so for more detailed locations). But injury categories are much more diverse between datasets.\nSkeletons are virtually all fractures, with a few variations on different parts of the body: knocks on the head, leg/arm/spinal muscle injuries."
+  },
+  {
+    "objectID": "posts/a-first-look/index.html#royal-london-hospital",
+    "href": "posts/a-first-look/index.html#royal-london-hospital",
+    "title": "A first look at the Skin and Bone data",
+    "section": "Royal London Hospital",
+    "text": "Royal London Hospital\nAn early version of the data for all three hospitals was available, but I’d only done analysis of Royal London at this point as the most detailed dataset (shouldn’t assume it will be the same as other hospitals).\n\nunique data on length of hospital stay and outcomes\nbut hospital data only records injuries that were severe enough to necessitate hospitalisation\nand descriptions only record the injuries that occasioned hospitalisation\nno “uninjured” population for comparison\n\n\nRLH: age groups and injury categories\nUsed these particular age groups to match the groups in the skeletons data.\nMore diverse range of injuries than in skeletons; noted higher proprotion of burns among children and fractures among older patients.\n\n\n\n\n\n\n\n\n\n\n\nRLH: injury locations and categories\nSome interesting variations: knocks on the head again; fractures are mainly ribs, followed by arms and legs.\n\n\n\n\n\n\n\n\n\n\n\nRLH: outcomes and gender\nYou can pack a lot of information into a mosaic chart - shows proportions of categories as well as of outcomes.\nMore detailed injury categories this time. “fracture+”= compound fractures - can see there’s a big difference in outcomes compared to simple fractures.\nCompound fractures and burns were far more lethal than any other categories. Can also see association of female patients with burns and somewhat more likely than men to die, suggesting tended to be more severe cases."
+  },
+  {
+    "objectID": "posts/a-first-look/index.html#digital-panopticon",
+    "href": "posts/a-first-look/index.html#digital-panopticon",
+    "title": "A first look at the Skin and Bone data",
+    "section": "Digital Panopticon",
+    "text": "Digital Panopticon\n\nmay have highly detailed physical descriptions (and could even be repeated for the same individual over time)\nconsiderable amounts of background and demographic information are available from the same sources or via DP linkage\nprisoners and “habitual” convicts only\n\n\nDP: chronology\nThere are actually several different datasets within the DP collection, spanning more than a century. Chronologically there’s very little overlap between them (and I removed the few years’ overlap for convenience here).\nThere are huge differences in numbers, but also big differences in numbers (and also proportions) of datasets that included physical descriptions. That makes comparisons difficult.\n\n\n\n\n\n\n\n\n\n\n\nDP: what is changing?\nProportional bar chart shows changing percentage of descriptions that mention injuries more clearly. But it’s not actually recording changing likelihood of having injuries. It’s really showing increasing state surveillance of criminals’ bodies over the course of the nineteenth century.\n\n\n\n\n\n\n\n\n\n\n\nDP: gender\nWomen are always substantially outnumbered in criminal data, but exact proportions can vary.\nComparison of injured vs uninjured, as with skeletons, shows lower % of women have injuries."
+  },
+  {
+    "objectID": "posts/a-first-look/index.html#comparison-location-of-injuries",
+    "href": "posts/a-first-look/index.html#comparison-location-of-injuries",
+    "title": "A first look at the Skin and Bone data",
+    "section": "Comparison: location of injuries",
+    "text": "Comparison: location of injuries\nWhat might be compared across the three collections?\nFinish with comparison of body regions across DP, skeletons and RLH to show just how much difference there is.\nDP - higher % head (skull, face). Closer inspection shows a lot of these are relatively superficial injuries that wouldn’t appear in the other two collections, like facial scars, missing teeth, scarred eyebrows.\nRLH - predominance of broken legs\nSkeletons - a lot more rib injuries (in fact this is aggregated per person and would be even higher if I counted every individual rib injury). Curious there are so few mentions in the other datasets."
+  },
+  {
+    "objectID": "posts/biographical/index.html",
+    "href": "posts/biographical/index.html",
+    "title": "Biographical information",
+    "section": "",
+    "text": "The Skin and Bone project data contains two kinds of biographical information, sex/gender and age, that are consistent enough across collections to be useful for comparison. However, they need some standardisation to enable meaningful analysis and visualisations. There are some variations in recording of the gender data, and ages need to be grouped."
+  },
+  {
+    "objectID": "posts/biographical/index.html#introduction",
+    "href": "posts/biographical/index.html#introduction",
+    "title": "Biographical information",
+    "section": "",
+    "text": "The Skin and Bone project data contains two kinds of biographical information, sex/gender and age, that are consistent enough across collections to be useful for comparison. However, they need some standardisation to enable meaningful analysis and visualisations. There are some variations in recording of the gender data, and ages need to be grouped."
+  },
+  {
+    "objectID": "posts/biographical/index.html#age-groups",
+    "href": "posts/biographical/index.html#age-groups",
+    "title": "Biographical information",
+    "section": "Age groups",
+    "text": "Age groups\nThis was effectively pre-determined by broad age categories used in the osteological (OS) collection, where ages are unrecorded and have to be estimated from analysis of the skeletons (Mant thesis p.58).\n\nYoung Adult (YA) = 18-25 years\n\nMiddle Adult 1 (MA1) = 26-35 years\nMiddle Adult 2 (MA2) = 36-45 years\nOld Adult (OA) = 46+ years\nAdult = &gt;18 years\n\nA group for children (0-17) was added for the hospital (HP) and Digital Panopticon criminals (DP) collections, as children were excluded from the osteological data, and the “Adult” category was turned into “Unknown” (since it can’t be assumed in HP and DP that someone without a recorded age is an adult).\n\nos_injury_ages &lt;-\n  os_injury_bio |&gt;\n  mutate(age_group = if_else(age_group==\"Adult\", \"unknown\", age_group))\n\nos_injury_ages |&gt;  \ndistinct(person_id, age_group) |&gt;\n  count(age_group, name=\"count\") |&gt;\n  kable() |&gt;\n  kable_styling()\n\n\n\n\nage_group\ncount\n\n\n\n\n18-25\n15\n\n\n26-35\n44\n\n\n36-45\n93\n\n\n46+\n122\n\n\nunknown\n60\n\n\n\n\n\n\n\n\nHP\nAssigning groups to ages is straightforward using case_when(), as the age column is already numerical.\n\nhp_injury_bio |&gt;\n  distinct(age) |&gt;\n  # make age groups; \"unknown\" for NA.\n  mutate(age_group = case_when(\n    is.na(age) ~ \"unknown\",\n    between(age, 0, 17) ~ \"0-17\",\n    between(age, 18, 25) ~ \"18-25\",\n    between(age, 26, 35) ~ \"26-35\",\n    between(age, 36, 45) ~ \"36-45\",\n    age&gt;45 ~ \"46+\"\n  )) |&gt;\n  slice(1:10) |&gt;\n  kable() |&gt;\n  kable_styling()\n\n\n\n\nage\nage_group\n\n\n\n\nNA\nunknown\n\n\n41\n36-45\n\n\n58\n46+\n\n\n25\n18-25\n\n\n45\n36-45\n\n\n35\n26-35\n\n\n36\n36-45\n\n\n64\n46+\n\n\n38\n36-45\n\n\n47\n46+\n\n\n\n\n\n\n\nI may as well turn it into a function I can reuse.\n\nmake_age_groups &lt;- function(df){\n  df |&gt;\n    mutate(age_group = case_when(\n    is.na(age) ~ \"unknown\",\n    between(age, 0, 17) ~ \"0-17\",\n    between(age, 18, 25) ~ \"18-25\",\n    between(age, 26, 35) ~ \"26-35\",\n    between(age, 36, 45) ~ \"36-45\",\n    age&gt;45 ~ \"46+\"\n  ))\n}\n\nUnfortunately age is not consistently recorded across HP (only one hospital has it for most records).\n\nhp_injury_ages &lt;-\nhp_injury_bio |&gt;\n  make_age_groups()\n\nhp_injury_ages |&gt;\n  distinct(person_id, age, age_group) |&gt;\n  count(age_group, name=\"count\") |&gt;\n  kable() |&gt;\n  kable_styling()\n\n\n\n\nage_group\ncount\n\n\n\n\n0-17\n182\n\n\n18-25\n598\n\n\n26-35\n789\n\n\n36-45\n768\n\n\n46+\n931\n\n\nunknown\n14427\n\n\n\n\n\n\n\n\n\nDP\nA high proportion of DP records have age information, but it needs a little bit of preprocessing because for some reason R decides to import the age column as character rather than numeric data.\n\ndp_injury_ages &lt;-\ndp_injury_bio |&gt;\n  mutate(age = parse_number(age)) |&gt;\n  make_age_groups() \n\ndp_injury_ages |&gt;\n  distinct(description_id, age, age_group) |&gt;\n  count(age_group, name = \"count\") |&gt;\n  kable() |&gt;\n  kable_styling()\n\n\n\n\nage_group\ncount\n\n\n\n\n0-17\n405\n\n\n18-25\n5718\n\n\n26-35\n6544\n\n\n36-45\n3947\n\n\n46+\n3952\n\n\nunknown\n62"
+  },
+  {
+    "objectID": "posts/biographical/index.html#gender",
+    "href": "posts/biographical/index.html#gender",
+    "title": "Biographical information",
+    "section": "Gender",
+    "text": "Gender\nGender was assigned in the skeletons data on the basis of physical characteristics, whereas in HP and DP it was done on the basis of first names. In either case, it’s essentially probabilistic.\nValues in the gender data across the collections haven’t been standardised and they’re all slightly different.\n\nos_injury_bio |&gt;\n  distinct(person_id, gender) |&gt;\n  count(gender) \n\n# A tibble: 3 × 2\n  gender           n\n  &lt;chr&gt;        &lt;int&gt;\n1 F               81\n2 M              198\n3 Undetermined    55\n\n\n\nhp_injury_bio |&gt;\n  distinct(person_id, gender) |&gt;\n  count(gender)\n\n# A tibble: 3 × 2\n  gender     n\n  &lt;chr&gt;  &lt;int&gt;\n1 f       4103\n2 m      13425\n3 u        167\n\n\n\ndp_injury_bio |&gt;\n  distinct(person_id, gender) |&gt;\n  count(gender)\n\n# A tibble: 3 × 2\n  gender     n\n  &lt;chr&gt;  &lt;int&gt;\n1 f       1712\n2 m      17336\n3 &lt;NA&gt;     111\n\n\nAnnoying! But all the variations can be smoothed out with a simple function.\n\ngender_std &lt;- function(df){\n  df |&gt;\n    mutate(gender = str_to_lower(gender)) |&gt;\n    mutate(gender = case_match(\n      gender,\n      \"f\" ~ \"female\",\n      \"m\" ~ \"male\",\n      \"undetermined\" ~ \"unknown\", \n      \"u\" ~ \"unknown\",\n      NA ~ \"unknown\",\n      .default = gender\n    ))\n}\n\n\n\n\n\n\ngender\nn\n\n\n\n\nfemale\n1712\n\n\nmale\n17336\n\n\nunknown\n111"
+  },
+  {
+    "objectID": "posts/biographical/index.html#results",
+    "href": "posts/biographical/index.html#results",
+    "title": "Biographical information",
+    "section": "Results",
+    "text": "Results\nPie charts are a bit controversial. But I like them in certain cases. They’re also really easy to make in {ggplot}. Essentially, you start by making a bar chart and then turn it into a circle using the coord_polar() function.\n\nAge groups\nI opted to use a sequential colour scale, which I wouldn’t normally do for categorical data, but age groups are a special case (since they’re based on numerical data and do go from low to high).\nI’d like to have consistent colours for these categories across analyses. With ggplot, the easiest way to have complete control of colours is to use the scale_*_manual() functions, with a paired vector. I can include all five groups (plus unknown) and ggplot won’t mind if some aren’t actually in the data; it’ll only complain if there’s a value in the data that isn’t included in the vector.\n\ncol_age_groups5 &lt;- c(\n  \"0-17\"='#ffeda0', \n  \"18-25\"='#fecc5c', \n  \"26-35\"= '#fd8d3c', \n  \"36-45\"= '#fc4e2a', \n  \"46+\"= '#800026', \n  \"unknown\"='#dddddd'\n  )\n\nAs you might expect of data based on skeletons from cemeteries, the largest group is the oldest. (But the younger groups are nonetheless considerably larger than they would be in a modern cemetery.)\n\nos_injury_ages |&gt;\n  distinct(person_id, age_group) |&gt;\n  filter(age_group !=\"unknown\") |&gt;\n  count(age_group) |&gt;\n  mutate(prop = n / sum(n)*100) |&gt;\n  mutate(ypos = cumsum(prop)- 0.5*prop ) |&gt;\n  ggplot(aes(x=\"\", y=prop, fill=age_group)) +\n  geom_col(width = 1, color=\"white\", show.legend = F) +\n  geom_text(aes(label = age_group), position = position_stack(vjust=0.5), color = \"white\", size=4) +\n  # make it circular\n  coord_polar(\"y\", start=0, direction = -1) +\n  scale_fill_manual(values = col_age_groups5) +\n  theme_void() +\n  theme(plot.tag.position = \"top\" ) +\n  labs(tag = \"OS age groups\")\n\n\n\n\n\n\n\n\nComparing the three collections, the 46+ group is a lot smaller in both HP and DP; in both cases, the age groups are more evenly distributed than in OS. In HP 46+ is clearly still the single largest group. In DP the largest group is 26-35, with 18-25 close behind, so pie chart critics might point out it’s not obvious which is larger. But I’d argue that’s fine, because the difference (about 3%) is too small to really matter. What I want to do is get a quick overview and comparison of the three collections, and that’s what this is good at.\n\n\n\n\n\n\n\n\n\n\n\nGender\nOnly OS has a significant proportion of unknowns. What’s most noticeable is that women are in the minority in all three collections - this would be expected in criminal datasets, but is more surprising in the other two."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "This website accompanies the British Academy funded project Skin and Bone: Interdisciplinary analysis of accidents, injury, and violence in industrialising London, 1760-1901\nSkin and Bone aims to develop a new interdisciplinary approach by combining the expertise of archaeology and history with digital humanities methodologies."
+  },
+  {
+    "objectID": "about.html#research-questions",
+    "href": "about.html#research-questions",
+    "title": "About",
+    "section": "Research Questions",
+    "text": "Research Questions\nThe project addresses a combination of historical and digital humanities research questions.\n\nWhat does evidence of scars and injuries, and their locations on the body, taken from convict observations, hospital admissions, and analysis of skeletal remains, tell us about experiences of work-related injuries, accidents, and interpersonal violence in the eighteenth and nineteenth century?\nWhich individuals, and from which social contexts, bore scars and injuries? How did physical harm vary by gender, age, and occupation? And how did these patterns change between 1760 and 1901?\nHow do we classify and merge complex variables from social and osteoarchaeological datasets charting experiences of scarring and injury from skin (surface descriptions within hospital and criminal records) and bone (evidence of healed and/or healing trauma in skeletal remains)?\nHow can visualisations be utilised to summarise and analyse the complexity of this evidence, particularly when it is combined with evidence about the individual’s personal background and characteristics, in order to identify the specific contexts in which injuries, and what types of injuries, occurred?\nIn particular, can new data-mining and visualisation techniques be developed to uncover significant patterns in this and potentially other collections of complex, multivariate humanities data?"
+  },
+  {
+    "objectID": "about.html#code-and-data-analysis",
+    "href": "about.html#code-and-data-analysis",
+    "title": "About",
+    "section": "Code and data analysis",
+    "text": "Code and data analysis\nAll analysis of the data is done in R, a programming language particularly geared towards statistical analysis and visualisation.\nMore specifically, the R workflow has these key components:\n\nRStudio, an “integrated development environment” (IDE) for R (free open source software, multi-platform)\nThe Tidyverse, “an opinionated collection of R packages designed for data science”\nMarkdown and RMarkdown for writing\nQuarto and Github Pages for publishing\n\nThis enables me to do most of what I need for the project - data wrangling and tidying, exploratory analysis, data modelling and visualisation, blogging - in one place, so that (hopefully…) everything I do is easily re-usable, either to test and reproduce my own results or as examples that can be adapted for other data and research.\nOne of the goals of this blog is to show how R can be of practical use for working with large, complex historical datasets, right through the research process from data management to writing and publication.\nThe project data will be made openly available. (Some of the datasets used by the project are already publicly available from the University of Sheffield data repository.) Datasets will be Creative Commons-licensed (or similar) for re-use, but the exact license terms are likely to vary."
   }
 ]
