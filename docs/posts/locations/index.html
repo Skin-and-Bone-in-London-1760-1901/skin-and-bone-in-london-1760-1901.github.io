@@ -1,2 +1,1095 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.53">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sharon Howard">
+<meta name="dcterms.date" content="2025-04-28">
+<meta name="description" content="Mapping injury locations to broader regions for analysis">
+
+<title>Injury locations on the body – Skin and Bone in London, 1760-1901</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="../../site_libs/core-js-2.5.3/shim.min.js"></script>
+<script src="../../site_libs/react-18.2.0/react.min.js"></script>
+<script src="../../site_libs/react-18.2.0/react-dom.min.js"></script>
+<script src="../../site_libs/reactwidget-2.0.0/react-tools.js"></script>
+<link href="../../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="../../site_libs/reactable-0.4.4/reactable.css" rel="stylesheet">
+<script src="../../site_libs/reactable-binding-0.4.4/reactable.js"></script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Skin and Bone in London, 1760-1901</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../blog.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#the-regions" id="toc-the-regions" class="nav-link" data-scroll-target="#the-regions">The regions</a></li>
+  <li><a href="#a-starting-point" id="toc-a-starting-point" class="nav-link" data-scroll-target="#a-starting-point">A starting point</a></li>
+  <li><a href="#extending-to-os-and-dp" id="toc-extending-to-os-and-dp" class="nav-link" data-scroll-target="#extending-to-os-and-dp">Extending to OS and DP</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Injury locations on the body</h1>
+</div>
+
+<div>
+  <div class="description">
+    Mapping injury locations to broader regions for analysis
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sharon Howard </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">28 April 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The Skin and Bone project data has extracted and separated out two kinds of injury information from the original datasets: types and locations of injuries. However, apart from some minor cleanup, the data consists of the original text of descriptions and there hasn’t been any further classification.</p>
+<p>To do meaningful analysis and visualisations, I need to standardise and group that information into broader categories. Here I look at the process for grouping body locations into <em>regions</em>, for which I’ll make a <a href="https://en.wiktionary.org/wiki/lookup_table">lookup</a> file to reuse in subsequent analysis.</p>
+<p>A second post will look at the categorisation of injuries.</p>
+</section>
+<section id="the-regions" class="level2">
+<h2 class="anchored" data-anchor-id="the-regions">The regions</h2>
+<p>The injury regions are based on six anatomical groupings used by Madeleine Mant, who originally created the HP and OS data [at p.66 of <a href="http://hdl.handle.net/11375/20026">her thesis</a>].</p>
+<ul>
+<li><strong>head</strong>: included fractures to the cranium and facial skeleton.</li>
+<li><strong>torso</strong>: included fractures to the sternum, ribs, vertebrae, sacrum, and os coxae.</li>
+<li><strong>arm</strong>: included the shoulder girdle (scapula, clavicle) and long bones of the arm (humerus, radius, ulna).</li>
+<li><strong>leg</strong>: included the femur, tibia, fibula, and patella.</li>
+<li><strong>hand</strong>: included the carpals, metacarpals, and manual phalanges</li>
+<li><strong>foot</strong>: included the tarsals, metatarsals, and pedal phalanges.</li>
+</ul>
+</section>
+<section id="a-starting-point" class="level2">
+<h2 class="anchored" data-anchor-id="a-starting-point">A starting point</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## get data etc</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## shared packages etc ####</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"R/shared.R"</span>)) </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## aesthetics ####</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"R/trimmings.R"</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># any extra packages and functions should go here</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reactable)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## dp data ####</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>dp_injuries_xlsx <span class="ot">&lt;-</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_excel</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/v20231130/dp_injury.xlsx"</span>), <span class="at">guess_max =</span> <span class="dv">100000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>dp_injury_locations <span class="ot">&lt;-</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  dp_injuries_xlsx <span class="sc">|&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rowid, body_location, injury, full_description)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="do">## skeletons ####</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>os_injury_xlsx <span class="ot">&lt;-</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_excel</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/v20231130/os_injury.xlsx"</span>) ) <span class="sc">|&gt;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>()</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>os_injury_locations <span class="ot">&lt;-</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  os_injury_xlsx <span class="sc">|&gt;</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rowid, body_location, injury)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="do">## hospitals ####</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>hp_injury_xlsx <span class="ot">&lt;-</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_excel</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/v20231130/hp_injury.xlsx"</span>) , <span class="at">guess_max=</span><span class="dv">18000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># basic year fixes</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">description_year =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    description_year<span class="sc">&gt;</span><span class="dv">2000</span> <span class="sc">~</span> <span class="fu">parse_number</span>(<span class="fu">str_sub</span>(<span class="fu">as.character</span>(description_year), <span class="dv">2</span>, <span class="dv">5</span>)),</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    description_year<span class="sc">&lt;</span><span class="dv">1760</span> <span class="sc">~</span> <span class="cn">NA</span>, </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default=</span>description_year</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowid_to_column</span>()</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>hp_injury_locations <span class="ot">&lt;-</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  hp_injury_xlsx <span class="sc">|&gt;</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rowid, body_location, injury, full_description) <span class="sc">|&gt;</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">body_location =</span> <span class="fu">str_remove</span>(body_location, <span class="st">"</span><span class="sc">\\</span><span class="st">bright +"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The hospitals (HP) descriptions data is the most useful set for making an initial lookup file, as the descriptions are brief and consistent - they almost never include extra detail like side of body - so that in virtually all cases, the <code>body_location</code> column <em>only</em> consists of the name of a body part. The Digital Panopticon criminals (DP) and osteological (OS) datasets are both a bit more complicated.</p>
+<p>NB that a significant proportion of descriptions don’t mention an injury location at all, so I’ll need an “unknown” category.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hp_injury_locations <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">body_location=</span><span class="fu">replace_na</span>(body_location, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">rowid</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">body_location</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">injury</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">full_description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">arm</td>
+<td style="text-align: left;">fractured</td>
+<td style="text-align: left;">fractured arm.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">loins</td>
+<td style="text-align: left;">injury</td>
+<td style="text-align: left;">injury loins.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">arm</td>
+<td style="text-align: left;">fractured</td>
+<td style="text-align: left;">fractured arm.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">eye</td>
+<td style="text-align: left;">injury</td>
+<td style="text-align: left;">injury eye.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">rib</td>
+<td style="text-align: left;">fractured</td>
+<td style="text-align: left;">fractured rib.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">hurt by a fall</td>
+<td style="text-align: left;">hurt by a fall.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">injury</td>
+<td style="text-align: left;">injury leg.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">lacerated</td>
+<td style="text-align: left;">lacerated leg.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">burns</td>
+<td style="text-align: left;">burns.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">cut</td>
+<td style="text-align: left;">cut head.</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>First, a list of unique values in the <code>body_location</code> column.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>hp_injury_location_count <span class="ot">&lt;-</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>hp_injury_locations <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(body_location, <span class="at">name=</span><span class="st">"count"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank=</span> <span class="fu">min_rank</span>(<span class="fu">desc</span>(count))) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are 104 distinct values in <code>body_location</code> (about a quarter of which join the regions_locations list without any further work).</p>
+<p><em>Explore locations…</em></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-4fe8c006a86cd04bc7fd" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4fe8c006a86cd04bc7fd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"rank":[29,9,71,3,54,84,12,52,65,65,38,84,55,84,37,71,13,84,84,78,84,71,23,21,60,18,47,30,43,19,36,8,55,52,10,78,4,55,14,34,84,65,84,25,6,71,1,27,49,84,33,84,84,78,84,41,44,84,71,17,63,60,58,71,65,60,45,78,24,7,71,21,40,45,65,11,16,84,15,28,58,84,63,65,84,84,32,39,5,49,20,31,41,34,48,78,51,84,84,84,78,26,84,2],"body_location":["abdomen","ankle","ankles","arm","arms","axilla","back","belly","bladder","body","breast","calcaneus","cheek","cheekbone","chest","chin","clavicle","clavicles","condule","condyle","cranium","ear","elbow","eye","eyes","face","feet","femur","fibula","finger","fingers","foot","forehead","groin","hand","hands","head","heel","hip","humerus","iliium","ilium","internal","jaw","knee","knees","leg","legs","lip","liver","loins","lumbar region","maxilla","metacarpal","mouth","neck","nose","occiput","olecranon","patella","pelvis","penis","perineum","private parts","privates","pubis","radius","rectum","rib","ribs","sacrum","scalp","scapula","scrotum","shin","shoulder","side","sides","skull","spine","sternum","stomach","stump","temple","temporal","testes","testicle","testicles","thigh","thighs","throat","thumb","tibia","toe","toes","tongue","ulna","urethra","uterus","vagina","womb","wrist","wrists",null],"count":[77,558,3,1671,10,1,332,11,4,4,38,1,9,1,40,3,312,1,1,2,1,3,126,142,6,155,18,70,23,153,48,592,9,11,491,2,1326,9,301,52,1,4,1,105,662,3,3480,99,14,1,53,1,1,2,1,28,20,1,3,175,5,6,8,3,4,6,19,2,120,602,3,142,29,19,4,342,231,1,286,98,8,1,5,4,1,1,61,31,1226,14,144,69,28,52,16,2,12,1,1,1,2,102,1,2874]},"columns":[{"id":"rank","name":"rank","type":"numeric","maxWidth":80},{"id":"body_location","name":"location","type":"character","maxWidth":140},{"id":"count","name":"count","type":"numeric","maxWidth":70}],"filterable":true,"defaultSorted":[{"id":"rank","desc":false},{"id":"body_location","desc":false}],"defaultPageSize":10,"defaultExpanded":true,"highlight":true,"bordered":true,"dataKey":"8f9eb0b491a4ea5df5127c0800d54a4b"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>While most are easy to place, they’re an interesting mix of familiar, old-fashioned and technical that I needed to look up. (<a href="https://en.wikipedia.org/wiki/Ilium_(bone)">ilium</a>? <a href="https://en.wikipedia.org/wiki/Olecranon">olecranon</a>? <a href="https://en.wikipedia.org/wiki/Axilla">axilla</a> and <a href="https://en.wikipedia.org/wiki/Maxilla">maxilla</a>?)</p>
+<p>A handful can’t be placed: “stump” seems quite likely to be leg, but I don’t think that can be assumed; <a href="https://en.wikipedia.org/wiki/Condyle">condyle</a> apparently could be one of several.</p>
+<p>I saved the list to a plain text file, and added a few locations that are in my list above but not used in these records. Since it’s a small number, manually grouped them per region, using a simple temporary format where the group name is listed first, prefixed with a hash. This can be converted to a two column lookup list quite easily.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hp_locations_by_region <span class="ot">&lt;-</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_lines</span>(<span class="st">"locations.txt"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>(<span class="at">name=</span><span class="cn">NULL</span>, <span class="at">value=</span><span class="st">"injury_location"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">region =</span> <span class="fu">str_match</span>(injury_location, <span class="st">"#(.+)$"</span>)[,<span class="dv">2</span>]) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(injury_location, <span class="st">"#"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To reuse the lookup later will simply need a left_join.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hp_injury_locations <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(body_location, full_description) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(hp_locations_by_region, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"body_location"</span><span class="ot">=</span><span class="st">"injury_location"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">region=</span><span class="st">"unknown"</span>, <span class="at">body_location=</span><span class="st">""</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)  <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">region</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">body_location</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">full_description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">arm</td>
+<td style="text-align: left;">arm</td>
+<td style="text-align: left;">fractured arm.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">torso</td>
+<td style="text-align: left;">loins</td>
+<td style="text-align: left;">injury loins.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">eye</td>
+<td style="text-align: left;">injury eye.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">torso</td>
+<td style="text-align: left;">rib</td>
+<td style="text-align: left;">fractured rib.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">unknown</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">hurt by a fall.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">injury leg.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">lacerated leg.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">unknown</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">burns.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">cut head.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">injury head.</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="extending-to-os-and-dp" class="level2">
+<h2 class="anchored" data-anchor-id="extending-to-os-and-dp">Extending to OS and DP</h2>
+<p>The OS and DP location descriptions often contain more detail than those for HP, so I’ll use a regex strategy rather than simple joins for the lookups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>locations_by_region_rgx <span class="ot">&lt;-</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>hp_locations_by_region <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># drop body/side as they cause a few false positives </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>injury_location <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"body"</span>, <span class="st">"side"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">locations_rgx =</span> <span class="fu">glue_collapse</span>(injury_location, <span class="at">sep=</span><span class="st">"|"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">locations_rgx=</span><span class="fu">glue</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">b({locations_rgx})"</span>)) </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>arm_region <span class="ot">&lt;-</span>  <span class="fu">pluck</span>(locations_by_region_rgx, <span class="st">"locations_rgx"</span>, <span class="dv">1</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>foot_region <span class="ot">&lt;-</span>  <span class="fu">pluck</span>(locations_by_region_rgx, <span class="st">"locations_rgx"</span>, <span class="dv">2</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>hand_region <span class="ot">&lt;-</span> <span class="fu">pluck</span>(locations_by_region_rgx, <span class="st">"locations_rgx"</span>, <span class="dv">3</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>head_region <span class="ot">&lt;-</span> <span class="fu">pluck</span>(locations_by_region_rgx, <span class="st">"locations_rgx"</span>, <span class="dv">4</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>leg_region <span class="ot">&lt;-</span> <span class="fu">pluck</span>(locations_by_region_rgx, <span class="st">"locations_rgx"</span>, <span class="dv">5</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>torso_region <span class="ot">&lt;-</span> <span class="fu">pluck</span>(locations_by_region_rgx, <span class="st">"locations_rgx"</span>, <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>Example</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>leg_region</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>\b(femur|fibula|knee|knees|leg|legs|patella|shin|thigh|thighs|tibia)</code></pre>
+</div>
+</div>
+<p>The OS descriptions look rather different from both HP and DP. Both HP and DP are based on transcriptions of documents written by people working in historical institutions (the hospital records were written by medical professionals; I’m not quite so sure about all the officials who recorded the DP descriptions). In contrast, the OS data has been recorded by a modern researcher using a systematic methodology for identifying and describing fractures [<a href="http://hdl.handle.net/11375/20026">Mant, p.60</a>].</p>
+<p>Most of the locations have been recorded twice, once using mostly non-technical language (“left forearm”) and then using more specific anatomical terms (“radius”). This gives me two chances to match a location to a region! (In the data they’re recorded in the same column using a pipe separator; I did need to separate them out and handle separately to avoid some false positives.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>os_injury_locations <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>injury, <span class="sc">-</span>rowid) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(body_location, <span class="at">into=</span><span class="fu">c</span>(<span class="st">"location1"</span>, <span class="st">"location2"</span>), <span class="at">sep=</span><span class="st">" *</span><span class="sc">\\</span><span class="st">| *"</span>, <span class="at">fill=</span><span class="st">"right"</span>, <span class="at">extra =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">location2 =</span> <span class="fu">replace_na</span>(location2, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">location1</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">location2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">vertebral</td>
+<td style="text-align: left;">cervical vertebra 7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">vertebral</td>
+<td style="text-align: left;">thoracic vertebra 6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">left forearm</td>
+<td style="text-align: left;">radius</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">right forearm</td>
+<td style="text-align: left;">ulna</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">right lower leg</td>
+<td style="text-align: left;">fibula</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rib</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">left forearm</td>
+<td style="text-align: left;">radius</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">left forearm</td>
+<td style="text-align: left;">ulna</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">right foot</td>
+<td style="text-align: left;">navicular</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rib</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>All the records could be matched without needing to add any new terms to the lookup list.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>os_locations_by_region <span class="ot">&lt;-</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>os_injury_locations <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(body_location, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"location1"</span>, <span class="st">"location2"</span>, <span class="st">"extra"</span>), <span class="at">sep=</span><span class="st">" *</span><span class="sc">\\</span><span class="st">| *"</span>, <span class="at">extra =</span> <span class="st">"merge"</span>, <span class="at">fill=</span><span class="st">"right"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">location_region =</span> <span class="fu">case_when</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location1, arm_region) <span class="sc">~</span> <span class="st">"arm"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location1, hand_region) <span class="sc">~</span> <span class="st">"hand"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location1, foot_region) <span class="sc">~</span> <span class="st">"foot"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location1, leg_region) <span class="sc">~</span> <span class="st">"leg"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location1, head_region) <span class="sc">~</span> <span class="st">"head"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location1, torso_region) <span class="sc">~</span> <span class="st">"torso"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a few don't match on location1 column but do match on location2.</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location2, arm_region) <span class="sc">~</span> <span class="st">"arm"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location2, head_region) <span class="sc">~</span> <span class="st">"head"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location2, leg_region) <span class="sc">~</span> <span class="st">"leg"</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location2, torso_region) <span class="sc">~</span> <span class="st">"torso"</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location2, foot_region) <span class="sc">~</span> <span class="st">"foot"</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(location2, hand_region) <span class="sc">~</span> <span class="st">"hand"</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(location_region, location1, <span class="at">name=</span><span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>DP locations need a bit more work. The <code>body_location</code> data is quite a bit messier than HP or OS, reflecting that the descriptions are more complex: injuries are more diverse than in the other two collections, and recording injuries wasn’t the records’ primary purpose so they can contain various kinds of information.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dp_injury_locations <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(full_description) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 1
+   full_description                                                             
+   &lt;chr&gt;                                                                        
+ 1 Scar over right eye, mole on left shoulder.                                  
+ 2 Scar right eye brow, mole on left shoulder, vaccination mark on left arm.    
+ 3 Scar on forehead, left eyebrow &amp; wrist, lost front upper tooth.              
+ 4 Scar on forehead, 2 scar on right arm below the elbow and lost several teeth.
+ 5 Scar on forehead and left of nose                                            
+ 6 Scars on forehead and nose, ears pierced                                     
+ 7 Scars on right knee, Ears pierced                                            
+ 8 Scar on right knee                                                           
+ 9 Scar on right hand and on forehead, mole on nose.                            
+10 Small Mole on left cheek, scar over left eyebrow, ears pierced               </code></pre>
+</div>
+</div>
+<p>Most can be matched to the list; the exceptions needing some new additions to the list are variations in terminology (“forearm” or “collarbone”) or likely to be related to minor injuries that wouldn’t appear in hospital or skeleton records (“tooth/teeth”, “hair”).</p>
+<p>However, there are also more locations that can’t be placed, in particular “nail”, “bone” and “fore”, which are very likely to be due to extraction failures. With this much bigger and messier collection, I just have to accept imperfection.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dp_locations_by_region <span class="ot">&lt;-</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>dp_injury_locations <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># initial tidying up</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">body_location=</span><span class="fu">str_to_lower</span>(body_location)) <span class="sc">|&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">body_location=</span><span class="fu">str_trim</span>(<span class="fu">str_replace_all</span>(body_location, <span class="st">"</span><span class="sc">\\</span><span class="st">s</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">" "</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">location_region =</span> <span class="fu">case_when</span>(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(body_location, arm_region) <span class="sc">~</span> <span class="st">"arm"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(body_location, hand_region) <span class="sc">~</span> <span class="st">"hand"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(body_location, foot_region) <span class="sc">~</span> <span class="st">"foot"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(body_location, leg_region) <span class="sc">~</span> <span class="st">"leg"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(body_location, head_region) <span class="sc">~</span> <span class="st">"head"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(body_location, torso_region) <span class="sc">~</span> <span class="st">"torso"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># put "side" and "body" in torso after more specific descriptions are accounted for</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (some will be wrong...)</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    body_location <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"side"</span>, <span class="st">"body"</span>) <span class="sc">~</span> <span class="st">"torso"</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># differentiate empty locations from those that fail to match the list</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(body_location) <span class="sc">~</span> <span class="st">"unknown"</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(location_region, body_location, <span class="at">name=</span><span class="st">"count"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank=</span> <span class="fu">min_rank</span>(<span class="fu">desc</span>(count))) <span class="sc">|&gt;</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>Explore locations that failed to match…</em></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-cfbfb1a6781404b09a61" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-cfbfb1a6781404b09a61">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"rank":[211,211,211,211,211,211,89,211,55,108,49,96,122,171,92,25,43,179,211,211,127,211,211,115,66,211,11,179,127,37,211,93,211,72,119,211,211,211,100,165,211,211,179,64,211,16,211,211,125,36,156,171,32,211,85,179,211,211,211,211,211,84,159],"body_location":["1 top tooth","3 teeth","4 top teeth","above left nipple","above right brest","all her teeth","bone","both less","buttock","buttocks","calf","collar bone","collarbone","each forearm","fore","forearm","forefinger","four top teeth","front teeth","front upper tooth","hair","in palm","inside left upperarm","knuckle","left buttock","left check","left forearm","left forefinger","left nostril","left side","left upper forearm","loin","lower part of left forearm","nail","navel","nearby all her teeth","nearly all front teeth","nearly all teeth","nipple","on palm","one tooth","one top tooth","right brest","right buttock","right check","right forearm","right forefinger","right knuckle","right nostril","right side","several teeth","several top teeth","teeth","third left to","tooth","top front teeth","top teeth","two bottom front teeth","two top teeth","under loft eve","upper teeth","upperarm","vein"],"count":[1,1,1,1,1,1,121,1,358,64,435,81,30,3,86,782,530,2,1,1,23,1,1,46,230,1,1505,2,23,606,1,83,1,206,31,1,1,1,73,5,1,1,2,252,1,1220,1,1,29,634,8,3,676,1,146,2,1,1,1,1,1,157,6]},"columns":[{"id":"rank","name":"rank","type":"numeric","maxWidth":80},{"id":"body_location","name":"location","type":"character","maxWidth":140},{"id":"count","name":"count","type":"numeric","maxWidth":70}],"filterable":true,"defaultSorted":[{"id":"rank","desc":false},{"id":"body_location","desc":false}],"defaultPageSize":10,"defaultExpanded":true,"highlight":true,"bordered":true,"dataKey":"8af183ae7c82a0a48fc7086011752097"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Those that can be placed go into a supplementary text file, organised and added to the original. Then the full list can be saved to a final location as a CSV file for later reuse.</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>A quick peek at the results, comparing the three collections.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There are some very marked differences between the collections.</p>
+<ul>
+<li><p>DP has a much higher percentage of head injuries; closer inspection shows a lot of these are relatively superficial injuries that wouldn’t appear in the other two collections, like facial scars or missing teeth (the latter might often be more to do with poor dental health than injuries).</p></li>
+<li><p>The largest category in the hospitals data is leg injuries (mostly fractures).</p></li>
+<li><p>Skeletons show a lot more torso injuries, most of which are rib fractures.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/skin-and-bone-in-london-1760-1901\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

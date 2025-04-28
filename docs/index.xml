@@ -10,7 +10,1202 @@
 <atom:link href="https://skin-and-bone-in-london-1760-1901.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>A data blog for the Skin and Bone project</description>
 <generator>quarto-1.5.53</generator>
-<lastBuildDate>Sun, 20 Apr 2025 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 27 Apr 2025 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Injury locations on the body</title>
+  <dc:creator>Sharon Howard</dc:creator>
+  <link>https://skin-and-bone-in-london-1760-1901.github.io/posts/locations/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The Skin and Bone project data has extracted and separated out two kinds of injury information from the original datasets: types and locations of injuries. However, apart from some minor cleanup, the data consists of the original text of descriptions and there hasn’t been any further classification.</p>
+<p>To do meaningful analysis and visualisations, I need to standardise and group that information into broader categories. Here I look at the process for grouping body locations into <em>regions</em>, for which I’ll make a <a href="https://en.wiktionary.org/wiki/lookup_table">lookup</a> file to reuse in subsequent analysis.</p>
+<p>A second post will look at the categorisation of injuries.</p>
+</section>
+<section id="the-regions" class="level2">
+<h2 class="anchored" data-anchor-id="the-regions">The regions</h2>
+<p>The injury regions are based on six anatomical groupings used by Madeleine Mant, who originally created the HP and OS data [at p.66 of <a href="http://hdl.handle.net/11375/20026">her thesis</a>].</p>
+<ul>
+<li><strong>head</strong>: included fractures to the cranium and facial skeleton.</li>
+<li><strong>torso</strong>: included fractures to the sternum, ribs, vertebrae, sacrum, and os coxae.</li>
+<li><strong>arm</strong>: included the shoulder girdle (scapula, clavicle) and long bones of the arm (humerus, radius, ulna).</li>
+<li><strong>leg</strong>: included the femur, tibia, fibula, and patella.</li>
+<li><strong>hand</strong>: included the carpals, metacarpals, and manual phalanges</li>
+<li><strong>foot</strong>: included the tarsals, metatarsals, and pedal phalanges.</li>
+</ul>
+</section>
+<section id="a-starting-point" class="level2">
+<h2 class="anchored" data-anchor-id="a-starting-point">A starting point</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## get data etc</span></span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## shared packages etc ####</span></span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">source</span>(here<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"R/shared.R"</span>)) </span>
+<span id="cb1-5"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## aesthetics ####</span></span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">source</span>(here<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"R/trimmings.R"</span>))</span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># any extra packages and functions should go here</span></span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(reactable)</span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## dp data ####</span></span>
+<span id="cb1-12">dp_injuries_xlsx <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb1-13">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_excel</span>(here<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data/v20231130/dp_injury.xlsx"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">guess_max =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100000</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-14">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rowid_to_column</span>()</span>
+<span id="cb1-15"></span>
+<span id="cb1-16">dp_injury_locations <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb1-17">  dp_injuries_xlsx <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-18">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(rowid, body_location, injury, full_description)</span>
+<span id="cb1-19"></span>
+<span id="cb1-20"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## skeletons ####</span></span>
+<span id="cb1-21">os_injury_xlsx <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb1-22">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_excel</span>(here<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data/v20231130/os_injury.xlsx"</span>) ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-23">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rowid_to_column</span>()</span>
+<span id="cb1-24"></span>
+<span id="cb1-25">os_injury_locations <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb1-26">  os_injury_xlsx <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-27">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(rowid, body_location, injury)</span>
+<span id="cb1-28"></span>
+<span id="cb1-29"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## hospitals ####</span></span>
+<span id="cb1-30">hp_injury_xlsx <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb1-31">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_excel</span>(here<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data/v20231130/hp_injury.xlsx"</span>) , <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">guess_max=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18000</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-32">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># basic year fixes</span></span>
+<span id="cb1-33">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">description_year =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">case_when</span>(</span>
+<span id="cb1-34">    description_year<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2000</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">parse_number</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_sub</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.character</span>(description_year), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)),</span>
+<span id="cb1-35">    description_year<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1760</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA</span>, </span>
+<span id="cb1-36">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">.default=</span>description_year</span>
+<span id="cb1-37">  )) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-38">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rowid_to_column</span>()</span>
+<span id="cb1-39"></span>
+<span id="cb1-40">hp_injury_locations <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb1-41">  hp_injury_xlsx <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-42">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(rowid, body_location, injury, full_description) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb1-43">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">body_location =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_remove</span>(body_location, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">bright +"</span>))</span></code></pre></div>
+</details>
+</div>
+<p>The hospitals (HP) descriptions data is the most useful set for making an initial lookup file, as the descriptions are brief and consistent - they almost never include extra detail like side of body - so that in virtually all cases, the <code>body_location</code> column <em>only</em> consists of the name of a body part. The Digital Panopticon criminals (DP) and osteological (OS) datasets are both a bit more complicated.</p>
+<p>NB that a significant proportion of descriptions don’t mention an injury location at all, so I’ll need an “unknown” category.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">hp_injury_locations <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">body_location=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">replace_na</span>(body_location, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">slice</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable_styling</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">rowid</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">body_location</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">injury</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">full_description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">arm</td>
+<td style="text-align: left;">fractured</td>
+<td style="text-align: left;">fractured arm.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">loins</td>
+<td style="text-align: left;">injury</td>
+<td style="text-align: left;">injury loins.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">arm</td>
+<td style="text-align: left;">fractured</td>
+<td style="text-align: left;">fractured arm.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">eye</td>
+<td style="text-align: left;">injury</td>
+<td style="text-align: left;">injury eye.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">rib</td>
+<td style="text-align: left;">fractured</td>
+<td style="text-align: left;">fractured rib.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">hurt by a fall</td>
+<td style="text-align: left;">hurt by a fall.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">injury</td>
+<td style="text-align: left;">injury leg.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">lacerated</td>
+<td style="text-align: left;">lacerated leg.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">burns</td>
+<td style="text-align: left;">burns.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">cut</td>
+<td style="text-align: left;">cut head.</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>First, a list of unique values in the <code>body_location</code> column.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">hp_injury_location_count <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb3-2">hp_injury_locations <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(body_location, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">name=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"count"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">rank=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">min_rank</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">desc</span>(count))) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">relocate</span>(rank)</span></code></pre></div>
+</div>
+<p>There are 104 distinct values in <code>body_location</code> (about a quarter of which join the regions_locations list without any further work).</p>
+<p><em>Explore locations…</em></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-4fe8c006a86cd04bc7fd" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4fe8c006a86cd04bc7fd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"rank":[29,9,71,3,54,84,12,52,65,65,38,84,55,84,37,71,13,84,84,78,84,71,23,21,60,18,47,30,43,19,36,8,55,52,10,78,4,55,14,34,84,65,84,25,6,71,1,27,49,84,33,84,84,78,84,41,44,84,71,17,63,60,58,71,65,60,45,78,24,7,71,21,40,45,65,11,16,84,15,28,58,84,63,65,84,84,32,39,5,49,20,31,41,34,48,78,51,84,84,84,78,26,84,2],"body_location":["abdomen","ankle","ankles","arm","arms","axilla","back","belly","bladder","body","breast","calcaneus","cheek","cheekbone","chest","chin","clavicle","clavicles","condule","condyle","cranium","ear","elbow","eye","eyes","face","feet","femur","fibula","finger","fingers","foot","forehead","groin","hand","hands","head","heel","hip","humerus","iliium","ilium","internal","jaw","knee","knees","leg","legs","lip","liver","loins","lumbar region","maxilla","metacarpal","mouth","neck","nose","occiput","olecranon","patella","pelvis","penis","perineum","private parts","privates","pubis","radius","rectum","rib","ribs","sacrum","scalp","scapula","scrotum","shin","shoulder","side","sides","skull","spine","sternum","stomach","stump","temple","temporal","testes","testicle","testicles","thigh","thighs","throat","thumb","tibia","toe","toes","tongue","ulna","urethra","uterus","vagina","womb","wrist","wrists",null],"count":[77,558,3,1671,10,1,332,11,4,4,38,1,9,1,40,3,312,1,1,2,1,3,126,142,6,155,18,70,23,153,48,592,9,11,491,2,1326,9,301,52,1,4,1,105,662,3,3480,99,14,1,53,1,1,2,1,28,20,1,3,175,5,6,8,3,4,6,19,2,120,602,3,142,29,19,4,342,231,1,286,98,8,1,5,4,1,1,61,31,1226,14,144,69,28,52,16,2,12,1,1,1,2,102,1,2874]},"columns":[{"id":"rank","name":"rank","type":"numeric","maxWidth":80},{"id":"body_location","name":"location","type":"character","maxWidth":140},{"id":"count","name":"count","type":"numeric","maxWidth":70}],"filterable":true,"defaultSorted":[{"id":"rank","desc":false},{"id":"body_location","desc":false}],"defaultPageSize":10,"defaultExpanded":true,"highlight":true,"bordered":true,"dataKey":"8f9eb0b491a4ea5df5127c0800d54a4b"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>While most are easy to place, they’re an interesting mix of familiar, old-fashioned and technical that I needed to look up. (<a href="https://en.wikipedia.org/wiki/Ilium_(bone)">ilium</a>? <a href="https://en.wikipedia.org/wiki/Olecranon">olecranon</a>? <a href="https://en.wikipedia.org/wiki/Axilla">axilla</a> and <a href="https://en.wikipedia.org/wiki/Maxilla">maxilla</a>?)</p>
+<p>A handful can’t be placed: “stump” seems quite likely to be leg, but I don’t think that can be assumed; <a href="https://en.wikipedia.org/wiki/Condyle">condyle</a> apparently could be one of several.</p>
+<p>I saved the list to a plain text file, and added a few locations that are in my list above but not used in these records. Since it’s a small number, manually grouped them per region, using a simple temporary format where the group name is listed first, prefixed with a hash. This can be converted to a two column lookup list quite easily.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">hp_locations_by_region <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb4-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_lines</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"locations.txt"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb4-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">enframe</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">name=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">value=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"injury_location"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb4-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">region =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_match</span>(injury_location, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#(.+)$"</span>)[,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb4-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fill</span>(region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb4-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(injury_location, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#"</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb4-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">relocate</span>(region)</span></code></pre></div>
+</div>
+<p>To reuse the lookup later will simply need a left_join.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">hp_injury_locations <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">distinct</span>(body_location, full_description) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">left_join</span>(hp_locations_by_region, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"body_location"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"injury_location"</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">relocate</span>(region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">replace_na</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">region=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unknown"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">body_location=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">slice</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)  <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb5-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable_styling</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">region</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">body_location</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">full_description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">arm</td>
+<td style="text-align: left;">arm</td>
+<td style="text-align: left;">fractured arm.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">torso</td>
+<td style="text-align: left;">loins</td>
+<td style="text-align: left;">injury loins.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">eye</td>
+<td style="text-align: left;">injury eye.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">torso</td>
+<td style="text-align: left;">rib</td>
+<td style="text-align: left;">fractured rib.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">unknown</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">hurt by a fall.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">injury leg.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">lacerated leg.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">unknown</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">burns.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">cut head.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">injury head.</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="extending-to-os-and-dp" class="level2">
+<h2 class="anchored" data-anchor-id="extending-to-os-and-dp">Extending to OS and DP</h2>
+<p>The OS and DP location descriptions often contain more detail than those for HP, so I’ll use a regex strategy rather than simple joins for the lookups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">locations_by_region_rgx <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb6-2">hp_locations_by_region <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb6-3">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># drop body/side as they cause a few false positives </span></span>
+<span id="cb6-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span>injury_location <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%in%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"body"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"side"</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb6-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">group_by</span>(region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb6-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">summarise</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">locations_rgx =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">glue_collapse</span>(injury_location, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"|"</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb6-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ungroup</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb6-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">locations_rgx=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">b({locations_rgx})"</span>)) </span>
+<span id="cb6-9"></span>
+<span id="cb6-10">arm_region <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pluck</span>(locations_by_region_rgx, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"locations_rgx"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb6-11"></span>
+<span id="cb6-12">foot_region <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pluck</span>(locations_by_region_rgx, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"locations_rgx"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb6-13"></span>
+<span id="cb6-14">hand_region <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pluck</span>(locations_by_region_rgx, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"locations_rgx"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb6-15"></span>
+<span id="cb6-16">head_region <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pluck</span>(locations_by_region_rgx, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"locations_rgx"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb6-17"></span>
+<span id="cb6-18">leg_region <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pluck</span>(locations_by_region_rgx, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"locations_rgx"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb6-19"></span>
+<span id="cb6-20">torso_region <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pluck</span>(locations_by_region_rgx, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"locations_rgx"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>)</span></code></pre></div>
+</div>
+<p><em>Example</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">leg_region</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>\b(femur|fibula|knee|knees|leg|legs|patella|shin|thigh|thighs|tibia)</code></pre>
+</div>
+</div>
+<p>The OS descriptions look rather different from both HP and DP. Both HP and DP are based on transcriptions of documents written by people working in historical institutions (the hospital records were written by medical professionals; I’m not quite so sure about all the officials who recorded the DP descriptions). In contrast, the OS data has been recorded by a modern researcher using a systematic methodology for identifying and describing fractures [<a href="http://hdl.handle.net/11375/20026">Mant, p.60</a>].</p>
+<p>Most of the locations have been recorded twice, once using mostly non-technical language (“left forearm”) and then using more specific anatomical terms (“radius”). This gives me two chances to match a location to a region! (In the data they’re recorded in the same column using a pipe separator; I did need to separate them out and handle separately to avoid some false positives.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">os_injury_locations <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb9-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>injury, <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>rowid) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb9-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">separate</span>(body_location, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">into=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"location1"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"location2"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" *</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">| *"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"right"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">extra =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"drop"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb9-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">location2 =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">replace_na</span>(location2, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb9-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">slice</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb9-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb9-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable_styling</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">location1</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">location2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">vertebral</td>
+<td style="text-align: left;">cervical vertebra 7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">vertebral</td>
+<td style="text-align: left;">thoracic vertebra 6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">left forearm</td>
+<td style="text-align: left;">radius</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">right forearm</td>
+<td style="text-align: left;">ulna</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">right lower leg</td>
+<td style="text-align: left;">fibula</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rib</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">left forearm</td>
+<td style="text-align: left;">radius</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">left forearm</td>
+<td style="text-align: left;">ulna</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">right foot</td>
+<td style="text-align: left;">navicular</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rib</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>All the records could be matched without needing to add any new terms to the lookup list.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">os_locations_by_region <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb10-2">os_injury_locations <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb10-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">separate</span>(body_location, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">into =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"location1"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"location2"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"extra"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" *</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">| *"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">extra =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"merge"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"right"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb10-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">location_region =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">case_when</span>(</span>
+<span id="cb10-5">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location1, arm_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"arm"</span>,</span>
+<span id="cb10-6">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location1, hand_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hand"</span>,</span>
+<span id="cb10-7">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location1, foot_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"foot"</span>,</span>
+<span id="cb10-8">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location1, leg_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"leg"</span>,</span>
+<span id="cb10-9">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location1, head_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"head"</span>,</span>
+<span id="cb10-10">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location1, torso_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"torso"</span>,</span>
+<span id="cb10-11">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># a few don't match on location1 column but do match on location2.</span></span>
+<span id="cb10-12">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location2, arm_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"arm"</span>,</span>
+<span id="cb10-13">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location2, head_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"head"</span>,</span>
+<span id="cb10-14">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location2, leg_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"leg"</span>,</span>
+<span id="cb10-15">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location2, torso_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"torso"</span>,</span>
+<span id="cb10-16">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location2, foot_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"foot"</span>,</span>
+<span id="cb10-17">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(location2, hand_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hand"</span></span>
+<span id="cb10-18">  )) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb10-19">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(location_region, location1, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">name=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"count"</span>)</span></code></pre></div>
+</div>
+<p>DP locations need a bit more work. The <code>body_location</code> data is quite a bit messier than HP or OS, reflecting that the descriptions are more complex: injuries are more diverse than in the other two collections, and recording injuries wasn’t the records’ primary purpose so they can contain various kinds of information.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">dp_injury_locations <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb11-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">distinct</span>(full_description) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb11-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">slice</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 1
+   full_description                                                             
+   &lt;chr&gt;                                                                        
+ 1 Scar over right eye, mole on left shoulder.                                  
+ 2 Scar right eye brow, mole on left shoulder, vaccination mark on left arm.    
+ 3 Scar on forehead, left eyebrow &amp; wrist, lost front upper tooth.              
+ 4 Scar on forehead, 2 scar on right arm below the elbow and lost several teeth.
+ 5 Scar on forehead and left of nose                                            
+ 6 Scars on forehead and nose, ears pierced                                     
+ 7 Scars on right knee, Ears pierced                                            
+ 8 Scar on right knee                                                           
+ 9 Scar on right hand and on forehead, mole on nose.                            
+10 Small Mole on left cheek, scar over left eyebrow, ears pierced               </code></pre>
+</div>
+</div>
+<p>Most can be matched to the list; the exceptions needing some new additions to the list are variations in terminology (“forearm” or “collarbone”) or likely to be related to minor injuries that wouldn’t appear in hospital or skeleton records (“tooth/teeth”, “hair”).</p>
+<p>However, there are also more locations that can’t be placed, in particular “nail”, “bone” and “fore”, which are very likely to be due to extraction failures. With this much bigger and messier collection, I just have to accept imperfection.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">dp_locations_by_region <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb13-2">dp_injury_locations <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb13-3">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># initial tidying up</span></span>
+<span id="cb13-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">body_location=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_to_lower</span>(body_location)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb13-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">body_location=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_trim</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_replace_all</span>(body_location, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">s</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">s+"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" "</span>))) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb13-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">location_region =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">case_when</span>(</span>
+<span id="cb13-7">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(body_location, arm_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"arm"</span>,</span>
+<span id="cb13-8">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(body_location, hand_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hand"</span>,</span>
+<span id="cb13-9">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(body_location, foot_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"foot"</span>,</span>
+<span id="cb13-10">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(body_location, leg_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"leg"</span>,</span>
+<span id="cb13-11">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(body_location, head_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"head"</span>,</span>
+<span id="cb13-12">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(body_location, torso_region) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"torso"</span>,</span>
+<span id="cb13-13">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># put "side" and "body" in torso after more specific descriptions are accounted for</span></span>
+<span id="cb13-14">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># (some will be wrong...)</span></span>
+<span id="cb13-15">    body_location <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%in%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"side"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"body"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"torso"</span>,</span>
+<span id="cb13-16">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># differentiate empty locations from those that fail to match the list</span></span>
+<span id="cb13-17">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">is.na</span>(body_location) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unknown"</span></span>
+<span id="cb13-18">  )) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb13-19">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(location_region, body_location, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">name=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"count"</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb13-20">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">rank=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">min_rank</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">desc</span>(count))) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb13-21">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">relocate</span>(rank)</span></code></pre></div>
+</div>
+<p><em>Explore locations that failed to match…</em></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-cfbfb1a6781404b09a61" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-cfbfb1a6781404b09a61">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"rank":[211,211,211,211,211,211,89,211,55,108,49,96,122,171,92,25,43,179,211,211,127,211,211,115,66,211,11,179,127,37,211,93,211,72,119,211,211,211,100,165,211,211,179,64,211,16,211,211,125,36,156,171,32,211,85,179,211,211,211,211,211,84,159],"body_location":["1 top tooth","3 teeth","4 top teeth","above left nipple","above right brest","all her teeth","bone","both less","buttock","buttocks","calf","collar bone","collarbone","each forearm","fore","forearm","forefinger","four top teeth","front teeth","front upper tooth","hair","in palm","inside left upperarm","knuckle","left buttock","left check","left forearm","left forefinger","left nostril","left side","left upper forearm","loin","lower part of left forearm","nail","navel","nearby all her teeth","nearly all front teeth","nearly all teeth","nipple","on palm","one tooth","one top tooth","right brest","right buttock","right check","right forearm","right forefinger","right knuckle","right nostril","right side","several teeth","several top teeth","teeth","third left to","tooth","top front teeth","top teeth","two bottom front teeth","two top teeth","under loft eve","upper teeth","upperarm","vein"],"count":[1,1,1,1,1,1,121,1,358,64,435,81,30,3,86,782,530,2,1,1,23,1,1,46,230,1,1505,2,23,606,1,83,1,206,31,1,1,1,73,5,1,1,2,252,1,1220,1,1,29,634,8,3,676,1,146,2,1,1,1,1,1,157,6]},"columns":[{"id":"rank","name":"rank","type":"numeric","maxWidth":80},{"id":"body_location","name":"location","type":"character","maxWidth":140},{"id":"count","name":"count","type":"numeric","maxWidth":70}],"filterable":true,"defaultSorted":[{"id":"rank","desc":false},{"id":"body_location","desc":false}],"defaultPageSize":10,"defaultExpanded":true,"highlight":true,"bordered":true,"dataKey":"8af183ae7c82a0a48fc7086011752097"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Those that can be placed go into a supplementary text file, organised and added to the original. Then the full list can be saved to a final location as a CSV file for later reuse.</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>A quick peek at the results, comparing the three collections.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/locations/index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There are some very marked differences between the collections.</p>
+<ul>
+<li><p>DP has a much higher percentage of head injuries; closer inspection shows a lot of these are relatively superficial injuries that wouldn’t appear in the other two collections, like facial scars or missing teeth (the latter might often be more to do with poor dental health than injuries).</p></li>
+<li><p>The largest category in the hospitals data is leg injuries (mostly fractures).</p></li>
+<li><p>Skeletons show a lot more torso injuries, most of which are rib fractures.</p></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://skin-and-bone-in-london-1760-1901.github.io/posts/locations/</guid>
+  <pubDate>Sun, 27 Apr 2025 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Biographical information</title>
   <dc:creator>Sharon Howard</dc:creator>
