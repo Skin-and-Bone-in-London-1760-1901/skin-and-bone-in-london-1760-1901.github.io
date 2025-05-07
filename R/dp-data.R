@@ -102,8 +102,11 @@ dp_injuries <-
   ## tweak for injury category "lost-tbd". needs injury region; prefer not to do that inside injury_classify
   mutate(injury_category = case_when(
     injury_region %in% c("foot", "hand", "leg", "arm") & injury_category=="lost-tbd" ~ "amputation",
+    injury=="lost sight" ~ "chronic",
     is.na(injury_region) & injury_category=="lost-tbd" ~ NA,
-    injury_category=="lost-tbd" ~ "other",
+    str_detect(body_location, "teeth|tooth") ~ NA,
+    # remainder varied, includes eyes, ears, genitalia and less plausible locations but not many of anything
+    injury_category=="lost-tbd" ~ "other", 
     .default = injury_category
   )) |>
   

@@ -64,7 +64,6 @@ ptol_cat_ost <- c('#C2A5CF',  '#E7D4E8', '#44BB99', '#FFAABB',  '#EEDD88' ,   '#
 
 inj_cat_ost_relevel <- c("amputation", "dislocation",  "muscle", "blunt", "sharp", "fracture")
 
-inj_reg_relevel <-  c( "head", "ribs", "torso", "arm", "hand", "leg",  "foot")
 
 
 ptol_cat_s <- c('#C2A5CF', '#EE8866',  '#EEDD88', '#E7D4E8',  '#99DDFF',  '#77AADD',   '#AAAA00',  '#FFAABB', '#44BB99', '#BBCC33' )  # ptol light plus 2 purple from another ptol scale 
@@ -74,6 +73,9 @@ ptol_cat_ss <- c( '#EE8866', '#EEDD88',  '#99DDFF', '#44BB99', '#BBCC33') # reus
 
 
 ## Injury locations
+
+#find in files didn't find this in a qmd ??
+#inj_reg_relevel <-  c( "head", "ribs", "torso", "arm", "hand", "leg",  "foot")
 
 # region colour and ordering should work across datasets. 
 inj_region_relevel <-  c( "head", "ribs", "torso", "arm", "hand", "leg",  "foot")
@@ -88,7 +90,8 @@ ptol_region <- c("head"= '#44BB99' ,
                  "hand"= '#33BBEE',  
                  "leg"= '#F67E4B',  
                  "foot"= '#FDB366', 
-                  "unknown"= '#dddddd')
+                  "unknown"= '#dddddd',
+                 "unrecorded"="#dddddd")
 
 
 
