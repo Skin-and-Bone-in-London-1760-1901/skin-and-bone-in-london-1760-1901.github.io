@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/hospitals/index.html",
       "/posts/categories/index.html",
       "/posts/locations/index.html",
       "/posts/biographical/index.html",
@@ -12,6 +13,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/hospitals/index.html",
       "/posts/categories/index.html",
       "/posts/locations/index.html",
       "/posts/biographical/index.html",

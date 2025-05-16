@@ -10,7 +10,172 @@
 <atom:link href="https://skin-and-bone-in-london-1760-1901.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>A data blog for the Skin and Bone project</description>
 <generator>quarto-1.5.53</generator>
-<lastBuildDate>Tue, 06 May 2025 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 15 May 2025 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Exploring the Skin and Bone hospitals data</title>
+  <dc:creator>Sharon Howard</dc:creator>
+  <link>https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="about-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-data">About the data</h2>
+<p>Data originally collected by Madeleine Mant, based on admission and discharge records of four hospitals:</p>
+<ul>
+<li>St Thomas’ (STH) (1774-1800 with many gaps)</li>
+<li>Guy’s (GHS) (1813-38)</li>
+<li>Royal London (RLH) (1760, 1791-92, 1805)</li>
+<li>Middlesex (MXH) (1760-64, 1771-88)</li>
+</ul>
+<p>Records vary in detail: the bare minimum is name, date of admission and reason for admission. Injury descriptions are quite brief and lacking in detail (eg, they very rarely record side of body), and only the specific injury that caused admission is likely to be recorded.</p>
+<p>RLH has the richest set of data, also having place of abode, occupation, age and result of hospital stay for most individuals, but only covers 3 1/2 years. GHS has age data for about a quarter of the records. Discharge information is available for most RLH records and about a quarter of MXH. STH is quite fragmentary.</p>
+<p>More detailed information about the sources can be found in Madeleine Mant’s PhD thesis, <a href="https://macsphere.mcmaster.ca/handle/11375/20026">Slips, Trips, Falls, and Brawls: Fractures of the Working Poor in London During the Long Eighteenth Century</a> (McMaster University, 2016).</p>
+</section>
+<section id="injuries-and-chronological-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="injuries-and-chronological-patterns">Injuries and chronological patterns</h2>
+<p>Generally, it seems reasonable to assume that an injury would have occurred shortly before admission, so it’s possible to use this data to explore changes over time or seasonal patterns to injuries.</p>
+<p>STH and (at least to some extent) RLH only admitted patients once a week, so it’s not possible to be more precise than that; here I’ll use monthly numbers and focus on years without gaps in the surviving registers.</p>
+<p>The <a href="https://epirhandbook.com/en/new_pages/time_series.html">R Epidemiologists Handbook</a> has a helpful introduction to time series analysis with R.</p>
+<p>I’m using some features of the <a href="https://tsibble.tidyverts.org/">tsibble</a> package in data processing.</p>
+</section>
+<section id="chronological-overview" class="level2">
+<h2 class="anchored" data-anchor-id="chronological-overview">Chronological overview</h2>
+<p>This shows the lack of overlap between most of hospitals’ data, which may make it difficult to talk about long term chronological patterns, as it could be muddied by possible differences between hospitals.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Since STH is very fragmentary and RLH only has three complete years, I’ll remove them from subsequent analysis to focus on the two hospital with good runs of full years, MXH and GHS.</p>
+<p>There’s a lot of fluctuation, but MXH has mostly smaller monthly numbers. (Though why does MXH have a sudden large spike in numbers in 1774? That may need checking out. Also interesting that its numbers look higher before than after the gap in records 1765-71.)</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Boxplot of monthly admissions per hospital confirms much smaller numbers for MXH.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="injury-categories-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="injury-categories-over-time">injury categories over time</h3>
+<p>Is there any significant change in the distribution of injuries with which people are admitted over time?</p>
+<p>Filtering out a few categories that constitute &lt;1% of the total for each hospital; there are some differences between the two hospitals which I won’t investigate here. Eg, <code>muscle</code> = 6.6% of MXH but &lt;1% of GHS; <code>injury</code> doesn’t appear as a category in MXH but 35% in GHS. The former might be an actual difference in hospital intake; the latter is more likely a difference in recording practices.</p>
+<p>The heatmaps are proportional rather than using raw numbers since there’s a lot of variation in category sizes. Even with the filters, some of the annual numbers could be very small. (White blocks in the heatmap = zero.) These are more likely to help with highlighting possible areas of interest for further exploration than to provide definitive findings.</p>
+<p>MXH heatmap confirms generally higher numbers 1760-64, before the gap in records, but also highlights certain categories in that period - <code>dislocation</code>, <code>muscle</code> and <code>wound.</code> After the resumption, distribution of injuries seems much more even.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For GHS the distribution overall looks less variable than in MXH except for a possible surge in the <code>wound</code> category right at the end of the period.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="seasonality-heatmaps" class="level2">
+<h2 class="anchored" data-anchor-id="seasonality-heatmaps">Seasonality heatmaps</h2>
+<p>NB: This is not taking into account different length of months; 30 vs 31 days doesn’t make any visible difference, but needs to be borne in mind when looking at February.</p>
+<p>If I want to combine the data for both hospitals in one chart, it’s better to do proportions than numbers again because of the differences.</p>
+<p>The heatmap doesn’t suggest any major changes over time. But it does hint at a concentration of admissions in the middle months of the year, slightly more marked in the earlier MXH years (as well as one noticeable outlier that could would need further examination).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="by-hospital" class="level3">
+<h3 class="anchored" data-anchor-id="by-hospital">by hospital</h3>
+<p>Comparison of the two hospitals confirms the seasonal pattern is stronger for MXH than GHS, though it’s still present in the latter. In GHS, but not in MXH, December looks slightly more concentrated than the preceding and following months. (February is slightly exaggerated in both due to being a short month and if that’s taken into account it’d be much the same as Jan and March.)</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="by-gender" class="level3">
+<h3 class="anchored" data-anchor-id="by-gender">by gender</h3>
+<p>Comparison of gender highlights that the summer pattern is much stronger for men than women. Why would there be more female injuries in May?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>(there isn’t enough age data to do the same chart for age groups.)</p>
+</section>
+<section id="by-injury-category" class="level3">
+<h3 class="anchored" data-anchor-id="by-injury-category">by injury category</h3>
+<p>A look at the four most frequent injury categories overall (excluding non-specific <code>injury</code>).</p>
+<p>Sometimes a visualisation tells you something that hadn’t occurred to you but is obvious in retrospect: <code>burn</code>s are most frequent in the late autumn and winter months (but why more so in Nov-Dec than in Jan-Feb?). The other three categories are on the whole following the summer months pattern, though <code>fracture</code> is… interesting.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="by-body-region" class="level3">
+<h3 class="anchored" data-anchor-id="by-body-region">by body region</h3>
+<p>And finally a breakdown for the four most frequent body regions (excl unknown). Again, tending to point to the summer pattern, but some more strongly so than others.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <guid>https://skin-and-bone-in-london-1760-1901.github.io/posts/hospitals/</guid>
+  <pubDate>Thu, 15 May 2025 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Types of injury</title>
   <dc:creator>Sharon Howard</dc:creator>
