@@ -10,7 +10,263 @@
 <atom:link href="https://skin-and-bone-in-london-1760-1901.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>A data blog for the Skin and Bone project</description>
 <generator>quarto-1.5.53</generator>
-<lastBuildDate>Thu, 15 May 2025 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 25 May 2025 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Exploring the Skin and Bone osteological data</title>
+  <dc:creator>Sharon Howard</dc:creator>
+  <link>https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="about-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-data">About the data</h2>
+<p>Data originally collected by Madeleine Mant, from the Museum of London’s Centre for Human Bioarchaeology collections. There are three cemetery collections:</p>
+<ul>
+<li><p>Royal London Hospital</p>
+<ul>
+<li>hospital cemetery, east London</li>
+<li>dates 1825-1841</li>
+<li>106 individuals with injuries</li>
+</ul></li>
+<li><p>Payne Road/Bow Baptist</p>
+<ul>
+<li>parish cemetery, east London</li>
+<li>dates 1816-1854</li>
+<li>74 individuals with injuries</li>
+</ul></li>
+<li><p>St.&nbsp;Bride’s lower</p>
+<ul>
+<li>parish cemetery, City of London</li>
+<li>dates 1770-1849</li>
+<li>154 individuals with injuries</li>
+</ul></li>
+</ul>
+<p>The major strength of the collection is that it’s fine-grained, systematically recorded data covering the whole body and a range of the adult population.</p>
+<p>However, information is limited to injuries that can be observed on a skeleton, which in practice means mainly fractures (the focus of Mant’s original research). Also, there is minimal background data; no dates of death are available so we only have very approximate dating, and sex and age have to be assigned probabilistically (accuracy can depend on factors like how much of the skeleton has survived).</p>
+<p>More detailed information about the data can be found in Madeleine Mant’s PhD thesis, <a href="https://macsphere.mcmaster.ca/handle/11375/20026">Slips, Trips, Falls, and Brawls: Fractures of the Working Poor in London During the Long Eighteenth Century</a> (McMaster University, 2016).</p>
+</section>
+<section id="mapping-bodies" class="level2">
+<h2 class="anchored" data-anchor-id="mapping-bodies">Mapping bodies</h2>
+<p>The consistent and detailed descriptions of injuries facilitate visualisation using body heatmaps. For this I’m using the <a href="https://epiben.github.io/humapr/">humapr</a> package. They’re quite simple, but I think visually effective.</p>
+<p>The Skin and Bone injury locations needed some re-processing to map onto the more specific Humap categories, which are:</p>
+<ul>
+<li>head</li>
+<li>neck</li>
+<li>chest</li>
+<li>abdomen</li>
+<li>arm [ie, upper arm]</li>
+<li>forearm</li>
+<li>hand</li>
+<li>thigh [upper leg]</li>
+<li>leg [lower leg]</li>
+<li>foot</li>
+</ul>
+<p>I needed to separate out some injuries that had been pooled into “torso”, “arm” and “leg” for S&amp;B’s regions, into their upper and lower halves. This is possible in OS because of the detailed recording, but often much less easy (or not possible) in the other two collections. However, the humaps are quite flexible and it’s possible to pool areas, so you can combine sides, say, or upper+lower torso, upper+lower arms, upper+lower legs for more or less precision.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">humap location</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">S&amp;B region</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">abdomen</td>
+<td style="text-align: left;">torso</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">arm</td>
+<td style="text-align: left;">arm</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chest</td>
+<td style="text-align: left;">ribs</td>
+<td style="text-align: right;">142</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">chest</td>
+<td style="text-align: left;">torso</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">foot</td>
+<td style="text-align: left;">foot</td>
+<td style="text-align: right;">64</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">forearm</td>
+<td style="text-align: left;">arm</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">forearm</td>
+<td style="text-align: left;">hand</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hand</td>
+<td style="text-align: left;">hand</td>
+<td style="text-align: right;">71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">head</td>
+<td style="text-align: left;">head</td>
+<td style="text-align: right;">56</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">leg</td>
+<td style="text-align: left;">leg</td>
+<td style="text-align: right;">69</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">neck</td>
+<td style="text-align: left;">torso</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">thigh</td>
+<td style="text-align: left;">leg</td>
+<td style="text-align: right;">26</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Initially this is not including information about sides (so the data is pooled). Colours in the humap function in exactly the same way as a conventional heatmap, light yellow=high density through to dark blue=low density (grey=zero).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Compare this to a conventional heatmap of the same areas; it doesn’t give the same sense of how areas relate to each other.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We know that rib injuries are a much higher proportion of injuries in OS data than in the other two collections and that’s really highlighted by the humap. But downside that it’s not easy to see anything else!</p>
+<p>So let’s take rib injuries out of the data to see better what’s going on elsewhere. Focus shifts to lower limbs, followed by head.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="include-side-of-body" class="level3">
+<h3 class="anchored" data-anchor-id="include-side-of-body">include side of body</h3>
+<p>About 40% of injuries have no side information, a sizeable proportion; sometimes this reflects central locations, eg spine or nose, but they can also be unknowns. (That might need more checking before using this in serious research.)</p>
+<p>Some intriguing things happen here. While it’s unsurprising that right hand injuries tend to be more predominant than left, it’s not so easy to understand why the reverse is true for lower leg/foot injuries. Head injuries are almost evenly distributed between left and right.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="gender" class="level2">
+<h2 class="anchored" data-anchor-id="gender">Gender</h2>
+<p>Now it’s possible to do some breakdowns for comparison. In each case, I’ll exclude rib injuries, but it should be borne in mind that some breakdowns will be very small. Gender is unknown for a significant proportion of individuals/injuries (which, like side information, may not be completely random; it tends to correlate with lower limbs).</p>
+<p><em>Health warning!</em> Where there are multiple humaps side by side, be careful of comparing colours. If there’s a significant difference in the distributions (eg one is quite evenly distributed between 10% and 30% and another goes from 0% to 50%), the colour scales will not be directly comparable. Keep an eye on the labels.</p>
+<p>The gendered pattern for forearms v hands is particularly interesting as it may point to patterns of violence; hand injuries might be more likely to be offensive (eg, throwing punches). Forearm injuries could be more suggestive of defensive injuries, although they’re just as likely to be work-related. The latter could also be hinted at by the contrast between arm and leg injuries. Setting hands aside, men are more likely than women to suffer leg injuries, and the converse is true of arm injuries, and this could plausibly reflect differences in their working lives.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Including rib injuries for reference, but not much else is visible.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="age-groups" class="level2">
+<h2 class="anchored" data-anchor-id="age-groups">Age groups</h2>
+<p>The 18-25 group is <em>very</em> small (only 15 individuals, 18 injuries) so it’s excluded along with unknown ages.</p>
+<p>These are quite difficult to interpret (for me anyway!), especially bearing in mind that skeletons will bear injuries from their whole lifetime’s experience, not just a single moment in time. Younger adults seem to have more upper torso injuries, while the middle group have a much higher proportion of head injuries; it’s not clear to me why that would be the case. Injuries in the oldest group look more evenly dispersed than in younger groups.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The map including rib injuries. While ribs overwhelm again, it’s still possible to see the head injuries for the middle group. Closer inspection of the labels also shows that the oldest group have a slightly higher percentage of upper body injuries.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="injury-categories" class="level2">
+<h2 class="anchored" data-anchor-id="injury-categories">Injury categories</h2>
+<p>Most categories are too small for a breakdown to be meaningful; only two categories have &gt;20 injuries, and the majority are fractures.</p>
+<p>With rib injuries excluded, muscle injuries are very strongly associated with the lower body and upper legs (but there are very small numbers), and fractures with the outer extremities.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Including rib injuries: a rare sighting of a humap where they make little difference.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://skin-and-bone-in-london-1760-1901.github.io/posts/osteology/</guid>
+  <pubDate>Sun, 25 May 2025 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Exploring the Skin and Bone hospitals data</title>
   <dc:creator>Sharon Howard</dc:creator>

@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "Posts",
     "section": "",
-    "text": "Exploring the Skin and Bone hospitals data\n\n\n\n\n\nFocus: time and seasonality in hospital admissions\n\n\n\n\n\n16 May 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nTypes of injury\n\n\n\n\n\nDefining and processing useful categories for injuries\n\n\n\n\n\n7 May 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nInjury locations on the body\n\n\n\n\n\nMapping injury locations to broader regions for analysis\n\n\n\n\n\n28 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nBiographical information\n\n\n\n\n\nProcessing gender and age data in the Skin and Bone collections\n\n\n\n\n\n21 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nA first look at the Skin and Bone data\n\n\n\n\n\nSome early exploratory visualisations at the project’s advisory board meeting in May 2023\n\n\n\n\n\n14 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nAn overview of the Skin and Bone data\n\n\n\n\n\nBrief description of the data and processing methods\n\n\n\n\n\n7 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\nNo matching items"
+    "text": "Exploring the Skin and Bone osteological data\n\n\n\n\n\nFocus: mapping injury locations\n\n\n\n\n\n26 May 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nExploring the Skin and Bone hospitals data\n\n\n\n\n\nFocus: time and seasonality in hospital admissions\n\n\n\n\n\n16 May 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nTypes of injury\n\n\n\n\n\nDefining and processing useful categories for injuries\n\n\n\n\n\n7 May 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nInjury locations on the body\n\n\n\n\n\nMapping injury locations to broader regions for analysis\n\n\n\n\n\n28 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nBiographical information\n\n\n\n\n\nProcessing gender and age data in the Skin and Bone collections\n\n\n\n\n\n21 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nA first look at the Skin and Bone data\n\n\n\n\n\nSome early exploratory visualisations at the project’s advisory board meeting in May 2023\n\n\n\n\n\n14 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\n\n\n\n\n\n\nAn overview of the Skin and Bone data\n\n\n\n\n\nBrief description of the data and processing methods\n\n\n\n\n\n7 April 2025\n\n\nSharon Howard\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -18,7 +18,7 @@
     "href": "index.html#recent-posts",
     "title": "Skin and Bone",
     "section": "Recent Posts",
-    "text": "Recent Posts\n\n\n\n\n\nDate\n\n\nTitle\n\n\n\n\n\n\n16 May 2025\n\n\nExploring the Skin and Bone hospitals data\n\n\n\n\n7 May 2025\n\n\nTypes of injury\n\n\n\n\n28 Apr 2025\n\n\nInjury locations on the body\n\n\n\n\n21 Apr 2025\n\n\nBiographical information\n\n\n\n\n14 Apr 2025\n\n\nA first look at the Skin and Bone data\n\n\n\n\n7 Apr 2025\n\n\nAn overview of the Skin and Bone data\n\n\n\n\n\nNo matching items\n\n\nAll posts"
+    "text": "Recent Posts\n\n\n\n\n\nDate\n\n\nTitle\n\n\n\n\n\n\n26 May 2025\n\n\nExploring the Skin and Bone osteological data\n\n\n\n\n16 May 2025\n\n\nExploring the Skin and Bone hospitals data\n\n\n\n\n7 May 2025\n\n\nTypes of injury\n\n\n\n\n28 Apr 2025\n\n\nInjury locations on the body\n\n\n\n\n21 Apr 2025\n\n\nBiographical information\n\n\n\n\n14 Apr 2025\n\n\nA first look at the Skin and Bone data\n\n\n\n\n\nNo matching items\n\n\nAll posts"
   },
   {
     "objectID": "index.html#credits",
@@ -26,6 +26,48 @@
     "title": "Skin and Bone",
     "section": "Credits",
     "text": "Credits\nThe project was funded by the British Academy (2022-23).\nThe project directors are Zoe Alker, University of Lancaster, and Madeleine Mant, University of Toronto.\nProject technical development is carried out by the Digital Humanities Institute | Sheffield.\nThis blog has been created by Sharon Howard, using RStudio, Quarto and Github."
+  },
+  {
+    "objectID": "posts/osteology/index.html",
+    "href": "posts/osteology/index.html",
+    "title": "Exploring the Skin and Bone osteological data",
+    "section": "",
+    "text": "Data originally collected by Madeleine Mant, from the Museum of London’s Centre for Human Bioarchaeology collections. There are three cemetery collections:\n\nRoyal London Hospital\n\nhospital cemetery, east London\ndates 1825-1841\n106 individuals with injuries\n\nPayne Road/Bow Baptist\n\nparish cemetery, east London\ndates 1816-1854\n74 individuals with injuries\n\nSt. Bride’s lower\n\nparish cemetery, City of London\ndates 1770-1849\n154 individuals with injuries\n\n\nThe major strength of the collection is that it’s fine-grained, systematically recorded data covering the whole body and a range of the adult population.\nHowever, information is limited to injuries that can be observed on a skeleton, which in practice means mainly fractures (the focus of Mant’s original research). Also, there is minimal background data; no dates of death are available so we only have very approximate dating, and sex and age have to be assigned probabilistically (accuracy can depend on factors like how much of the skeleton has survived).\nMore detailed information about the data can be found in Madeleine Mant’s PhD thesis, Slips, Trips, Falls, and Brawls: Fractures of the Working Poor in London During the Long Eighteenth Century (McMaster University, 2016)."
+  },
+  {
+    "objectID": "posts/osteology/index.html#about-the-data",
+    "href": "posts/osteology/index.html#about-the-data",
+    "title": "Exploring the Skin and Bone osteological data",
+    "section": "",
+    "text": "Data originally collected by Madeleine Mant, from the Museum of London’s Centre for Human Bioarchaeology collections. There are three cemetery collections:\n\nRoyal London Hospital\n\nhospital cemetery, east London\ndates 1825-1841\n106 individuals with injuries\n\nPayne Road/Bow Baptist\n\nparish cemetery, east London\ndates 1816-1854\n74 individuals with injuries\n\nSt. Bride’s lower\n\nparish cemetery, City of London\ndates 1770-1849\n154 individuals with injuries\n\n\nThe major strength of the collection is that it’s fine-grained, systematically recorded data covering the whole body and a range of the adult population.\nHowever, information is limited to injuries that can be observed on a skeleton, which in practice means mainly fractures (the focus of Mant’s original research). Also, there is minimal background data; no dates of death are available so we only have very approximate dating, and sex and age have to be assigned probabilistically (accuracy can depend on factors like how much of the skeleton has survived).\nMore detailed information about the data can be found in Madeleine Mant’s PhD thesis, Slips, Trips, Falls, and Brawls: Fractures of the Working Poor in London During the Long Eighteenth Century (McMaster University, 2016)."
+  },
+  {
+    "objectID": "posts/osteology/index.html#mapping-bodies",
+    "href": "posts/osteology/index.html#mapping-bodies",
+    "title": "Exploring the Skin and Bone osteological data",
+    "section": "Mapping bodies",
+    "text": "Mapping bodies\nThe consistent and detailed descriptions of injuries facilitate visualisation using body heatmaps. For this I’m using the humapr package. They’re quite simple, but I think visually effective.\nThe Skin and Bone injury locations needed some re-processing to map onto the more specific Humap categories, which are:\n\nhead\nneck\nchest\nabdomen\narm [ie, upper arm]\nforearm\nhand\nthigh [upper leg]\nleg [lower leg]\nfoot\n\nI needed to separate out some injuries that had been pooled into “torso”, “arm” and “leg” for S&B’s regions, into their upper and lower halves. This is possible in OS because of the detailed recording, but often much less easy (or not possible) in the other two collections. However, the humaps are quite flexible and it’s possible to pool areas, so you can combine sides, say, or upper+lower torso, upper+lower arms, upper+lower legs for more or less precision.\n\n\n\n\n\nhumap location\nS&B region\ncount\n\n\n\n\nabdomen\ntorso\n21\n\n\narm\narm\n31\n\n\nchest\nribs\n142\n\n\nchest\ntorso\n26\n\n\nfoot\nfoot\n64\n\n\nforearm\narm\n59\n\n\nforearm\nhand\n8\n\n\nhand\nhand\n71\n\n\nhead\nhead\n56\n\n\nleg\nleg\n69\n\n\nneck\ntorso\n4\n\n\nthigh\nleg\n26\n\n\n\n\n\n\n\nInitially this is not including information about sides (so the data is pooled). Colours in the humap function in exactly the same way as a conventional heatmap, light yellow=high density through to dark blue=low density (grey=zero).\n\n\n\n\n\n\n\n\n\nCompare this to a conventional heatmap of the same areas; it doesn’t give the same sense of how areas relate to each other.\n\n\n\n\n\n\n\n\n\nWe know that rib injuries are a much higher proportion of injuries in OS data than in the other two collections and that’s really highlighted by the humap. But downside that it’s not easy to see anything else!\nSo let’s take rib injuries out of the data to see better what’s going on elsewhere. Focus shifts to lower limbs, followed by head.\n\n\n\n\n\n\n\n\n\n\ninclude side of body\nAbout 40% of injuries have no side information, a sizeable proportion; sometimes this reflects central locations, eg spine or nose, but they can also be unknowns. (That might need more checking before using this in serious research.)\nSome intriguing things happen here. While it’s unsurprising that right hand injuries tend to be more predominant than left, it’s not so easy to understand why the reverse is true for lower leg/foot injuries. Head injuries are almost evenly distributed between left and right."
+  },
+  {
+    "objectID": "posts/osteology/index.html#gender",
+    "href": "posts/osteology/index.html#gender",
+    "title": "Exploring the Skin and Bone osteological data",
+    "section": "Gender",
+    "text": "Gender\nNow it’s possible to do some breakdowns for comparison. In each case, I’ll exclude rib injuries, but it should be borne in mind that some breakdowns will be very small. Gender is unknown for a significant proportion of individuals/injuries (which, like side information, may not be completely random; it tends to correlate with lower limbs).\nHealth warning! Where there are multiple humaps side by side, be careful of comparing colours. If there’s a significant difference in the distributions (eg one is quite evenly distributed between 10% and 30% and another goes from 0% to 50%), the colour scales will not be directly comparable. Keep an eye on the labels.\nThe gendered pattern for forearms v hands is particularly interesting as it may point to patterns of violence; hand injuries might be more likely to be offensive (eg, throwing punches). Forearm injuries could be more suggestive of defensive injuries, although they’re just as likely to be work-related. The latter could also be hinted at by the contrast between arm and leg injuries. Setting hands aside, men are more likely than women to suffer leg injuries, and the converse is true of arm injuries, and this could plausibly reflect differences in their working lives.\n\n\n\n\n\n\n\n\n\nIncluding rib injuries for reference, but not much else is visible."
+  },
+  {
+    "objectID": "posts/osteology/index.html#age-groups",
+    "href": "posts/osteology/index.html#age-groups",
+    "title": "Exploring the Skin and Bone osteological data",
+    "section": "Age groups",
+    "text": "Age groups\nThe 18-25 group is very small (only 15 individuals, 18 injuries) so it’s excluded along with unknown ages.\nThese are quite difficult to interpret (for me anyway!), especially bearing in mind that skeletons will bear injuries from their whole lifetime’s experience, not just a single moment in time. Younger adults seem to have more upper torso injuries, while the middle group have a much higher proportion of head injuries; it’s not clear to me why that would be the case. Injuries in the oldest group look more evenly dispersed than in younger groups.\n\n\n\n\n\n\n\n\n\nThe map including rib injuries. While ribs overwhelm again, it’s still possible to see the head injuries for the middle group. Closer inspection of the labels also shows that the oldest group have a slightly higher percentage of upper body injuries."
+  },
+  {
+    "objectID": "posts/osteology/index.html#injury-categories",
+    "href": "posts/osteology/index.html#injury-categories",
+    "title": "Exploring the Skin and Bone osteological data",
+    "section": "Injury categories",
+    "text": "Injury categories\nMost categories are too small for a breakdown to be meaningful; only two categories have &gt;20 injuries, and the majority are fractures.\nWith rib injuries excluded, muscle injuries are very strongly associated with the lower body and upper legs (but there are very small numbers), and fractures with the outer extremities.\n\n\n\n\n\n\n\n\n\nIncluding rib injuries: a rare sighting of a humap where they make little difference."
   },
   {
     "objectID": "posts/hospitals/index.html",
