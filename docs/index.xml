@@ -9,8 +9,285 @@
 <link>https://skin-and-bone-in-london-1760-1901.github.io/</link>
 <atom:link href="https://skin-and-bone-in-london-1760-1901.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>A data blog for the Skin and Bone project</description>
-<generator>quarto-1.5.53</generator>
-<lastBuildDate>Sun, 25 May 2025 23:00:00 GMT</lastBuildDate>
+<generator>quarto-1.7.32</generator>
+<lastBuildDate>Wed, 16 Jul 2025 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Exploring the Skin and Bone convicts data</title>
+  <dc:creator>Sharon Howard</dc:creator>
+  <link>https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="about-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-data">About the data</h2>
+<p>The DP collection has been sourced from <em>physical descriptions</em> of prisoners and convicts in data held by the <a href="https://www.digitalpanopticon.org">Digital Panopticon</a>.</p>
+<p>Four datasets in DP have this type of description and include Londoners between 1760 and 1901 (see linked pages for fuller documentation):</p>
+<ul>
+<li><a href="https://www.digitalpanopticon.org/England_and_Wales_Criminal_Registers_1791-1892">Home Office Criminal Registers 1790-1802</a> [HCR] (8833 descriptions)</li>
+<li><a href="https://www.digitalpanopticon.org/Prison_Registers_1770-1951">Millbank Prison Registers 1816-1826</a> [MPR] (914 descriptions)</li>
+<li><a href="https://www.digitalpanopticon.org/UK_Licences_for_the_Parole_of_Convicts_1853-1925">Prison Licences 1853-1883</a> [PL: split into PLD for female convicts (880); TLM for male convicts (5461)] (6341 descriptions in total)</li>
+<li><a href="https://www.digitalpanopticon.org/Metropolitan_Police_Register_of_Habitual_Criminals_1881-1925">Metropolitan Police Register of Habitual Criminals 1881-1901</a> (19716 descriptions)</li>
+</ul>
+</section>
+<section id="caveats-and-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="caveats-and-challenges">Caveats and challenges</h2>
+<p>The DP collection is by far the largest Skin and Bone dataset, and the physical descriptions it contains are in many cases the most detailed records we have. However, they’re also the most difficult to work with and to interpret.</p>
+<section id="data-quality" class="level3">
+<h3 class="anchored" data-anchor-id="data-quality">data quality</h3>
+<p>In fact, I can pretty much repeat the <a href="https://criminaltattoos.github.io/post/2021-04-12-a-first-look-at-tattoos-in-the-digital-panopticon/">caveats for the tattoos data</a> (extracted from the same sources), with a few slight variations.</p>
+<blockquote class="blockquote">
+<p>Users of the data should be aware from the outset that the dataset is a very long way from perfect; extracting tattoos from the descriptions was a major challenge for a small project with limited funding. It is likely that many tattoos (especially the “long tail” of rare tattoo designs) have been missed, and conversely things that were not tattoos have been misidentified. The process aimed not simply to find tattoos but also to associate them with body locations, and this could also go wrong in various ways.</p>
+</blockquote>
+<p>Just one example which illustrates some of the difficulties:</p>
+<blockquote class="blockquote">
+<p>Scar forehead, right eyebrow, right ear, left cheek, left side of nose, both sides of neck, lip, right arm elbow, right leg, right shoulder. I.L.M.K Liverpool E.R on right arm, ears pierced, lost several teeth. [<a href="https://www.digitalpanopticon.org/life?id=obpdef1-626-18770807">Bridget Lacking</a>, sentenced to penal servitude 1881]</p>
+</blockquote>
+<p>The descriptions consist of small, mixed pieces of information, in no fixed order, with unreliable punctuation and frequent but inconsistent use of abbreviations. Tattoos were often grouped together by body location (and I think that can happen with injuries too), but in these two examples we have the opposite problem, with several locations grouped together by injury type.</p>
+<p>Some features are ambiguous and interpretation depends on context. We can be confident that “ears pierced” isn’t an injury, but “pierced” in some other location could well be. Quite a lot of convicts have “lost” teeth and we can’t know whether this is due to injuries or poor dental health (though the latter feels very likely in this period).</p>
+<p>NB: It’s possible for a person to have multiple descriptions (and a small number of people have several), but the average is only fractionally over one, so I’ll generally count per description or per injury.</p>
+</section>
+<section id="a-lack-of-balance" class="level3">
+<h3 class="anchored" data-anchor-id="a-lack-of-balance">a lack of balance</h3>
+<p>A second set of problems for data analysis and visualisation arises from several very unbalanced features of the collection. The RHC data completely dwarfs the other datasets, and the amount of information about injuries we can expect to find varies considerably between datasets.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is even more pronounced when counting injuries rather than descriptions or people, because RHC averages a higher number of injuries per description.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Arguably, the size of RHC means that any analysis that doesn’t in some way separate out datasets might as well just throw the other three away, because they’ll be more or less invisible anyway.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The same goes for gender: men massively outnumber women, which is a pretty normal feature of datasets about criminal offenders. Only about 15% of descriptions are of women. And men have more injuries than women do per description, so the difference is even more pronounced if counting injuries instead of descriptions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Injuries themselves are very unevenly distributed in terms of both locations and types, which often makes effective visualisation very difficult.</p>
+<p>Head injuries dominate injury locations.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>But types of injury are even worse: <em>86.5%</em> of injuries are in the “sharp” category. Most of these are injuries that are described as “scars” and may have been quite minor (and very old) injuries. The numbers are so large because many individuals had multiple scars (in the Bridget Lacking example above, she had scars on 10 different parts of her body).</p>
+<p>This is not a very useful bar chart.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I might count distinct injury types per person or description, rather than individual injuries, but it doesn’t really make a massive difference to the problem.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>One answer is to use a <a href="https://en.wikipedia.org/wiki/Logarithmic_scale">log scale</a>, but that’s not so immediately intuitive to all audiences and needs to be handled with care.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When comparing variables of very different sizes, using proportional charts is often effective. The downside is that there’s now <em>no</em> indication of numbers. It’s only effective with a small number of distinct values; this is pushing at the limits for me.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Another approach can be to use faceting (aka “small multiples”), in combination with independent scales per facet which make them, in effect, proportional. This enables me to focus on comparing the <em>shape</em> of the breakdowns, whilst still having numbers available for a sense of differences in scale.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The faceted bar chart can also be enhanced by adding a heatmap-like dimension, with the shading of each bar indicating <em>proportion</em> of the injury category (yellow= highest and dark blue=lowest). That helps to focus on what may be more significant differences (not just minor variations).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>One more problem is that (like the hospitals data) there’s very little overlap between the datasets, just a couple of years at the beginning of RHC and end of PL. Only PL covers much more than a decade and there are long gaps between them. Combined with the variability in recording of injuries, this would make any analysis of long-term trends even more problematic. If there are differences between datasets do they reflect change over time or differences between the offenders represented in each dataset?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="comparing-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-datasets">Comparing datasets</h2>
+<p>Even if I can’t be sure what it all means, I do want to know if there <em>are</em> any significant or simply interesting differences between datasets. I’ll try out some comparisons using injury categories and injury locations.</p>
+<section id="injury-categories" class="level3">
+<h3 class="anchored" data-anchor-id="injury-categories">injury categories</h3>
+<p>I’ve excluded the smallest categories. HCR is too small to make much of its rather different pattern. There are minor variations between the other three datasets (eg we can see from the brighter yellow that the highest concentration of sharp injuries is in PL) but the distributions are broadly similar - except for the curious absence of fractures in MPR.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="injury-locations" class="level3">
+<h3 class="anchored" data-anchor-id="injury-locations">injury locations</h3>
+<p>Injury locations don’t vary much between datasets: head injuries are the largest category (a slightly higher % in HCR/MPR than in PL/RHC), and the distribution of hand/arm/leg/foot injuries are similar in each dataset (even the tiny HCR set is not that different from the others this time).</p>
+<p>The main variation is in the frequency of torso injuries. Their absence in HCR could be consistent with my theory about why that dataset is less likely to record injuries in the first place. Along with the lower frequency in MPR, and the shared higher % of head injuries, there’s a <em>possible</em> hint of the state’s growing willingness to scrutinise and police prisoners’ bodies during the 19th century (a big theory to hang on small amounts of data, but I’m just exploring here…). This is moving a long way from the project’s focus on experiences of injury, but it underlines how that can’t be properly understood without some attention to the creation of the original sources.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gender" class="level3">
+<h3 class="anchored" data-anchor-id="gender">gender</h3>
+<p>There is clear variation between datasets: RHC has the lowest proportion of women (about 10%) and MPR the highest (nearly 30%).</p>
+<p>I’m not concerned here with <em>why</em> that’s the case, but would probably be thinking about likely differences between the kind of offender to be found at Millbank Prison in the 1820s and those convicted as “habitual criminals” more than half a century later. The invention of the category reflected growing anxieties about recidivism, and it wouldn’t be surprising if this was more focused on men than women.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="a-look-at-injuries-and-gender" class="level2">
+<h2 class="anchored" data-anchor-id="a-look-at-injuries-and-gender">A look at injuries and gender</h2>
+<p>I’ve already noted that men tend to have more injuries than women, and so it’s not surprising that a higher proportion of women than men have no recorded injuries at all. But the difference is even larger than I expected: 36% of female descriptions have at least one injury, compared to 61% of male descriptions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A breakdown of injury categories by gender also suggests some interesting variations, though differences are quite small. It seems that women are more likely to suffer fractures and burns than men, and men are more likely to have wounds and chronic injuries.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The proportion of sharp injuries is very similar for male and female, so let’s filter those out and take a closer look at the rest. I think it’s easier here to distinguish which are more significant variations: burns and fractures for women and wounds for men still stand out (whereas I think the variation for chronic is less notable). On the other hand, amputation now appears as a more significant difference.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The waffle chart for injury locations is quite a bit easier to read than the one for categories. Head injuries are clearly more associated with female, cf.&nbsp;torso and leg for male.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Those variations are quite suggestive of a gendered difference between “private” and “public” body parts. So I’ll group together as “private” body parts: torso (including shoulders but excluding neck if that’s been put in torso rather than head) and legs; “public”: head, feet, hands and arms.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/index_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://skin-and-bone-in-london-1760-1901.github.io/posts/criminal/</guid>
+  <pubDate>Wed, 16 Jul 2025 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Exploring the Skin and Bone osteological data</title>
   <dc:creator>Sharon Howard</dc:creator>
@@ -137,8 +414,6 @@
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 <p>Initially this is not including information about sides (so the data is pooled). Colours in the humap function in exactly the same way as a conventional heatmap, light yellow=high density through to dark blue=low density (grey=zero).</p>
@@ -291,7 +566,7 @@
 </section>
 <section id="injuries-and-chronological-patterns" class="level2">
 <h2 class="anchored" data-anchor-id="injuries-and-chronological-patterns">Injuries and chronological patterns</h2>
-<p>Generally, it seems reasonable to assume that an injury would have occurred shortly before admission, so it’s possible to use this data to explore changes over time or seasonal patterns to injuries.</p>
+<p>Generally, it seems reasonable to assume that an injury would have occurred shortly before admission, so this data is ideal for exploring changes over time or seasonal patterns to injuries.</p>
 <p>STH and (at least to some extent) RLH only admitted patients once a week, so it’s not possible to be more precise than that; here I’ll use monthly numbers and focus on years without gaps in the surviving registers.</p>
 <p>The <a href="https://epirhandbook.com/en/new_pages/time_series.html">R Epidemiologists Handbook</a> has a helpful introduction to time series analysis with R.</p>
 <p>I’m using some features of the <a href="https://tsibble.tidyverts.org/">tsibble</a> package in data processing.</p>
@@ -1412,8 +1687,6 @@ font-style: inherit;">kable_styling</span>()</span></code></pre></div>
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 </section>
@@ -1773,8 +2046,6 @@ font-style: inherit;">kable_styling</span>()</span></code></pre></div>
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 <p>First, a list of unique values in the <code>body_location</code> column.</p>
@@ -2003,8 +2274,6 @@ font-style: inherit;">kable_styling</span>()</span></code></pre></div>
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 </section>
@@ -2265,8 +2534,6 @@ font-style: inherit;">kable_styling</span>()</span></code></pre></div>
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 <p>All the records could be matched without needing to add any new terms to the lookup list.</p>
@@ -2734,8 +3001,6 @@ font-style: inherit;">kable_styling</span>()</span></code></pre></div>
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 <section id="hp" class="level3">
@@ -2893,8 +3158,6 @@ font-style: inherit;">kable_styling</span>()</span></code></pre></div>
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 <p>I may as well turn it into a function I can reuse.</p>
@@ -3050,8 +3313,6 @@ font-style: inherit;">kable_styling</span>()</span></code></pre></div>
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 </section>
@@ -3138,8 +3399,6 @@ font-style: inherit;">kable_styling</span>()</span></code></pre></div>
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 </section>
@@ -3304,8 +3563,6 @@ font-style: inherit;">.default =</span> gender</span>
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 </section>

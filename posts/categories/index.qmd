@@ -1,0 +1,268 @@
+---
+title: "Types of injury"
+description: "Defining and processing useful categories for injuries"
+author: "Sharon Howard"
+date: "2025-05-07"
+execute: 
+  warning: false
+  message: false
+  #echo: false
+---
+
+## Introduction
+
+The Skin and Bone project data has extracted and separated out two kinds of injury information from the original datasets: types and locations of injuries. However, apart from some minor cleanup, the data consists of the original text of descriptions and there hasn't been any further classification. 
+
+To do meaningful analysis and visualisations, I need to standardise and group that information into broader categories. Here I look at the process for grouping injury descriptions into broader *categories*.
+
+
+## Defining categories
+
+Especially in DP, descriptions of injuries are very varied; combining the three collections, there are over 350 distinct values in the `injury` column. How to reduce this kind of variety to a small number of coherent and useful categories for analysis?
+
+After some initial exploration of the injury descriptions and discussion with the project PI and Co-I, we came up with a list of eight categories:
+
+- **fractures** (including fracture, "broken", compound fracture, [avulsion](https://en.wikipedia.org/wiki/Avulsion_injury))
+- **blunt force trauma** (including lacerations, contusion, bruises, kicks, concussion, falls, being crushed or strangled)
+- **sharp force trauma** (including cuts, scars, stabs, bites, punctures)
+- **wounds** (a variety of surface injuries and marks, including those described only as "wound", and "marks" that are likely to be the result of industrial injuries and accidents)
+- **burns** and scalds (also includes some brand marks which were inflicted as punishments)
+- **muscle injuries** - sprains, strains, etc
+- **dislocation** 
+- **amputation**
+
+These are not all *quite* the same kind of thing; most have a fairly specific forensic definition, but "wounds" is more general. But they should work as a coherent set for our particular data.
+
+A few more categories were also assigned but are removed from categories-based analysis (the records are kept in the dataset when doing other kinds of analysis):
+
+- *injury* - description states something like "injury" or "injured" but gives no further information
+- *chronic* - various physical impairments (eg "bent", "deformed", "ruptured", "lame") which *might* have been due to accidents but not enough info to be sure
+- *other* - some descriptions like "accident" that are most likely relevant injuries but not specific enough to judge what kind
+
+A very few records which are almost certainly not relevant to the project (such as frostbite), probably not injuries or too fragmentary to interpret, are removed from the data before any analysis. (The "chronic" category is large enough that retaining it may be a bit problematic, but will keep it at least for now.)
+
+```{r}
+#| code-fold: true
+
+## shared packages etc ####
+source(here::here("R/shared.R")) 
+## aesthetics ####
+source(here::here("R/trimmings.R"))
+
+# any extra packages and functions should go here
+library(reactable)
+
+## dp data ####
+dp_injuries_xlsx <-
+  read_excel(here::here("data/v20231130/dp_injury.xlsx"), guess_max = 100000) |>
+  rowid_to_column()
+
+# need locations for dp to fix lost-tbd
+dp_injury_category <-
+  dp_injuries_xlsx |>
+  select(rowid, injury, full_description, body_location) |>
+  mutate(body_location=str_to_lower(body_location)) |>
+  mutate(body_location=str_trim(str_replace_all(body_location, "\\s\\s+", " "))) |>
+  mutate(injury_region = case_when(
+    str_detect(body_location, arm_rgx) ~ "arm",
+    str_detect(body_location, hand_rgx) ~ "hand",
+    str_detect(body_location, foot_rgx) ~ "foot",
+    str_detect(body_location, leg_rgx) ~ "leg",
+    str_detect(body_location, head_rgx) ~ "head",
+    str_detect(body_location, torso_rgx) ~ "torso",
+    body_location %in% c("side", "body") ~ "torso",
+  )) |>
+  # injury categories *after* region
+  mutate(injury = str_to_lower(injury)) |>
+  mutate(injury = str_trim(str_replace_all(injury, "  +", " "))) |>
+  # plural might be meaningful...
+  mutate(injury_plural = case_when(
+    str_detect(injury, "\\b(marks)\\b|s$") ~ "y"
+  )) |>
+  # then slight std to make rgx easier. don't need to keep original.
+  mutate(injury = str_remove(injury, "s$|^marks of *")) |>
+  injury_classify() |>
+  ## tweak for injury category "lost-tbd". needs injury region
+  mutate(injury_category = case_when(
+    injury_region %in% c("foot", "hand", "leg", "arm") & injury_category=="lost-tbd" ~ "amputation",
+    injury=="lost sight" ~ "chronic",
+    is.na(injury_region) & injury_category=="lost-tbd" ~ NA,
+    str_detect(body_location, "teeth|tooth") ~ NA,
+    # varied, includes eyes, ears, genitalia and less plausible locations but v few
+    injury_category=="lost-tbd" ~ "other", 
+    .default = injury_category
+  )) 
+
+## skeletons ####
+os_injury_xlsx <-
+  read_excel(here::here("data/v20231130/os_injury.xlsx") ) |>
+  rowid_to_column()
+
+os_injury_category <-
+  os_injury_xlsx |>
+  separate(injury, into=c("injury", "i2"), sep=" *\\| *", fill="right", extra = "merge")  |>
+  # tidy up
+  mutate(injury_category = str_remove(injury, "\\..+$")) |> 
+  mutate(injury_category = str_trim(str_to_lower(injury_category))) |>
+  mutate(injury_category = case_when(
+    str_detect(injury_category, "subluxation") ~ "dislocation",
+    str_detect(injury_category, "fracture|avulsion") ~ "fracture",
+    injury_category=="soft tissue trauma" ~ "muscle",
+    str_detect(injury_category, "projectile") ~ "wound", # only one.
+    str_detect(injury_category, "trauma") ~ word(injury_category),
+    .default = injury_category
+  )) |>
+  select(rowid, injury, injury_category)
+
+## hospitals ####
+hp_injury_xlsx <-
+  read_excel(here::here("data/v20231130/hp_injury.xlsx") , guess_max=18000) |>
+  # basic year fixes
+  mutate(description_year = case_when(
+    description_year>2000 ~ parse_number(str_sub(as.character(description_year), 2, 5)),
+    description_year<1760 ~ NA, 
+    .default=description_year
+  )) |>
+  rowid_to_column()
+
+hp_injury_category <-
+  hp_injury_xlsx |>
+  select(rowid, injury, full_description) |>
+  injury_classify()
+  
+
+injuries_count <-
+bind_rows(dp_injury_category, hp_injury_category, os_injury_category) |>
+  mutate(injury = str_trim(str_to_lower(injury))) |>
+  count(injury, name="count") |>
+  filter(!is.na(injury)) |>
+  mutate(rank= min_rank(desc(count))) |>
+  relocate(rank)
+```
+
+
+
+
+*Explore injuries...*
+
+```{r echo=FALSE}
+
+reactable(
+  injuries_count,
+  filterable = TRUE,
+  searchable = FALSE,
+  bordered = TRUE,
+  highlight = TRUE,
+  defaultPageSize = 10,
+  defaultExpanded = TRUE,
+  defaultSorted = c("rank", "injury"),
+  defaultColDef = colDef(maxWidth = 80),
+  columns = list(
+    injury = colDef(maxWidth = 140, name="injury"),
+    count = colDef(maxWidth = 70)
+  )
+)
+```
+
+
+
+
+
+## Assigning categories to the data
+
+A rules-based method using [regular expressions](https://programminghistorian.org/en/lessons/understanding-regular-expressions) is used to decide which category an injury description should be put in. The regex for the fractures category, for example, is: "\b(fractur|broken|compound|avulsion|hairline|splintered)"
+
+The process is not perfect, and some assignments can be more uncertain than others. "Scar", for example, which is very common in DP descriptions, has been categorised as sharp force trauma as generally most likely, but scars can also be the result of burns. (If a description explicitly says that a scar was caused by burns, it's put in the latter category instead.) 
+
+DP also has a number of "lost X" (or "missing X") and the most likely interpretation of these depends on the injury's location. So, for example:
+
+- "lost teeth/tooth" *could* be the result of an accident but seem far more likely to be related to poor dental health in this period and will be removed 
+- a "lost" limb *might* not always be due to an accident, but on balance of probabilities will put in the "amputation" category
+
+
+
+```{r echo=FALSE}
+
+# fractures: "\\b(fractur|broken|compound|avulsion|hairline|splintered)"
+# burns: "\\b(burn|scald|mortar in|d (on )?left )"
+# sharp: "\\b(sharp|cut|scar|stab|bit|needle|pin|punctur|nail (in|through))|slit"
+# blunt: "\\b(blunt|lacerat|contus|bruis|kick|concus|jam|compres|strang|r.n over|fall|lump|swelling|knocked up|ruptured|split|torn|flogg|corporal|internal|inward)"
+# muscle: "\\b(sprain|strain|soft tissue|muscle|spain)"
+# amputation: "\\b(amputat)") ~ "amputation",
+# dislocation: "\\b(dislocat|sublux|luxat|displaced)"
+# wound: "\\b(gun|shot|gun.shot|wound)") 
+# wound: "\\b(blue|red|purple|coal)"
+# chronic: "\\b(bent|crooked|inclined|contracted|crippled|defect|deficient|deformed|disfigured|lame|limp|blind|cast)"
+# injury: "\\b(been injured|injured|injury|inury)"
+# other: "\\b(accident|suffocated|suffocation|drowned|^(flesh mark|mark from|hurt leg|hurt)$)"
+# depends: "\\b(lost|missing)"
+# excluded: "\\b(struck by lightening|flash of lightning|frost.?bite|frost.?bitten)\\b" and anything not matched by the above
+```
+
+This is the function I eventually concocted to handle DP and HP (the regexes make it look complicated but the function itself is quite simple). The OS descriptions are much more consistent so they're easier to handle.
+
+```{r}
+injury_classify <- function(df){
+
+  df |>
+    mutate(injury_category = str_to_lower(injury)) |>
+    mutate(injury_category = case_when(
+      # environmental; to be removed
+      str_detect(injury_category, "\\b(struck by lightening|flash of lightning|frost.?bite|frost.?bitten)\\b") ~ NA, 
+      str_detect(injury_category, "\\b(fractur|broken|compound|avulsion|hairline|splintered)") ~ "fracture",
+      str_detect(injury_category, "\\b(burn|scald|mortar in|d (on )?left )") ~ "burn",
+      str_detect(injury_category, "\\b(sharp|cut|scar|stab|bit|needle|pin|punctur|nail (in|through))|slit") ~ "sharp",
+      str_detect(injury_category, "\\b(sprain|strain|soft tissue|muscle|spain)") ~ "muscle",
+      str_detect(injury_category, "\\b(amputat)") ~ "amputation",
+      # DP only. some are amputation, but final choice will depend on location
+      str_detect(injury_category, "\\b(lost|missing)") ~ "lost-tbd",
+      str_detect(injury_category, "\\b(blunt|lacerat|contus|bruis|kick|concus|jam|compres|strang|r.n over|fall|lump|swelling|knocked up|ruptured|split|torn|flogg|corporal|internal|inward)") ~ "blunt", 
+      str_detect(injury_category, "\\b(dislocat|sublux|luxat|displaced)") ~ "dislocation",
+      str_detect(injury_category, "\\b(bent|crooked|inclined|contracted|crippled|defect|deficient|deformed|disfigured|lame|limp|blind|cast)") ~ "chronic",
+      str_detect(injury_category, "\\b(gun|shot|gun.shot|wound)") ~ "wound",
+      str_detect(injury_category, "\\b(been injured|injured|injury|inury)") ~ "injury",
+      # a bit more uncertain. probably industrial but some might be tattoos 
+      str_detect(injury_category, "\\b(blue|red|purple|coal)") ~ "wound", 
+      str_detect(injury_category, "\\b(accident|suffocated|suffocation|drowned|hurt leg)|^hurt") ~ "other",
+    ))
+}
+```
+
+
+A random sample:
+
+```{r}
+injuries_count |>
+  slice_sample(n=10) |>
+  select(injury) |>
+  arrange(injury) |>
+  injury_classify() |>
+  kable() |>
+  kable_styling()
+
+```
+
+## Results
+
+As already seen with injury location regions, the distribution of injury categories varies a lot between the collections. DP is dominated by sharp force injuries; many of these are scars, which reflects the nature of the DP records as recording long personal histories of physical misfortune and violence. OS is equally dominated by fractures, the injuries most likely to remain visible on skeletal evidence. HP, on the other hand, shows a more varied record of mishaps and accidents, though fractures are still the largest single category.
+
+
+```{r echo=FALSE}
+bind_rows(
+  os_injury_category |> mutate(collection="OS"),
+  hp_injury_category |> mutate(collection="HP"),
+  dp_injury_category |> mutate(collection="DP")
+ ) |> #count(injury_category)
+  filter(injury_category %in% injury_categories_for_analysis) |>
+  count(injury_category, collection) |>
+    ggplot(aes(fill=injury_category, values=n)) +
+  geom_waffle(na.rm=TRUE, colour="white", n_rows = 10, make_proportional = TRUE) +
+  # how to fix ordering in waffle... do it before count.
+  coord_equal() +
+  facet_wrap(~collection) +
+  theme_minimal() +
+  theme_enhance_waffle() +
+   scale_fill_manual(values = ptol_inj_category) +
+  theme(legend.position = "bottom") +
+  labs(fill="category", title="Injury categories by collection", caption = "1 square = 1% of injuries")
+```

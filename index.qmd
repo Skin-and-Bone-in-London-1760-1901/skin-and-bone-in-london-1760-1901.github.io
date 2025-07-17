@@ -5,7 +5,7 @@ listing:
   - id: posts-table
     contents: posts
     sort: "date desc"
-    max-items: 6
+    max-items: 9
     type: table
     fields: [date, title]
     categories: false

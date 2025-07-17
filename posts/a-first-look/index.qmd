@@ -1,0 +1,408 @@
+---
+title: "A first look at the Skin and Bone data"
+description: "Some early exploratory visualisations at the project's advisory board meeting in May 2023"
+author: "Sharon Howard"
+date: "2025-04-14"
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+## Introduction
+
+The brief for the meeting was mainly to think about 
+
+- characteristics of the three data collections
+- differences between the collections and what might be comparable
+- shared demographic data across collections - ie gender/sex and age - plus injury locations and types
+
+Note: this post uses final versions of data rather than the slightly provisional version at the time of the meeting, but that makes only a few very minor differences to results.
+
+```{r include=FALSE}
+## will need to sort paths/copies of data in the R scripts.
+
+## shared packages etc ####
+source(here::here("R/shared.R")) 
+## aesthetics ####
+source(here::here("R/trimmings.R"))
+
+# any extra packages and functions should go here
+
+library(ggmosaic) ## nb this conflicts with vcd mosaic
+
+
+
+## dp data ####
+source(here::here("R/dp-data.R"))
+# used
+# dp_injuries:  dataset_rev, injury_region
+# dp_desc:  year_cln, description_year, dataset_rev, injury==TRUE , gender
+
+## skeletons ####
+source(here::here("R/osteology-data.R"))
+# used..
+# persons injured, uninjured: cemetery, gender
+# injuries: injury_category, injury_region  cemetery_code
+
+
+## RLH ####
+source(here::here("R/hospitals-data.R"))
+
+## what's actually used? 
+# age_group, injury_category_ss, injury_region
+# result_s, gender, injury_category_s
+# description_dataset, full_description
+
+
+hosp_rlh <-
+  hp_injuries |>
+  filter(description_dataset=="rlh") |>
+  # collapse smallest categories. burn is borderline but possible interesting for gender.
+  # this won't work for fracture+
+  mutate(injury_category_ss = case_match(
+    injury_category,
+    #"fracture+" ~ "fracture",
+    c("amputation", "dislocation", "muscle", "other", "sharp") ~ "other",
+    .default = injury_category
+  )) |> 
+  mutate(injury_category_ss = fct_relevel(injury_category_ss, c("burn", "blunt", "fracture", "wound", "other")))  |>
+  # # this should be close to the original _s
+  # but it will duplicate if the injury has been recorded as two...
+   mutate(injury_category_s = case_when(
+    str_detect(full_description, "with dislocation") & str_detect(injury, "fracture") ~ "fracture+",
+    str_detect(injury, "fracture with|compound|fractures") ~ "fracture+",
+    # needs to be after fracture+ ...
+    str_detect(injury, "fracture") ~ "fracture",
+    str_detect(injury, "\\b(burn|scald)") ~ "burn",
+    str_detect(injury, "wound|gunshot") ~ "wound",
+    str_detect(injury, "strain|sprain") ~ "muscle",
+    str_detect(injury, "contus|bruise") ~ "contusion",
+    str_detect(injury, "amputat") ~ "amputation",
+    str_detect(injury, "dislocat") ~ "dislocation",
+    str_detect(injury, "lacerat") ~ "laceration",
+    .default = "other"
+  ))
+
+
+# ## Comparable?
+# 
+# Shared information
+# 
+# - demographic
+# 
+#   - gender - all 
+#   - age groups - all
+#   - occupations - partial (hospital and criminal)
+# 
+# - injuries
+# 
+#   - body location - all
+#   - injury categories - all
+#   - causes - partial
+
+```
+
+
+
+## Osteological data
+
+- fine-grained, systematically recorded data covering range of adult population 
+- but only injuries (and other information) that can be observed on the skeleton itself
+- limited background data (eg, no precise dates)
+- age groups are very broad
+
+
+### Skeletons: sex and injuries
+
+I like waffle charts for comparisons, as long as there aren't too many different values.
+
+Having said that coverage is broad, gender is still not balanced (overall about 42% of skeletons for which sex could be determined [which is about 85% of skeletons]) so it's not whole population - and highly variable between the three cemeteries.
+
+There is a very consistent correlation between female sex and lower % of skeletons with injuries.
+
+```{r}
+os_injured_persons |>
+  count(cemetery, gender) |>
+  ggplot(aes(fill=gender, values=n)) +
+  geom_waffle(na.rm=TRUE, colour="white", n_rows = 10, make_proportional = TRUE) +
+  # can't remember how to fix ordering in waffle...
+  coord_equal() +
+  facet_wrap(~cemetery) +
+  theme_minimal() +
+  theme_enhance_waffle() +
+    scale_fill_manual(values = c(col_gender)) +
+  labs(fill="sex", subtitle="injured") +
+  
+os_uninjured_persons |>
+  count(cemetery, gender) |>
+  ggplot(aes(fill=gender, values=n)) +
+  geom_waffle(na.rm=TRUE, colour="white", n_rows = 10, make_proportional = TRUE) +
+  # can't remember how to fix ordering in waffle...
+  coord_equal() +
+  facet_wrap(~cemetery) +
+  theme_minimal() +
+  theme_enhance_waffle() +
+    scale_fill_manual(values = c(col_gender)) +
+  labs(fill="sex", subtitle="uninjured") +
+
+
+  plot_layout(guides = "collect", ncol = 1) +
+  plot_annotation(title="Cemeteries, sex of individuals and injury status", caption = "1 square=1% of individuals")
+
+```
+
+
+
+### Skeletons: mapping injuries
+
+
+
+It's straightforward to assign broad body location regions across datasets for comparisons (less so for more detailed locations). But injury categories are much more diverse between datasets.
+
+Skeletons are virtually all fractures, with a few variations on different parts of the body: knocks on the head, leg/arm/spinal muscle injuries. 
+
+```{r}
+##(same as a waffle chart because I haven't decided whether I prefer bars or waffle) - use waffle to be consistent with RLH
+os_injury |>
+  count(injury_category, injury_region) |>
+  mutate(injury_category = fct_relevel(injury_category, inj_cat_ost_relevel)) |>
+  mutate(injury_region = fct_relevel(injury_region, inj_region_relevel6)) |>
+    ggplot(aes(fill=injury_category, values=n)) +
+  geom_waffle(na.rm=TRUE, colour="white", n_rows = 10, make_proportional = TRUE) +
+  # can't remember how to fix ordering in waffle...
+  coord_equal() +
+  facet_wrap(~injury_region, nrow = 2) +
+  theme_minimal() +
+  theme_enhance_waffle() +
+
+  scale_fill_manual(values = ptol_cat_ost) +
+  theme(legend.position = "bottom") +
+  labs(fill="category", title="Injury categories and locations")
+```
+
+
+## Royal London Hospital
+
+
+
+An early version of the data for all three hospitals was available, but I'd only done analysis of Royal London at this point as the most detailed dataset (shouldn't assume it will be the same as other hospitals).
+
+- unique data on length of hospital stay and outcomes
+- but hospital data only records injuries that were severe enough to necessitate hospitalisation
+- and descriptions only record the injuries that occasioned hospitalisation
+- no "uninjured" population for comparison
+
+
+### RLH: age groups and injury categories
+
+Used these particular age groups to match the groups in the skeletons data. 
+
+More diverse range of injuries than in skeletons; noted higher proprotion of burns among children and fractures among older patients.
+
+```{r}
+# again maybe i like this better than bars
+hosp_rlh |>
+  count(age_group, injury_category_ss) |>
+    ggplot(aes(fill=injury_category_ss, values=n)) +
+  geom_waffle(na.rm=TRUE, colour="white", n_rows = 10, make_proportional = TRUE) +
+  coord_equal() +
+  facet_wrap(~age_group) +
+  theme_minimal() +
+  theme_enhance_waffle() +
+  scale_fill_manual(values =  ptol_cat_ss) +
+  labs(fill="category", title="age and injury category", caption="1 square=1% of patients")
+```
+
+
+### RLH: injury locations and categories
+
+Some interesting variations: knocks on the head again; fractures are mainly ribs, followed by arms and legs.
+
+
+```{r}
+hosp_rlh |>
+  mutate(injury_region = fct_relevel(injury_region, inj_region_relevel6)) |>
+  count(injury_category_ss, injury_region) |>
+  ggplot(aes(fill=injury_category_ss, values=n)) +
+  geom_waffle(na.rm=TRUE, colour="white", n_rows = 10, make_proportional = TRUE) +
+  # how to fix ordering in waffle... do it before counting
+  coord_equal() +
+  facet_wrap(~injury_region, nrow = 2) +
+  theme_minimal() +
+  theme_enhance_waffle() +
+  scale_fill_manual(values =  ptol_cat_ss) +
+  labs(fill="category", title="Injury locations and categories", caption = "1 square = 1% of patients")
+```
+
+### RLH: outcomes and gender
+
+You can pack a lot of information into a mosaic chart - shows proportions of categories as well as of outcomes.
+
+More detailed injury categories this time. "fracture+"= compound fractures - can see there's a big difference in outcomes compared to simple fractures. 
+
+Compound fractures and burns were far more lethal than any other categories. Can also see association of female patients with burns and somewhat more likely than men to die, suggesting tended to be more severe cases. 
+
+```{r}
+hosp_rlh |>
+  filter(result_s %in% c("cured", "died"), gender!="unknown", injury_category_s!="other")  |>
+  left_join(hosp_rlh |>
+              filter(result_s %in% c("cured", "died"), gender!="unknown", injury_category_s!="other") |>
+              count(injury_category_s, result_s) |>
+              group_by(injury_category_s)|>
+              mutate(p=n/sum(n)) |>
+              filter(result_s=="cured")|>
+              select(injury_category_s, p), by="injury_category_s"
+            )|>
+  select(category=injury_category_s, result=result_s, gender, p) |>
+  mutate(category=fct_rev(fct_reorder(category, p))) |>
+  ggplot() +
+  geom_mosaic(aes(x=product(category), fill=result)) +
+  facet_grid(~gender) +
+  coord_flip() +
+    scale_fill_manual(values = ptol_result2) +
+  
+  theme(legend.position = "bottom") +
+  labs(title="Injury outcomes by category and gender", fill="result", caption = "excludes small number of unknown outcomes")
+```
+
+
+
+## Digital Panopticon
+
+- may have highly detailed physical descriptions (and could even be repeated for the same individual over time)
+- considerable amounts of background and demographic information are available from the same sources or via DP linkage
+- prisoners and "habitual" convicts only
+
+
+### DP: chronology
+
+There are actually several different datasets within the DP collection, spanning more than a century. Chronologically there's very little overlap between them (and I removed the few years' overlap for convenience here).
+
+There are huge differences in numbers, but also big differences in numbers (and also proportions) of datasets that included physical descriptions. That makes comparisons difficult.
+
+```{r}
+
+dp_desc |>
+  #filter(description_dataset=="rhc") |>
+  filter(!is.na(year_cln)) |>  
+  count(description_year, dataset_rev)  |>
+  mutate(dataset_rev = str_to_upper(dataset_rev)) |>
+  ggplot(aes(description_year, n)) +
+  geom_col() +
+  facet_grid(~dataset_rev, scales = "free_x", space = "free_x") +
+  scale_x_continuous(labels = dp_year_labels, breaks = dp_year_labels)+
+  labs(x="year", y="number", title = "All descriptions")  +
+  
+  dp_desc |>
+  #filter(description_dataset=="rhc") |>
+  filter(!is.na(year_cln)) |>  
+  filter(injury==TRUE) |>
+  count(description_year, dataset_rev)  |>
+  mutate(dataset_rev = str_to_upper(dataset_rev)) |>
+  ggplot(aes(description_year, n)) +
+  geom_col() +
+  facet_grid(~dataset_rev, scales = "free_x", space = "free_x") +
+  scale_x_continuous(labels = dp_year_labels, breaks = dp_year_labels)+
+  labs(x="year", y="number", title = "Descriptions mentioning injuries") +
+  
+  plot_layout(ncol = 1)
+```
+
+### DP: what is changing?
+
+Proportional bar chart shows changing percentage of descriptions that mention injuries more clearly. But it's not actually recording changing likelihood of having injuries. It's really showing increasing state surveillance of criminals' bodies over the course of the nineteenth century.
+
+```{r}
+dp_desc |>
+  filter(!is.na(year_cln)) |>  
+  count(description_year, dataset_rev, injury)  |>
+  mutate(dataset_rev = str_to_upper(dataset_rev)) |>
+  mutate(injury = if_else(injury==TRUE, "injured", "uninjured")) |>
+  ggplot(aes(description_year, n, fill=injury)) +
+  geom_col(position = "fill") +
+  facet_grid(~dataset_rev, scales = "free_x", space = "free_x") +
+  scale_x_continuous(labels = dp_year_labels, breaks = dp_year_labels) +
+  scale_fill_colorblind() +
+  scale_y_continuous(labels = percent_format()) +
+  theme(legend.position = "bottom") +
+  labs(x="year", y="% of descriptions", title = "Proportion of descriptions that mention injuries")
+```
+
+
+### DP: gender
+
+Women are always substantially outnumbered in criminal data, but exact proportions can vary.
+
+Comparison of injured vs uninjured, as with skeletons, shows lower % of women have injuries. 
+
+
+```{r}
+
+dp_desc |>
+  # drop NA year from rhc but keep in other datasets
+  #filter(!is.na(year_cln) | description_dataset !="rhc") |>
+  filter(gender !="u") |>
+  mutate(gender = if_else(gender=="m", "male", "female")) |>
+  count(gender, dataset_rev, injury) |>
+  mutate(dataset_rev = str_to_upper(dataset_rev)) |>
+  mutate(injury = if_else(injury==TRUE, "injured", "uninjured")) |>
+  ggplot(aes(injury, n, fill=gender)) +
+  geom_col(position = "fill") +
+#  facet_grid(dataset_rev~injury, scales = "free") 
+  facet_grid(injury~dataset_rev, scales = "free") +
+  coord_flip() +
+  scale_fill_manual(values = col_gender) +
+  theme(#panel.grid.major = element_blank(),  # white lines
+        axis.ticks=element_blank(),  # the axis ticks
+          #axis.title=element_blank(),  # axis labels
+          axis.text.y = element_blank(),
+          axis.text.x=element_blank()) + # the 0.00... 1.00 labels
+  labs(y="% of descriptions", title = "Gender in descriptions by dataset / mention of injury")
+```
+
+
+## Comparison: location of injuries
+
+What might be compared across the three collections?
+
+Finish with comparison of body regions across DP, skeletons and RLH to show just how much difference there is.
+
+DP - higher % head (skull, face). Closer inspection shows a lot of these are relatively superficial injuries that wouldn't appear in the other two collections, like facial scars, missing teeth, scarred eyebrows.
+
+RLH - predominance of broken legs
+
+Skeletons - a lot more rib injuries (in fact this is aggregated per person and would be even higher if I counted every individual rib injury). Curious there are so few mentions in the other datasets.
+
+
+```{r}
+os_injury |>  # grouped injuries
+#ost_injuries |> # ungrouped injuries !!!! ribs
+  select(cemetery_code, injury_region) |>
+  mutate(src = case_match(
+    cemetery_code,
+    "BBP07" ~ "PR/BB Cemetery",
+    "PAY05" ~ "PR/BB Cemetery",
+    "RLP05" ~ "RLH Cemetery",
+    "FAO90" ~ "StB Cemetery"
+  )) |>
+  bind_rows(
+    hosp_rlh |> select(injury_region) |> mutate(src="RLH"),
+    dp_injuries |>
+      mutate(src=str_to_upper(dataset_rev)) |>
+      mutate(injury_region=if_else(is.na(injury_region), "unknown", injury_region)) 
+  ) |>
+  count(injury_region, src) |>
+  mutate(injury_region = fct_relevel(injury_region, inj_region_relevel6)) |>
+  mutate(src = fct_relevel(src, "HCR", "MPR", "PL", "RHC", "RLH")) |>
+  ggplot(aes(fill=injury_region, n, x="")) +
+  geom_col(position = "fill") +
+  facet_wrap(~src, ncol=4) +
+  scale_fill_manual(values = ptol_region) +
+  scale_y_continuous(labels = percent_format()) +
+  labs(y="% of injuries", title = "Injury locations, by dataset", x=NULL)
+```
+
+
+
+

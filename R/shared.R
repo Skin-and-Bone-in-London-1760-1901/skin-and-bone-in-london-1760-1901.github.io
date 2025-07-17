@@ -136,6 +136,7 @@ injury_classify <- function(df){
   df |>
     mutate(injury_category = str_to_lower(injury)) |>
     mutate(injury_category = case_when(
+      # environmental; to be removed
       str_detect(injury_category, "\\b(struck by lightening|flash of lightning|frost.?bite|frost.?bitten)\\b") ~ NA, # environmental. [was "remove"]
       str_detect(injury_category, "\\b(fractur|broken|compound|avulsion|hairline|splintered)") ~ "fracture",
       # burn needs to be before scar/mark.
@@ -158,4 +159,3 @@ injury_classify <- function(df){
 
     ))
 }
-

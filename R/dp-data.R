@@ -12,7 +12,10 @@ dp_injuries_xlsx <-
   rowid_to_column()
 
 dp_person_xlsx <-
-  read_excel(here::here("data/v20231130/dp_person.xlsx"), guess_max = 100000) # public data
+# public data
+  read_excel(here::here("data/v20231130/dp_person.xlsx"), guess_max = 100000) |>
+  # ensure that anyone in PLD=female as there is an error
+  mutate(gender = if_else(str_detect(description_datasets,"pld"), "f", gender))
 
 
 # recreate dp_descriptions data (exclude the full_descriptions which won't unnest correctly)
@@ -32,7 +35,7 @@ dp_person_desc <-
       group_by(person_id, description_id) |>
       summarise(injuries = paste(injury, collapse = " "), .groups = "drop_last") |>
       ungroup(), by=c("person_id", "description_id")
-  ) |>
+  ) |> 
   mutate(injury = if_else(!is.na(injuries), TRUE, FALSE))
 
 
@@ -45,6 +48,9 @@ dp_injuries <-
   select(person_id, description_id, injury, body_location, cause, full_description, description_dataset, description_year, gender, born, age) |>
   
   gender_simplify() |>
+  # update: ensure that anyone in PLD=female as there is an error
+  mutate(gender = if_else(description_dataset=="pld", "female", gender)) |>
+  
   # age group using groups in skeletons data for adults. 
   mutate(age=parse_number(age)) |>
   mutate(age_group = case_when(
@@ -153,11 +159,9 @@ dp_desc <-
     between(age, 36, 45) ~ "36-45",
     age>45 ~ "46+"
   ))  |>
-  # fix gender "m" in pld if it's still there
-  mutate(gender = case_when(
-    gender=="m" & description_dataset=="pld" ~ "f",
-    .default = gender
-  )) |>
+  # fix gender "m" in pld
+  mutate(gender = if_else(description_dataset=="pld", "f", gender)) |>
+  gender_simplify() |>
   # none of these datasets play nicely with decades but make it anyway....
   mutate(description_decade = description_year - (description_year %% 10) ) |>
   # version of description_dataset with male and female licences combined

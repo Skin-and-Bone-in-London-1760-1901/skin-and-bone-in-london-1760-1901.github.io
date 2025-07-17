@@ -1,0 +1,478 @@
+---
+title: "Exploring the Skin and Bone hospitals data"
+description: "Focus: time and seasonality in hospital admissions"
+author: "Sharon Howard"
+date: "2025-05-16"
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+
+```{r get-libraries-data}
+# needs to go first
+source(here::here("R/shared.R"))
+
+source(here::here("R/hospitals-data.R"))
+
+# colours, ordering categories etc
+source(here::here("R/trimmings.R"))
+
+
+library(tsibble)
+```
+
+## About the data
+
+Data originally collected by Madeleine Mant, based on admission and discharge records of four hospitals:
+
+- St Thomas' (STH) (1774-1800 with many gaps)
+- Guy's (GHS) (1813-38)
+- Royal London (RLH) (1760, 1791-92, 1805)
+- Middlesex (MXH) (1760-64, 1771-88)
+
+Records vary in detail: the bare minimum is name, date of admission and reason for admission. Injury descriptions are quite brief and lacking in detail (eg, they very rarely record side of body), and only the specific injury that caused admission is likely to be recorded.
+
+RLH has the richest set of data, also having place of abode, occupation, age and result of hospital stay for most individuals, but only covers 3 1/2 years. GHS has age data for about a quarter of the records. Discharge information is available for most RLH records and about a quarter of MXH. STH is quite fragmentary.
+
+
+More detailed information about the sources can be found in Madeleine Mant's PhD thesis, [Slips, Trips, Falls, and Brawls: Fractures of the Working Poor in London During the Long Eighteenth Century](https://macsphere.mcmaster.ca/handle/11375/20026) (McMaster University, 2016).
+
+
+
+## Injuries and chronological patterns
+
+Generally, it seems reasonable to assume that an injury would have occurred shortly before admission, so this data is ideal for exploring changes over time or seasonal patterns to injuries. 
+
+STH and (at least to some extent) RLH only admitted patients once a week, so it's not possible to be more precise than that; here I'll use monthly numbers and focus on years without gaps in the surviving registers.
+
+
+The [R Epidemiologists Handbook](https://epirhandbook.com/en/new_pages/time_series.html) has a helpful introduction to time series analysis with R.
+
+I'm using some features of the [tsibble](https://tsibble.tidyverts.org/) package in data processing.
+
+
+```{r}
+# yearweek/yearmonth from tsibble; not sure if any issues with historical dates, seems ok.
+hp_admission_dates_all_hospitals <-
+hp_desc |> 
+  select(description_id, hospital= description_dataset, date_admission_std) |>
+  filter(!is.na(date_admission_std)) |>
+  mutate(yrmonth=yearmonth(date_admission_std), month=month(yrmonth, label = TRUE), year_admission=year(yrmonth)) |>
+  mutate(yrweek=yearweek(date_admission_std))
+
+# drop sth for most analysis; only two complete years and one of them (1787) duplicates mxh.
+# drop rlh since it only has 3 full years.
+hp_admission_dates <-
+  hp_admission_dates_all_hospitals |>
+  filter(!hospital %in% c("sth", "rlh")) 
+
+
+# use only years that have 12 months / 52/53 weeks
+hp_admission_dates_months_per_hospital <-
+hp_admission_dates |>
+  distinct(hospital, year_admission, yrmonth)  |>
+  count(year_admission, hospital) |>
+  filter(n==12) |> select(-n)
+
+# for some things you need to be careful about gaps
+
+hp_injuries_admissions_months <-
+hp_injuries |> 
+  select(rowid, description_id, gender, age_group, date_admission_std, date_discharge_std, hospital=description_dataset, result_s, injury_category, injury_region)  |>
+  filter(!is.na(date_admission_std)) |>
+  mutate(yrmonth=yearmonth(date_admission_std), year_admission=year(yrmonth), month=month(yrmonth, label = TRUE)) |>
+  # keep only complete years
+  semi_join(hp_admission_dates_months_per_hospital, by=c("hospital", "year_admission"))
+
+hp_desc_admissions_months <-
+hp_desc |>
+  select(description_id, hospital=description_dataset, date_admission_std, date_discharge_std, result_s, gender, age_group) |>
+  filter(!is.na(date_admission_std)) |>
+  mutate(yrmonth=yearmonth(date_admission_std), year_admission=year(yrmonth), month=month(yrmonth, label = TRUE)) |>
+  # keep only complete years
+  semi_join(hp_admission_dates_months_per_hospital, by=c("hospital", "year_admission"))
+
+```
+
+
+```{r original, include=FALSE}
+# # drop sth; only two complete years and one (1787) duplicates mxh.
+# hp_admission_dates <-
+# hp_desc |> 
+#   select(description_id, hospital= description_dataset, date_admission_std, year_admission) |>
+#   filter(hospital != "sth") |>
+#   filter(!is.na(date_admission_std))
+# 
+# # original
+# # hp_admission_dates_months_per_hospital <-
+# # hp_admission_dates |>
+# #   mutate(month=yearmonth(date_admission_std)) |>
+# #   count(hospital, month, name = "admissions") 
+# #  mutate(id = paste(hospital, month))
+# 
+# # hp_admission_dates_weeks_per_hospital <-
+# # hp_admission_dates |>
+# #   mutate(week=yearweek(date_admission_std)) |>
+# #   count(hospital, week, name = "admissions") 
+# #  mutate(id = paste(hospital, week))
+# 
+# 
+# # updated
+# # yearweek/yearmonth from tsibble; not sure if there are any issues with historical dates, though it seems to work.
+# # use only years that have 12 months / 52/53 weeks
+# # nb renaming yrmonth was month, yrweek was week, confusing!
+# hp_admission_dates_months_per_hospital <-
+# hp_admission_dates |>
+#   mutate(yrmonth=yearmonth(date_admission_std)) |>
+#   count(hospital, yrmonth, name = "admissions")  |>
+#   mutate(yr = year(yrmonth)) |>
+#   add_count(yr, hospital) |>
+#   filter(n==12) |> select(-n)
+# #  mutate(id = paste(hospital, month))
+# 
+# hp_admission_dates_weeks_per_hospital <-
+# hp_admission_dates |>
+#   mutate(yrweek=yearweek(date_admission_std)) |>
+#   count(hospital, yrweek, name = "admissions") |>
+#   mutate(yr = year(yrweek)) |>
+#   add_count(yr, hospital) |>
+#   filter(n>=52) |> select(-n)
+# #  mutate(id = paste(hospital, week))
+
+```
+
+## Chronological overview
+
+This shows the lack of overlap between most of hospitals' data, which may make it difficult to talk about long term chronological patterns, as it could be muddied by possible differences between hospitals.
+
+```{r}
+hp_admission_dates_all_hospitals |>
+  count(yrmonth, hospital, name = "admissions") |>
+  mutate(hospital=str_to_upper(hospital)) |>
+  ggplot(aes(x=yrmonth, y=admissions)) +
+  geom_col() +
+  facet_wrap(~hospital, ncol = 1) +
+  labs(title = "Monthly admissions to each hospital")
+```
+
+Since STH is very fragmentary and RLH only has three complete years, I'll remove them from subsequent analysis to focus on the two hospital with good runs of full years, MXH and GHS.
+
+There's a lot of fluctuation, but MXH has mostly smaller monthly numbers. (Though why does MXH have a sudden large spike in numbers in 1774? That may need checking out. Also interesting that its numbers look higher before than after the gap in records 1765-71.)
+
+```{r}
+hp_desc_admissions_months |> 
+  count(yrmonth, hospital, name = "admissions") |>
+  ggplot(aes(x=yrmonth, y=admissions, fill=hospital)) +
+  geom_col() +
+  labs(title = "Monthly admissions to MXH and GHS (complete years only)") +
+  scale_fill_tableau()
+```
+
+Boxplot of monthly admissions per hospital confirms much smaller numbers for MXH.
+
+```{r}
+hp_desc_admissions_months |> 
+  count(yrmonth, hospital, name = "admissions")  |>
+  ggplot(aes(hospital, admissions)) +
+  geom_boxplot()
+
+```
+
+### injury categories over time
+
+Is there any significant change in the distribution of injuries with which people are admitted over time? 
+
+```{r}
+hp_injury_categories_years_counts <-
+hp_injuries_admissions_months |>
+  add_count(hospital, injury_category, name="n_cat") |>
+  count(hospital, injury_category, year_admission, n_cat)
+
+# hp_injuries_admissions_months |>
+#   filter(hospital=="mxh") |> 
+#   #count(injury_category) |>
+#   #mutate(p = n/sum(n)*100)
+
+hp_desc_gender_years_counts <-
+hp_desc_admissions_months |>
+  filter(gender !="unknown") |>
+  add_count(hospital, gender, name="n_gen") |>
+  count(hospital, gender, year_admission, n_gen) 
+
+```
+
+
+Filtering out a few categories that constitute <1% of the total for each hospital; there are some differences between the two hospitals which I won't investigate here. Eg, `muscle` = 6.6% of MXH but <1% of GHS; `injury` doesn't appear as a category in MXH but 35% in GHS. The former might be an actual difference in hospital intake; the latter is more likely a difference in recording practices.
+
+The heatmaps are proportional rather than using raw numbers since there's a lot of variation in category sizes. Even with the filters, some of the annual numbers could be very small. (White blocks in the heatmap = zero.) These are more likely to help with highlighting possible areas of interest for further exploration than to provide definitive findings.
+
+
+MXH heatmap confirms generally higher numbers 1760-64, before the gap in records, but also highlights certain categories in that period - `dislocation`, `muscle` and `wound.` After the resumption, distribution of injuries seems much more even.
+
+```{r}
+hp_injury_categories_years_counts |>
+  filter(hospital=="mxh") |>
+  filter(!injury_category %in% c("amputation", "other") ) |>
+  mutate(p = n/n_cat*100) |>
+  mutate(injury_category = fct_rev(injury_category)) |>
+  ggplot(aes(x=year_admission, y=injury_category, fill=p)) +
+  geom_tile() + # geom_raster causes a warning because of gap in years.
+  scale_fill_viridis_b() +
+  scale_y_discrete(expand=c(0,0)) +
+  scale_x_continuous(expand = c(0,0)) +
+  theme(legend.position = "bottom") +
+  labs(y=NULL, x=NULL, fill="% of category", title = "MXH heatmap of injury categories 1760-88", caption = "categories filtered out: amputation, other")
+```
+
+
+
+
+```{r include=FALSE}
+# library(ggridges)
+# hp_injuries_admissions_months |>
+#   filter(hospital=="mxh") |> 
+#   #count(injury_category) |>
+#   #mutate(p = n/sum(n)*100)
+#   #count(year_admission)
+#   filter(!injury_category %in% c("amputation", "other") ) |>
+#   #don't count for ridgeline plot
+#   mutate(category=fct_rev(injury_category)) |>
+#   ggplot(aes(x = year_admission, y = category, group=category, fill=category, height = after_stat(density))) +   ## height doesn't seem to make any difference?  
+#   geom_density_ridges(stat = "binline", bins = 13, scale = 0.95, draw_baseline = FALSE, show.legend = FALSE) +
+#   # `expand` option for both axes to remove unneeded padding 
+#   scale_y_discrete(expand = c(0, 0)) +     
+#   scale_x_continuous(expand = c(0, 0) ) +  #, breaks = seq(1780, 1840, 10) ) +  
+#   scale_fill_tableau(direction = -1) +
+#   coord_cartesian(clip = "off") +  #clip = "off" to avoid clipping of the very top of the top ridgeline
+#   theme_ridges(font_size=12) +
+#   theme(axis.text.y = element_text(vjust = 0), legend.position = "none", 
+#         panel.grid.minor.x=element_blank(),
+#         panel.grid.major.x=element_blank()
+#         ) +
+#   theme_ridges() +
+#   labs(y=NULL, x=NULL, title = "MXH injury categories 1760-88")
+
+```
+
+For GHS the distribution overall looks less variable than in MXH except for a possible surge in the `wound` category right at the end of the period.
+
+```{r}
+hp_injury_categories_years_counts |>
+  filter(hospital=="ghs") |>
+  filter(!injury_category %in% c("amputation", "muscle", "other") ) |>
+  mutate(p = n/n_cat*100) |>
+  mutate(injury_category=fct_rev(injury_category)) |>
+  ggplot(aes(x=year_admission, y=injury_category, fill=p)) +
+  geom_tile() +
+  scale_fill_viridis_b() +
+  scale_y_discrete(expand=c(0,0)) +
+  scale_x_continuous(expand = c(0,0)) +
+  theme(legend.position = "bottom") +
+  labs(y=NULL, x=NULL, fill="% of category", title = "GHS heatmap of injury categories 1813-38", caption = "categories filtered out: amputation, muscle, other")
+```
+
+```{r include=FALSE}
+# hp_injuries_admissions_months |>
+#   filter(hospital=="ghs") |> 
+#   #count(injury_category) |>
+#   #mutate(p = n/sum(n)*100)
+#   #count(year_admission)
+#   filter(!injury_category %in% c("amputation", "other", "muscle") ) |>
+#   #don't count for ridgeline plot
+#   mutate(category=fct_rev(injury_category)) |>
+#   ggplot(aes(x = year_admission, y = category, group=category, fill=category, height = after_stat(density))) +   ## height doesn't seem to make any difference?  
+#   geom_density_ridges(stat = "binline", bins = 11, scale = 0.95, draw_baseline = FALSE, show.legend = FALSE) +
+#   # `expand` option for both axes to remove unneeded padding 
+#   scale_y_discrete(expand = c(0, 0)) +     
+#   scale_x_continuous(expand = c(0, 0) ) +  #, breaks = seq(1780, 1840, 10) ) +  
+#   scale_fill_tableau(direction = -1) +
+#   coord_cartesian(clip = "off") +  #clip = "off" to avoid clipping of the very top of the top ridgeline
+#   theme_ridges(font_size=12) +
+#   theme(axis.text.y = element_text(vjust = 0), legend.position = "none", 
+#         panel.grid.minor.x=element_blank(),
+#         panel.grid.major.x=element_blank()
+#         ) +
+#   theme_ridges() +
+#   labs(y=NULL, x=NULL, title = "GHS injury categories 1813-38")
+
+```
+
+
+
+```{r include=FALSE}
+# idk whether to show these or not...
+# hp_desc_gender_years_counts |>
+#   filter(hospital=="mxh") |>  
+#     mutate(p = n/n_gen*100) |>
+#   mutate(gender=fct_rev(gender)) |>
+#   ggplot(aes(x=year_admission, y=gender, fill=p)) +
+#   geom_tile() +
+#   scale_fill_viridis_b( ) +
+#   scale_y_discrete(expand=c(0,0)) +
+#   scale_x_continuous(expand = c(0,0)) +
+#   theme(legend.position = "bottom") +
+#   labs(y=NULL, x=NULL, fill="% of category", title = "GHS heatmap of gender of admissions 1813-38")
+
+```
+
+
+
+```{r include=FALSE}
+# hp_desc_gender_years_counts |>
+#   filter(hospital=="ghs") |>  
+#     mutate(p = n/n_gen*100) |>
+#   #mutate(injury_category=fct_rev(injury_category)) |>
+#   ggplot(aes(x=year_admission, y=gender, fill=p)) +
+#   geom_tile() +
+#   scale_fill_viridis_b( ) +
+#   scale_y_discrete(expand=c(0,0)) +
+#   scale_x_continuous(expand = c(0,0)) +
+#   theme(legend.position = "bottom") +
+#   labs(y=NULL, x=NULL, fill="% of category", title = "GHS heatmap of injury categories 1813-38")
+
+```
+
+
+
+
+## Seasonality heatmaps
+
+NB: This is not taking into account different length of months; 30 vs 31 days doesn't make any visible difference, but needs to be borne in mind when looking at February.
+
+
+If I want to combine the data for both hospitals in one chart, it's better to do proportions than numbers again because of the differences.
+
+
+```{r}
+hp_desc_admissions_months_years_props <-
+hp_desc_admissions_months |>
+  add_count(hospital, year_admission, name="n_yr") |>
+  count(hospital, year_admission, month, yrmonth, n_yr, name="n_month") |>
+  mutate(p_of_year = n_month/n_yr)
+```
+
+
+The heatmap doesn't suggest any major changes over time. But it does hint at a concentration of admissions in the middle months of the year, slightly more marked in the earlier MXH years (as well as one noticeable outlier that could would need further examination).
+
+```{r}
+
+hp_desc_admissions_months_years_props |>
+  mutate(yr=fct_rev(as.character(year_admission))) |>
+  ggplot(aes(x=month, y=yr, fill=p_of_year)) +
+  geom_raster() +
+  scale_fill_viridis_b(labels=percent_format()) +
+  scale_y_discrete(expand=c(0,0)) +
+  theme(aspect.ratio = 1) +
+  labs(y=NULL, x=NULL, fill="% of year", title = "Heatmap of monthly hospital admissions by year")
+```
+
+
+
+```{r}
+
+split_data <- function(data, grp){
+  
+grp_character <- deparse(substitute(grp))
+
+# sort should put them in the same order as the group_split (though i still don't know why group_split reorders them)
+data_names <-
+  sort(unique(data[[grp_character]]))
+
+  data_split <-
+  data |>
+  group_split({{grp}})
+
+  names(data_split) <- data_names
+  
+  data_split 
+  
+}
+
+
+split_heatmap <- function(data, grp){
+  
+  data |>
+    count(month, {{grp}}) |>
+    ggplot(aes(x=month, y={{grp}}, fill=n)) +
+    geom_raster() +
+    scale_fill_viridis_b() +
+    theme(legend.position = "bottom", 
+          # make y hospital name stand out a bit more
+          axis.text.y=element_text(size=11), 
+          # make legend a bit smaller, but can make labels cramped
+          legend.key.size = unit(0.8, 'cm'), legend.title = element_text(size = 9)) +
+    scale_y_discrete(expand = c(0,0)) +
+    labs(y=NULL, fill="count")
+}
+```
+
+### by hospital
+
+Comparison of the two hospitals confirms the seasonal pattern is stronger for MXH than GHS, though it's still present in the latter. In GHS, but not in MXH, December looks slightly more concentrated than the preceding and following months. (February is slightly exaggerated in both due to being a short month and if that's taken into account it'd be much the same as Jan and March.)
+
+```{r}
+hp_desc_admissions_months |>
+  split_data(hospital) |>
+  map(~split_heatmap(., hospital)) |>
+  wrap_plots(ncol = 1)
+
+```
+
+### by gender
+
+Comparison of gender highlights that the summer pattern is much stronger for men than women. Why would there be more female injuries in May?
+
+```{r}
+hp_desc_admissions_months |>
+  filter(gender != "unknown") |>
+  split_data(gender) |>
+  map(~split_heatmap(., gender)) |>
+  wrap_plots(ncol = 1)
+
+```
+
+(there isn't enough age data to do the same chart for age groups.)
+
+```{r include=FALSE}
+# only 2k of 13k have age, so i think don't do this one.
+# hp_desc_admissions_months |>
+#   filter(!age_group %in% c("0-17", "unknown")) |>
+#   split_data(age_group) |> 
+#   map(~split_heatmap(., age_group)) |> 
+#   wrap_plots()
+
+```
+
+
+### by injury category
+
+A look at the four most frequent injury categories overall (excluding non-specific `injury`).
+
+Sometimes a visualisation tells you something that hadn't occurred to you but is obvious in retrospect: `burn`s are most frequent in the late autumn and winter months (but why more so in Nov-Dec than in Jan-Feb?). The other three categories are on the whole following the summer months pattern, though `fracture` is... interesting.
+
+```{r}
+hp_injuries_admissions_months |> 
+  filter(injury_category %in% c("fracture", "blunt", "sharp", "burn")) |>
+  split_data(injury_category) |> 
+  map(~split_heatmap(., injury_category)) |> 
+  wrap_plots()
+
+```
+
+### by body region
+
+And finally a breakdown for the four most frequent body regions (excl unknown). Again, tending to point to the summer pattern, but some more strongly so than others.
+
+```{r}
+hp_injuries_admissions_months |> 
+  filter(injury_region %in% c("leg", "arm", "torso", "head")) |>
+  split_data(injury_region) |> 
+  map(~split_heatmap(., injury_region)) |> 
+  wrap_plots()
+
+```
+
+
+

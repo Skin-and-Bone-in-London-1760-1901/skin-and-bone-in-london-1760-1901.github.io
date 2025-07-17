@@ -1,0 +1,627 @@
+---
+title: "Exploring the Skin and Bone convicts data"
+description: "Focus: making some sense of a lot of messy data"
+author: "Sharon Howard"
+date: "2025-07-17"
+execute: 
+  warning: false
+  message: false
+  echo: false
+---
+
+## About the data
+
+The DP collection has been sourced from *physical descriptions* of prisoners and convicts in data held by the [Digital Panopticon](https://www.digitalpanopticon.org).
+
+Four datasets in DP have this type of description and include Londoners between 1760 and 1901 (see linked pages for fuller documentation):
+
+- [Home Office Criminal Registers 1790-1802](https://www.digitalpanopticon.org/England_and_Wales_Criminal_Registers_1791-1892) [HCR] (8833 descriptions)
+- [Millbank Prison Registers 1816-1826](https://www.digitalpanopticon.org/Prison_Registers_1770-1951) [MPR] (914 descriptions)
+- [Prison Licences 1853-1883](https://www.digitalpanopticon.org/UK_Licences_for_the_Parole_of_Convicts_1853-1925) [PL: split into PLD for female convicts (880); TLM for male convicts (5461)] (6341 descriptions in total)
+- [Metropolitan Police Register of Habitual Criminals 1881-1901](https://www.digitalpanopticon.org/Metropolitan_Police_Register_of_Habitual_Criminals_1881-1925) (19716 descriptions)
+
+
+
+```{r}
+## shared packages etc needs to go first
+source(here::here("R/shared.R")) 
+
+## process DP data 
+source(here::here("R/dp-data.R"))
+
+## aesthetics
+source(here::here("R/trimmings.R"))
+
+# any extra packages and functions should go here
+
+
+# adjust injury categories: remove "other" and "injury", but keep "chronic"
+# capitalise datasets!
+
+dp_injuries <-
+  dp_injuries |>
+  mutate(across(c(dataset_rev, description_dataset), str_to_upper)) |>
+  filter(!injury_category %in% c("injury", "other"))
+
+# dp_desc has had more processing than dp_person_desc, use dp_desc unless you have good reason not to.
+# does dp_desc (and person_desc) already remove the above? it ought to really. <200 difference so does it matter?
+# hang on not remove them surely, more like recategorise as uninjured. ugh leave it alone.
+# dp_desc |>
+#   filter(description_id %in% dp_injuries$description_id | injury==FALSE) # 35616 of 35804
+## join removes descriptions without any injuries as well, so you want filter above. but numbers look right
+  # filter(injury==TRUE) |> # 20628
+  # semi_join(dp_injuries, join_by(description_id)) # 20440
+
+
+# for reference, list of private parts from Tattoos. may not be an exact match.
+# private_parts <- c("chest", "breast", "shoulder", "back", "leg", "thigh", "calf", "knee", "shin", "ankle", "rib", "nipple", "buttock")
+
+dp_injuries_pp <-
+dp_injuries |> 
+  filter(!is.na(injury_region_ribs) & gender !="unknown") |>
+  
+  # private/public
+  mutate(pp = case_when(
+    # tweaks to regions
+    str_detect(body_location, "ankle") ~ "private",
+    str_detect(body_location, "\\b(neck|throat)") ~ "public", # these are in torso i think
+    str_detect(body_location, "\\b(axilla|arm.?pit|clavicle|collar.?bone|shoulder|scapula)") ~ "private", # in tattoos shoulder=private but rest of arm=public? not very many tbh.
+    # remaining regions =public
+    injury_region_ribs %in% c("hand", "foot", "head", "arm") ~ "public",
+    # remaining regions =private
+    injury_region_ribs %in% c("ribs", "torso", "leg") ~ "private",
+  ))  |>
+    
+  # slightly different mapping for bodymaps
+    mutate(loc_hum = case_when(
+    # start with handarm stuff
+    str_detect(body_location, "wrist") ~ "forearm",
+    injury_region_ribs %in% c("hand") ~ "hand", 
+    str_detect(body_location, "\\b(axilla|clavicle|collar.?bone|shoulder|upper.?arm|humerus|scapula|arm.?pit)") ~ "upperarm", # will need sthg for humap, but prefer to keep sep from "arm" at this point
+    str_detect(body_location, "\\b(elbow|ulna|radius|olecranon|fore.?arm|lower part of left arm)") ~ "forearm",
+   # remaining arm can't be separated out
+   str_detect(body_location, "\\barm") ~ "arm*", 
+   # now the rest
+   body_location %in% c("forehead", "nose") ~ "head",
+    injury_region_ribs=="ribs" ~ "chest",
+    str_detect(body_location, "\\b(calf|knee|tibia|fibula|patella|shin|lower leg)") ~ "leg", # lower
+    str_detect(body_location, "\\b(femur|thigh)") ~ "thigh",
+    str_detect(body_location, "\\b(neck|throat)") ~ "neck", # throat may need to change
+   # this time body needs to be distinct 
+   body_location %in% c("body") ~ "torso",
+   # spine 66, side/s 432+78, ditto. plus back.
+   str_detect(body_location, "\\b(spine|side|back)") ~ "torso",
+   str_detect(body_location, "\\b(chest|sternum|brea?st|stomach|nipple)") ~ "chest",
+    # remaining torso > abdomen. that looks right.
+   injury_region_ribs=="torso" ~ "abdomen",
+   injury_region_ribs %in% c("foot", "head") ~ injury_region_ribs, # do head after throat/neck as i'm not sure what they're in
+   # remaining legs can't be separated anyway. why is this body location rather than region though?
+   str_detect(body_location, "\\bleg") ~ "leg*"
+  )) 
+
+
+library(humapr)
+
+# won't need all of these? actually only using combined atm
+
+sb_humap <- function(data){
+  data |>
+  as.data.frame() |>
+  humap() + 
+  geom_body(aes(loc = loc_hum), controls = list(na_fill="lightgrey")) +
+  scale_fill_viridis_c() 
+}
+
+# sb_humap_side <- function(data){
+#   data |>
+#   as.data.frame() |>
+#   humap() + 
+#   geom_body(aes(loc = loc_hum, side=side), controls = list(na_fill="lightgrey")) +
+#   scale_fill_viridis_b()
+# }
+
+# combine: arm, leg, torso
+sb_humap_combined <- function(data){
+  data |>
+    as.data.frame() |>
+    humap() + 
+    geom_body(aes(loc = loc_hum), 
+            combine = list(
+              arm = c("arm", "forearm"), 
+              leg=c("thigh", "leg"), 
+              chest=c("chest", "abdomen")
+                           ) ,
+            controls = list(na_fill="lightgrey")) +
+  scale_fill_viridis_c() 
+}
+```
+
+
+
+
+## Caveats and challenges
+
+The DP collection is by far the largest Skin and Bone dataset, and the physical descriptions it contains are in many cases the most detailed records we have. However, they're also the most difficult to work with and to interpret.
+
+### data quality
+
+In fact, I can pretty much repeat the [caveats for the tattoos data](https://criminaltattoos.github.io/post/2021-04-12-a-first-look-at-tattoos-in-the-digital-panopticon/) (extracted from the same sources), with a few slight variations.
+
+> Users of the data should be aware from the outset that the dataset is a very long way from perfect; extracting tattoos from the descriptions was a major challenge for a small project with limited funding. It is likely that many tattoos (especially the "long tail" of rare tattoo designs) have been missed, and conversely things that were not tattoos have been misidentified. The process aimed not simply to find tattoos but also to associate them with body locations, and this could also go wrong in various ways.
+
+Just one example which illustrates some of the difficulties:
+
+> Scar forehead, right eyebrow, right ear, left cheek, left side of nose, both sides of neck, lip, right arm elbow, right leg, right shoulder. I.L.M.K Liverpool E.R on right arm, ears pierced, lost several teeth. [[Bridget Lacking](https://www.digitalpanopticon.org/life?id=obpdef1-626-18770807), sentenced to penal servitude 1881]
+
+The descriptions consist of small, mixed pieces of information, in no fixed order, with unreliable punctuation and frequent but inconsistent use of abbreviations. Tattoos were often grouped together by body location (and I think that can happen with injuries too), but in these two examples we have the opposite problem, with several locations grouped together by injury type. 
+
+Some features are ambiguous and interpretation depends on context. We can be confident that "ears pierced" isn't an injury, but "pierced" in some other location could well be. Quite a lot of convicts have "lost" teeth and we can't know whether this is due to injuries or poor dental health (though the latter feels very likely in this period). 
+
+
+NB: It's possible for a person to have multiple descriptions (and a small number of people have several), but the average is only fractionally over one, so I'll generally count per description or per injury.
+
+### a lack of balance
+
+A second set of problems for data analysis and visualisation arises from several very unbalanced features of the collection. The RHC data completely dwarfs the other datasets, and the amount of information about injuries we can expect to find varies considerably between datasets. 
+
+```{r}
+dp_desc |>
+  count(dataset_rev, injury)  |>
+  mutate(dataset_rev = str_to_upper(dataset_rev)) |>
+  mutate(injury = if_else(injury==TRUE, "injured", "uninjured")) |>
+  ggplot(aes(dataset_rev, n, fill=injury)) +
+  geom_col() +
+  scale_fill_tableau() +
+  labs(x=NULL, y="number of descriptions", title = "DP descriptions and injuries, by dataset") 
+```
+
+
+This is even more pronounced when counting injuries rather than descriptions or people, because RHC averages a higher number of injuries per description.
+
+```{r}
+dp_injuries |>
+  count(description_id, dataset_rev) |>
+  ggplot(aes(x=dataset_rev, y=n)) +
+  geom_boxplot() +
+  labs(x="dataset", y="injuries per description", title = "Boxplot of DP injuries per description, by dataset")
+```
+
+Arguably, the size of RHC means that any analysis that doesn't in some way separate out datasets might as well just throw the other three away, because they'll be more or less invisible anyway.
+
+```{r}
+dp_injuries |>
+  count(dataset_rev) |>
+  mutate(dataset_rev = fct_reorder(dataset_rev, n)) |>
+  ggplot(aes(x=n, y=dataset_rev)) +
+  geom_col() +
+  labs(y=NULL, x="number of injuries", title = "DP injury counts by dataset")
+```
+
+The same goes for gender: men massively outnumber women, which is a pretty normal feature of datasets about criminal offenders. Only about 15% of descriptions are of women. 
+And men have more injuries than women do per description, so the difference is even more pronounced if counting injuries instead of descriptions.
+
+```{r}
+dp_injuries |>
+  filter(gender!="unknown") |>
+  count(gender) |>
+  mutate(gender = fct_reorder(gender, n)) |>
+  ggplot(aes(x=n, y=gender)) +
+  geom_col() +
+  labs(y=NULL, x="number of injuries", title = "DP injury counts by gender")
+```
+
+```{r}
+dp_injuries |>
+  filter(gender !="unknown") |>
+  count(description_id, gender) |>
+  ggplot(aes(x=gender, y=n)) +
+  geom_boxplot() +
+  labs(x="gender", y="injuries per description", title = "Boxplot of DP injuries per description, by dataset")
+```
+
+
+
+
+
+```{r include=FALSE}
+
+# nah not really.
+# dp_injuries |>
+#   filter(!is.na(year_cln)) |>
+#   distinct(description_id, year_cln, dataset_rev, full_description) |>
+#   unnest_regex(word, full_description) |>
+#   count(description_id, year_cln, dataset_rev) |>
+#   arrange(year_cln, dataset_rev) |>
+#   ggplot(aes(y=year_cln, x=n)) +
+#   ggbeeswarm::geom_beeswarm(size=0.4,  method = "swarm", cex = 0.8, corral = "wrap", corral.width = 0.9) + #, cex=0.8
+#   scale_colour_ptol() +
+#   #scale_x_discrete(expand=expansion(add=c(0.5,0.5))) +
+#   theme(legend.position = "bottom") +
+#   guides(colour = guide_legend(override.aes = list(size=2))) +
+#   labs(y=NULL, x=NULL, colour=NULL)
+
+```
+
+Injuries themselves are very unevenly distributed in terms of both locations and types, which often makes effective visualisation very difficult. 
+
+Head injuries dominate injury locations.
+
+```{r}
+dp_injuries_pp |>
+  mutate(loc_hum = case_when(
+    loc_hum %in% c("upperarm", "arm", "arm*") ~ "arm",
+    loc_hum %in% c("leg", "leg*") ~ "leg",
+    loc_hum %in% c("torso") ~ "chest",
+    .default = loc_hum
+  )) |>
+  sb_humap_combined() +
+  ggtitle("DP humap of injury locations")
+```
+
+
+But types of injury are even worse: *86.5%* of injuries are in the "sharp" category. Most of these are injuries that are described as "scars" and may have been quite minor (and very old) injuries. The numbers are so large because many individuals had multiple scars (in the Bridget Lacking example above, she had scars on 10 different parts of her body). 
+
+This is not a very useful bar chart.
+
+```{r}
+dp_injuries |>
+  count(injury_category) |>
+  #filter(!injury_category %in% c("other") ) |>
+  mutate(injury_category = fct_reorder(injury_category, n)) |>
+  ggplot(aes(x=n, y=injury_category)) +
+  geom_col() +
+  labs(y=NULL, x="number of injuries", title = "DP injury counts, by injury category")
+```
+
+I might count distinct injury types per person or description, rather than individual injuries, but it doesn't really make a massive difference to the problem.
+
+```{r}
+dp_injuries |>
+  distinct(injury_category, person_id) |>
+  count(injury_category) |>
+  filter(!injury_category %in% c("other") ) |>
+  mutate(injury_category = fct_reorder(injury_category, n)) |>
+  ggplot(aes(x=n, y=injury_category)) +
+  geom_col() +
+  labs(y=NULL, x="number of people", title = "DP injury categories by person")
+```
+
+One answer is to use a [log scale](https://en.wikipedia.org/wiki/Logarithmic_scale), but that's not so immediately intuitive to all audiences and needs to be handled with care. 
+
+```{r}
+dp_injuries |>
+  count(injury_category) |>
+  filter(!injury_category %in% c("other") ) |>
+  mutate(injury_category = fct_reorder(injury_category, n)) |>
+  ggplot(aes(x=n, y=injury_category)) +
+  geom_col() +
+  scale_x_log10(labels=label_comma()) +
+  labs(y=NULL, x="number of injuries (log scale)", title = "DP injuries by category")
+```
+
+When comparing variables of very different sizes, using proportional charts is often effective. The downside is that there's now *no* indication of numbers. It's only effective with a small number of distinct values; this is pushing at the limits for me.
+
+```{r}
+dp_injuries |>
+  filter(!is.na(injury_region)) |>
+  count(injury_category, injury_region) |>
+  mutate(injury_region = fct_relevel(injury_region, "head", "torso",  "hand", "arm", "foot", "leg")) |>
+  ggplot(aes(y=n, fill = injury_region, x=injury_category)) +
+  geom_col(position = "fill") +
+  scale_fill_tableau() +
+  scale_y_continuous(labels = percent_format()) +
+  #facet_wrap(~injury_category, scales="free_y", ncol=2) +
+  labs(x="injury region", y="% of injuries", title = "DP injury categories and locations")
+```
+
+Another approach can be to use faceting (aka "small multiples"), in combination with independent scales per facet which make them, in effect, proportional. This enables me to focus on comparing the *shape* of the breakdowns, whilst still having numbers available for a sense of differences in scale. 
+
+```{r}
+dp_injuries |>
+  filter(!is.na(injury_region)) |>
+  count(injury_category, injury_region) |>
+  mutate(injury_region = fct_relevel(injury_region, "head", "torso",  "hand", "arm", "foot", "leg")) |>
+  ggplot(aes(y=n, x = injury_region)) +
+  geom_col() +
+  facet_wrap(~injury_category, scales="free_y", ncol=2) +
+  labs(x="injury region", y="number of injuries", title = "DP injury categories and locations")
+```
+
+The faceted bar chart can also be enhanced by adding a heatmap-like dimension, with the shading of each bar indicating *proportion* of the injury category (yellow= highest and dark blue=lowest). That helps to focus on what may be more significant differences (not just minor variations). 
+
+```{r}
+dp_injuries |>
+  filter(!is.na(injury_region)) |>
+  count(injury_category, injury_region) |>
+  group_by(injury_category) |>
+  mutate(p = n/sum(n), t=sum(n)) |>
+  ungroup() |>
+  mutate(injury_region = fct_relevel(injury_region, "head", "torso",  "hand", "arm", "foot", "leg")) |>
+  ggplot(aes(y=n, x = injury_region, fill=p)) +
+  geom_col() +
+  scale_fill_viridis_c(labels=percent_format()) +
+  facet_wrap(~injury_category, scales="free_y", ncol=2) +
+  labs(x="injury region", y="number of injuries", title = "DP injury categories and locations", fill="% of\ncategory")
+```
+
+One more problem is that (like the hospitals data) there's very little overlap between the datasets, just a couple of years at the beginning of RHC and end of PL. Only PL covers much more than a decade and there are long gaps between them. Combined with the variability in recording of injuries, this would make any analysis of long-term trends even more problematic. If there are differences between datasets do they reflect change over time or differences between the offenders represented in each dataset?
+
+```{r}
+dp_desc |>
+  filter(description_year>1789) |>
+  count(description_year, dataset_rev, name = "descriptions") |>
+  mutate(dataset_rev=str_to_upper(dataset_rev)) |>
+  ggplot(aes(x=description_year, y=descriptions)) +
+  geom_col() +
+  facet_wrap(~dataset_rev, ncol = 1, scales="free_y") +
+  labs(title = "Descriptions per year", x="year", y="number of descriptions")
+```
+
+
+```{r}
+# dp_injuries |> filter(!is.na(year) & description_dataset=="mpr") |>
+#   count(injury_category)
+```
+
+
+
+
+## Comparing datasets
+
+Even if I can't be sure what it all means, I do want to know if there *are* any significant or simply interesting differences between datasets. I'll try out some comparisons using injury categories and injury locations.
+
+```{r}
+#library(gghighlight)
+
+# ggplot(iris, aes(Sepal.Length, fill = Species)) +
+#   geom_histogram() +
+#   gghighlight() +
+#   facet_wrap(~ Species)
+```
+
+### injury categories 
+
+I've excluded the smallest categories. HCR is too small to make much of its rather different pattern. 
+There are minor variations between the other three datasets (eg we can see from the brighter yellow that the highest concentration of sharp injuries is in PL) but the distributions are broadly similar - except for the curious absence of fractures in MPR.
+
+
+```{r}
+dp_injuries |>
+  count(injury_category, dataset_rev) |>
+  filter(!injury_category %in% c("other", "muscle", "dislocation") ) |>
+  group_by(dataset_rev) |>
+  mutate(p = n/sum(n)) |>
+  ungroup() |>
+  mutate(injury_category = fct_rev(injury_category)) |>
+  ggplot(aes(x=n, y=injury_category, fill=p)) +
+  geom_col() +
+  scale_x_log10(labels=label_comma()) +
+  scale_fill_viridis_c(labels=percent_format()) +
+  facet_wrap(~dataset_rev, scales="free_x") +
+  labs(y=NULL, x="number of injuries (log scale)", title = "DP injury categories by dataset", fill="% of\ndataset")
+```
+
+### injury locations
+
+Injury locations don't vary much between datasets: head injuries are the largest category (a slightly higher % in HCR/MPR than in PL/RHC), and the distribution of hand/arm/leg/foot injuries are similar in each dataset (even the tiny HCR set is not that different from the others this time). 
+
+The main variation is in the frequency of torso injuries. Their absence in HCR could be consistent with my theory about why that dataset is less likely to record injuries in the first place. Along with the lower frequency in MPR, and the shared higher % of head injuries, there's a *possible* hint of the state's growing willingness to scrutinise and police prisoners' bodies during the 19th century (a big theory to hang on small amounts of data, but I'm just exploring here...). This is moving a long way from the project's focus on experiences of injury, but it underlines how that can't be properly understood without some attention to the creation of the original sources.
+
+
+```{r}
+##devtools::install_github("ricardo-bion/ggradar",  dependencies = TRUE)
+
+#library(ggradar)
+
+# need to convert n to % of dataset. 
+# but still not able to see much because they're so similar. faceted would have the same problem. nevermind
+
+# dp_injuries |>
+#   filter(!is.na(injury_region)) |> 
+#   count(injury_region, dataset_rev) |>
+#   group_by(dataset_rev) |>
+#   mutate(n = n/sum(n)) |>
+#   ungroup() |>
+#   rename(group=dataset_rev) |>
+#   pivot_wider(names_from = injury_region, values_from = n, values_fill = 0) |>
+#   ggradar()
+```
+
+
+```{r}
+dp_injuries |>
+  filter(!is.na(injury_region)) |> 
+  count(injury_region, dataset_rev) |>
+  group_by(dataset_rev) |>
+  mutate(p = n/sum(n)) |>
+  ungroup() |>
+  mutate(injury_region = fct_relevel(injury_region, "head", "torso",  "hand", "arm", "foot", "leg")) |>
+  ggplot(aes(y=n, x = injury_region, fill=p)) +
+  geom_col() +
+  facet_wrap(~dataset_rev, scales="free_y", ncol=2) +
+  scale_fill_viridis_c(labels=percent_format()) +
+  labs(x="injury region", y="number of injuries", fill="% of\ndataset")
+```
+
+```{r}
+# dp_injuries |>
+#   filter(!is.na(injury_region) & !injury_category %in% c("muscle", "dislocation", "sharp")) |>
+#   select(dataset_rev, injury_category, injury_region) |>
+#   ggplot(aes(injury_region, injury_category)) +
+#   geom_count()
+```
+
+### gender
+
+There is clear variation between datasets: RHC has the lowest proportion of women (about 10%)  and MPR the highest (nearly 30%). 
+
+I'm not concerned here with *why* that's the case, but would probably be thinking about likely differences between the kind of offender to be found at Millbank Prison in the 1820s and those convicted as "habitual criminals" more than half a century later. The invention of the category reflected growing anxieties about recidivism, and it wouldn't be surprising if this was more focused on men than women.
+
+```{r}
+# dp_desc |>
+#   filter(gender !="unknown") |>
+#   mutate(dataset_rev = if_else(description_dataset %in% c("pld", "tlm"), "PL", str_to_upper(description_dataset)))  |>
+#   count(gender, dataset_rev) |>
+#   mutate(p = n/sum(n)*100, .by = dataset_rev)
+```
+
+```{r}
+dp_desc |>
+  filter(gender !="unknown") |> 
+  mutate(dataset_rev = str_to_upper(dataset_rev)) |>
+  #mutate(injury = if_else(injury==TRUE, "has injury", "no injury")) |>
+  count(dataset_rev, gender) |>
+  ggplot(aes(y=n, x=dataset_rev, fill= gender)) +
+  geom_col(position = "fill") +
+  scale_fill_tableau() +
+  scale_y_continuous(labels = percent_format()) +
+  labs(x=NULL, y="% of descriptions", title = "Male and female descriptions, by dataset")
+  
+```
+
+
+## A look at injuries and gender
+
+
+I've already noted that men tend to have more injuries than women, and so it's not surprising that a higher proportion of women than men have no recorded injuries at all. But the difference is even larger than I expected: 36% of female descriptions have at least one injury, compared to 61% of male descriptions.
+
+```{r}
+dp_desc_gender_dataset_injury <-
+dp_desc |>
+  select(description_id, gender, dataset_rev, description_dataset, injury) |>
+  filter(gender !="unknown") |> 
+  mutate(injury = if_else(injury==TRUE, "injured", "uninjured")) |>
+  mutate(across(c(dataset_rev, description_dataset), str_to_upper))
+```
+
+```{r}
+dp_desc_gender_dataset_injury |>
+  count(gender, injury) |>
+  ggplot(aes(y=n, fill=injury, x= gender)) +
+  geom_col(position = "fill") +
+  scale_fill_tableau() +
+  scale_y_continuous(labels = percent_format()) +
+  labs(x=NULL, y="% of descriptions")
+```
+
+
+
+A breakdown of injury categories by gender also suggests some interesting variations, though differences are quite small. It seems that women are more likely to suffer fractures and burns than men, and men are more likely to have wounds and chronic injuries.
+
+```{r}
+dp_injuries_gender_counted <-
+dp_injuries |>
+  # chronic isn't in ptol_inj_category so you either need to change that or filter it out
+  filter(gender !="unknown"  & !(injury_category %in% c("other", "muscle")) ) |>
+  count(injury_category, gender)
+
+
+dp_injury_locations_gender <-
+dp_injuries |>
+  filter(gender !="unknown" & !is.na(injury_region)) 
+#  count(gender, injury_region)
+```
+
+
+
+```{r}
+# dp_injuries |>
+#   filter(gender !="unknown" & injury_category!="other") |>
+#   # because of the way the reorder_within works, seems you need to duplicate the injury_region column to use for fill. heh.
+#   # don't remember ever having to do that before?
+#   mutate(category_fill=injury_category) |>
+#   count(gender, injury_category, category_fill)  |>
+# #  mutate(injury_region = fct_relevel(injury_region, inj_region_relevel)) |>
+#   mutate(injury_category= reorder_within(injury_category, n, gender)) |>
+#   ggplot(aes(injury_category, n, fill=category_fill)) +
+#   geom_col(show.legend = F) +
+#   coord_flip() +
+#   facet_wrap(~gender, scales = "free") +
+#   scale_x_reordered() +
+#   #scale_fill_tableau() +
+#   scale_y_log10(expand = c(0,0)) +
+#   scale_fill_manual(values = ptol_inj_category) + 
+#   #scale_y_continuous(labels = percent_format()) +
+#   labs(y="injuries", title = "Gender and injury categories", x=NULL)
+```
+
+
+```{r}
+dp_injuries_gender_counted |>
+  ggplot(aes(fill=injury_category, values=n)) +
+  geom_waffle(na.rm=TRUE,colour="white", n_rows = 10, make_proportional = TRUE) +
+  # how to fix ordering in waffle... do it before counting
+  coord_equal() +
+  facet_wrap(~gender) +
+  theme_minimal() +
+  theme_enhance_waffle() +
+  scale_fill_colorblind() +
+#  scale_fill_manual(values =  ptol_inj_category) +
+  labs(fill="category", title="Gender and injury categories", caption = "1 square = 1% of injuries")
+```
+
+The proportion of sharp injuries is very similar for male and female, so let's filter those out and take a closer look at the rest. I think it's easier here to distinguish which are more significant variations: burns and fractures for women and wounds for men still stand out (whereas I think the variation for chronic is less notable). On the other hand, amputation now appears as a more significant difference. 
+
+```{r}
+dp_injuries_gender_counted |>
+  # chronic isn't in ptol_inj_category so you either need to change that or filter it out
+  filter(injury_category !="sharp" ) |>
+  ggplot(aes(fill=injury_category, values=n)) +
+  geom_waffle(na.rm=TRUE,colour="white", n_rows = 10, make_proportional = TRUE) +
+  # how to fix ordering in waffle... do it before counting
+  coord_equal() +
+  facet_wrap(~gender) +
+  theme_minimal() +
+  theme_enhance_waffle() +
+  scale_fill_colorblind() +
+#  scale_fill_manual(values =  ptol_inj_category) +
+  labs(fill="category", title="Gender and injury categories (excl sharp)", caption = "1 square = 1% of injuries")
+```
+
+
+```{r}
+##Are any of the variations *statistically* significant? Not very
+# 
+# dp_injuries_gender_tab <-
+# xtabs(n~injury_category+gender, data=dp_injuries_gender_counted |> filter(injury_category!="sharp"))
+# 
+# mosaic(dp_injuries_gender_tab, shade = TRUE, legend=FALSE)
+```
+
+
+
+The waffle chart for injury locations is quite a bit easier to read than the one for categories. Head injuries are clearly more associated with female, cf. torso and leg for male.
+
+```{r}
+dp_injury_locations_gender |>
+  mutate(injury_region = fct_relevel(injury_region, "head", "torso", "hand")) |>
+  count(gender, injury_region) |>
+  ggplot(aes(fill=injury_region, values=n)) +
+  geom_waffle(na.rm=TRUE,colour="white", n_rows = 10, make_proportional = TRUE) +
+  # how to fix ordering in waffle... do it before counting
+  coord_equal() +
+  facet_wrap(~gender) +
+  theme_minimal() +
+  theme_enhance_waffle() +
+  scale_fill_colorblind() +
+#  scale_fill_manual(values =  ptol_inj_category) +
+  labs(fill="location", title="Gender and injury locations", caption = "1 square = 1% of injuries")
+```
+
+Those variations are quite suggestive of a gendered difference between "private" and "public" body parts. So I'll group together as "private" body parts: torso (including shoulders but excluding neck if that's been put in torso rather than head) and legs; "public": head, feet, hands and arms. 
+
+
+```{r}
+dp_injuries_pp |>
+  count(gender, pp) |>
+  ggplot(aes(gender, n, fill = pp)) +
+  geom_col(position = "fill") +
+  scale_fill_tableau() +
+  scale_y_continuous(labels = percent_format()) +
+  labs(y="% of injuries", fill="location \ntype", title = "Gender and location type")
+```
+
+
+
+
+

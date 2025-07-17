@@ -1,0 +1,387 @@
+---
+title: "Biographical information"
+description: "Processing gender and age data in the Skin and Bone collections"
+author: "Sharon Howard"
+date: "2025-04-21"
+execute: 
+  warning: false
+  message: false
+  #echo: false
+---
+
+## Introduction
+
+The Skin and Bone project data contains two kinds of biographical information, sex/gender and age, that are consistent enough across collections to be useful for comparison. However, they need some standardisation to enable meaningful analysis and visualisations. There are some variations in recording of the gender data, and ages need to be grouped. 
+
+
+```{r echo=FALSE}
+
+## shared packages etc ####
+source(here::here("R/shared.R")) 
+## aesthetics ####
+source(here::here("R/trimmings.R"))
+
+# any extra packages and functions should go here
+library(reactable)
+
+## dp ####
+dp_injuries_xlsx <-
+  read_excel(here::here("data/v20231130/dp_injury.xlsx"), guess_max = 100000) |>
+  rowid_to_column()
+
+dp_injury_bio <-
+  dp_injuries_xlsx |>
+  select(rowid, person_id, description_id, gender, age)
+
+## skeletons ####
+os_injury_xlsx <-
+  read_excel(here::here("data/v20231130/os_injury.xlsx") ) |>
+  rowid_to_column()
+
+os_injury_bio <-
+os_injury_xlsx |>
+  select(rowid, person_id, gender, age_group=agegroup) 
+
+
+## hospitals ####
+hp_injury_xlsx <-
+  read_excel(here::here("data/v20231130/hp_injury.xlsx") , guess_max=18000) |>
+  # basic year fixes
+  mutate(description_year = case_when(
+    description_year>2000 ~ parse_number(str_sub(as.character(description_year), 2, 5)),
+    description_year<1760 ~ NA, 
+    .default=description_year
+  )) |>
+  rowid_to_column()
+
+hp_injury_bio <-
+  hp_injury_xlsx |>
+  select(rowid, person_id, gender, age) 
+  
+```
+
+
+## Age groups
+
+This was effectively pre-determined by broad age categories used in the osteological (OS) collection, where ages are unrecorded and have to be estimated from analysis of the skeletons ([Mant thesis p.58](http://hdl.handle.net/11375/20026)). 
+
+- Young Adult (YA) = 18-25 years  
+- Middle Adult 1 (MA1) = 26-35 years
+- Middle Adult 2 (MA2) = 36-45 years
+- Old Adult (OA) = 46+ years
+- Adult = >18 years
+
+A group for children (0-17) was added for the hospital (HP) and Digital Panopticon criminals (DP) collections, as children were excluded from the osteological data, and the "Adult" category was turned into "Unknown" (since it can't be assumed in HP and DP that someone without a recorded age is an adult).
+
+```{r}
+os_injury_ages <-
+  os_injury_bio |>
+  mutate(age_group = if_else(age_group=="Adult", "unknown", age_group))
+
+os_injury_ages |>  
+distinct(person_id, age_group) |>
+  count(age_group, name="count") |>
+  kable() |>
+  kable_styling()
+```
+
+
+### HP
+
+
+Assigning groups to ages is straightforward using `case_when()`, as the age column is already numerical. 
+
+```{r}
+hp_injury_bio |>
+  distinct(age) |>
+  # make age groups; "unknown" for NA.
+  mutate(age_group = case_when(
+    is.na(age) ~ "unknown",
+    between(age, 0, 17) ~ "0-17",
+    between(age, 18, 25) ~ "18-25",
+    between(age, 26, 35) ~ "26-35",
+    between(age, 36, 45) ~ "36-45",
+    age>45 ~ "46+"
+  )) |>
+  slice(1:10) |>
+  kable() |>
+  kable_styling()
+```
+
+
+I may as well turn it into a function I can reuse.
+
+```{r}
+make_age_groups <- function(df){
+  df |>
+    mutate(age_group = case_when(
+    is.na(age) ~ "unknown",
+    between(age, 0, 17) ~ "0-17",
+    between(age, 18, 25) ~ "18-25",
+    between(age, 26, 35) ~ "26-35",
+    between(age, 36, 45) ~ "36-45",
+    age>45 ~ "46+"
+  ))
+}
+```
+
+Unfortunately age is not consistently recorded across HP (only one hospital has it for most records).
+
+```{r}
+hp_injury_ages <-
+hp_injury_bio |>
+  make_age_groups()
+
+hp_injury_ages |>
+  distinct(person_id, age, age_group) |>
+  count(age_group, name="count") |>
+  kable() |>
+  kable_styling()
+```
+
+
+### DP
+
+A high proportion of DP records have age information, but it needs a little bit of preprocessing because for some reason R decides to import the age column as character rather than numeric data. 
+
+```{r}
+dp_injury_ages <-
+dp_injury_bio |>
+  mutate(age = parse_number(age)) |>
+  make_age_groups() 
+
+dp_injury_ages |>
+  distinct(description_id, age, age_group) |>
+  count(age_group, name = "count") |>
+  kable() |>
+  kable_styling()
+```
+
+
+## Gender
+
+Gender was assigned in the skeletons data on the basis of physical characteristics, whereas in HP and DP it was done on the basis of first names. In either case, it's essentially probabilistic.
+
+Values in the gender data across the collections haven't been standardised and they're all slightly different.
+
+```{r}
+os_injury_bio |>
+  distinct(person_id, gender) |>
+  count(gender) 
+```
+
+```{r}
+hp_injury_bio |>
+  distinct(person_id, gender) |>
+  count(gender)
+```
+
+```{r}
+dp_injury_bio |>
+  distinct(person_id, gender) |>
+  count(gender)
+```
+
+Annoying! But all the variations can be smoothed out with a simple function.
+
+```{r}
+
+gender_std <- function(df){
+  df |>
+    mutate(gender = str_to_lower(gender)) |>
+    mutate(gender = case_match(
+      gender,
+      "f" ~ "female",
+      "m" ~ "male",
+      "undetermined" ~ "unknown", 
+      "u" ~ "unknown",
+      NA ~ "unknown",
+      .default = gender
+    ))
+}
+```
+
+
+```{r echo=FALSE}
+dp_injury_bio |>
+  distinct(person_id, gender) |>
+  count(gender) |>
+  gender_std() |>
+  kable() |>
+  kable_styling()
+```
+
+
+
+
+
+## Results 
+
+Pie charts are a bit [controversial](https://observablehq.com/blog/truth-about-pie-charts). But I like them in certain cases. They're also [really easy to make in {ggplot}](https://r-graph-gallery.com/piechart-ggplot2.html). Essentially, you start by making a bar chart and then turn it into a circle using the `coord_polar()` function.
+
+
+
+### Age groups
+
+I opted to use a [sequential colour scale](https://www.datawrapper.de/blog/which-color-scale-to-use-in-data-vis#sequential-color-scales-nbsp), which I wouldn't normally do for categorical data, but age groups are a special case (since they're based on numerical data and do go from low to high). 
+
+I'd like to have consistent colours for these categories across analyses. With ggplot, the easiest way to have complete control of colours is to use the scale_*_manual() functions, with a paired vector. I can include all five groups (plus unknown) and ggplot won't mind if some aren't actually in the data; it'll only complain if there's a value in the data that isn't included in the vector. 
+
+```{r}
+col_age_groups5 <- c(
+  "0-17"='#ffeda0', 
+  "18-25"='#fecc5c', 
+  "26-35"= '#fd8d3c', 
+  "36-45"= '#fc4e2a', 
+  "46+"= '#800026', 
+  "unknown"='#dddddd'
+  )
+```
+
+
+As you might expect of data based on skeletons from cemeteries, the largest group is the oldest. (But the younger groups are nonetheless considerably larger than they would be in a modern cemetery.)
+
+```{r os-age-pie}
+
+os_injury_ages |>
+  distinct(person_id, age_group) |>
+  filter(age_group !="unknown") |>
+  count(age_group) |>
+  mutate(prop = n / sum(n)*100) |>
+  mutate(ypos = cumsum(prop)- 0.5*prop ) |>
+  ggplot(aes(x="", y=prop, fill=age_group)) +
+  geom_col(width = 1, color="white", show.legend = F) +
+  geom_text(aes(label = age_group), position = position_stack(vjust=0.5), color = "white", size=4) +
+  # make it circular
+  coord_polar("y", start=0, direction = -1) +
+  scale_fill_manual(values = col_age_groups5) +
+  theme_void() +
+  theme(plot.tag.position = "top" ) +
+  labs(tag = "OS age groups")
+  
+```
+
+Comparing the three collections, the 46+ group is a lot smaller in both HP and DP; in both cases, the age groups are more evenly distributed than in OS. In HP 46+ is clearly still the single largest group. In DP the largest group is 26-35, with 18-25 close behind, so pie chart critics might point out it's not obvious which is larger. But I'd argue that's fine, because the difference (about 3%) is too small to really matter. What I want to do is get a quick overview and comparison of the three collections, and that's what this is good at.
+
+```{r all-age-pies, echo=FALSE}
+
+os_injury_ages |>
+  distinct(person_id, age_group) |>
+  filter(age_group !="unknown") |>
+  count(age_group) |>
+  mutate(prop = n / sum(n)*100) |>
+  mutate(ypos = cumsum(prop)- 0.5*prop ) |>
+  ggplot(aes(x="", y=prop, fill=age_group)) +
+  geom_col(width = 1, color="white", show.legend = F) +
+  geom_text(aes(label = age_group), position = position_stack(vjust=0.5), color = "white", size=4) +
+  # make it circular
+  coord_polar("y", start=0, direction = -1) +
+  scale_fill_manual(values = col_age_groups5) +
+  theme_void()  +
+  theme(plot.tag.position = "top" ) +
+  labs(tag = "OS") +
+  
+hp_injury_ages |>
+  distinct(person_id, age_group) |>
+  filter(age_group !="unknown") |>
+  count(age_group) |>
+  mutate(prop = n / sum(n)*100) |>
+  mutate(ypos = cumsum(prop)- 0.5*prop ) |>
+  ggplot(aes(x="", y=prop, fill=age_group)) +
+  geom_col(width = 1, color="white", show.legend = F) +
+  geom_text(aes(label = age_group), position = position_stack(vjust=0.5), color = "white", size=4) +
+  coord_polar("y", start=0, direction = -1) +
+  scale_fill_manual(values = col_age_groups5) +
+  theme_void()  +
+  theme(plot.tag.position = "top" ) +
+  labs(tag = "HP") +
+  
+dp_injury_ages |>
+  distinct(description_id, age_group) |>
+  filter(age_group !="unknown") |>
+  count(age_group) |>
+  mutate(prop = n / sum(n)*100) |>
+  mutate(ypos = cumsum(prop)- 0.5*prop ) |>
+  ggplot(aes(x="", y=prop, fill=age_group)) +
+  geom_col(width = 1, color="white", show.legend = F) +
+  geom_text(aes(label = age_group), position = position_stack(vjust=0.5), color = "white", size=4) +
+  coord_polar("y", start=0, direction = -1) +
+  scale_fill_manual(values = col_age_groups5) +
+  theme_void()  +
+  theme(plot.tag.position = "top" ) +
+  labs(tag = "DP") +
+  
+  plot_annotation(title="Age groups")
+  
+```
+
+
+
+### Gender
+
+Only OS has a significant proportion of unknowns. What's most noticeable is that women are in the minority in all three collections - this would be expected in criminal datasets, but is more surprising in the other two.
+
+```{r echo=FALSE}
+dp_gender <-
+dp_injury_bio |>
+  distinct(person_id, gender) |>
+  gender_std()
+
+hp_gender <-
+hp_injury_bio |>
+  distinct(person_id, gender) |>
+  gender_std()
+
+os_gender <-
+os_injury_bio |>
+  distinct(person_id, gender) |>
+  gender_std()
+
+
+
+os_gender |>
+  count(gender) |>
+  mutate(prop = n / sum(n)*100) |>
+  mutate(ypos = cumsum(prop)- 0.5*prop ) |>
+  ggplot(aes(x="", y=prop, fill=gender)) +
+  geom_col(width = 1, color="white", show.legend = F) +
+  geom_text(aes(label = gender), position = position_stack(vjust=0.5), color = "white", size=4) +
+  coord_polar("y", start=0, direction = -1) +
+  scale_fill_manual(values = col_gender) +
+  theme_void() +
+  theme(plot.tag.position = "top" ) +
+  labs(tag = "OS") +
+  
+hp_gender |>
+  count(gender) |>
+  mutate(prop = n / sum(n)*100) |>
+  mutate(ypos = cumsum(prop)- 0.5*prop ) |>
+  ggplot(aes(x="", y=prop, fill=gender)) +
+  geom_col(width = 1, color="white", show.legend = F) +
+  geom_text(aes(label = gender), position = position_stack(vjust=0.5), color = "white", size=4) +
+  coord_polar("y", start=0, direction = -1) +
+  scale_fill_manual(values = col_gender) +
+  theme_void() +
+  theme(plot.tag.position = "top" ) +
+  labs(tag = "HP")  +
+  
+dp_gender |>
+  count(gender) |>
+  mutate(prop = n / sum(n)*100) |>
+  mutate(ypos = cumsum(prop)- 0.5*prop ) |>
+  ggplot(aes(x="", y=prop, fill=gender)) +
+  geom_col(width = 1, color="white", show.legend = F) +
+  geom_text(aes(label = gender), position = position_stack(vjust=0.5), color = "white", size=4) +
+  coord_polar("y", start=0, direction = -1) +
+  scale_fill_manual(values = col_gender) +
+  theme_void() +
+  theme(plot.tag.position = "top" ) +
+  labs(tag = "DP")  +
+  
+plot_annotation(title = "Gender")
+  
+```
+
+
+
+

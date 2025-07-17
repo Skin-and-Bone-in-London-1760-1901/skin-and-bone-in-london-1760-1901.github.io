@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/criminal/index.html",
       "/posts/osteology/index.html",
       "/posts/hospitals/index.html",
       "/posts/categories/index.html",
@@ -14,6 +15,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/criminal/index.html",
       "/posts/osteology/index.html",
       "/posts/hospitals/index.html",
       "/posts/categories/index.html",
